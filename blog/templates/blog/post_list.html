@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+  {% for post in posts %}
+      <div>
+          <p>published: {{ post.created_date }}</p>
+          <h1><a href="" class="text-secondary">{{ post.title }}</a></h1>
+          <p>{{ post.text|linebreaksbr }}</p>
+      </div>
+  {% endfor %}
+{% endblock %}
+
+
+
+
