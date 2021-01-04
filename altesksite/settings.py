@@ -120,14 +120,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# настройки для статических файлов и медив
 STATIC_URL = '/static/'
 STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+
+# настройки для ckeditor
+#CKEDITOR_BASEPATH = Path.joinpath(STATIC_ROOT, 'ckeditor/ckeditor')
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_CONFIGS = {'default' :
                        {'toolbar':'none',}
     ,}
-CKEDITOR_STORAGE_BACKEND = 'pillow'
-CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+#CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+# ------------------------
