@@ -5,6 +5,7 @@ from mptt.admin import DraggableMPTTAdmin
 
 # Register your models here.
 admin.site.register(Post)
+
 #admin.site.register(Genre)
 admin.site.register(
     Genre,
