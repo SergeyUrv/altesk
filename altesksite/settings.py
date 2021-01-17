@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'mptt',
     'lkk',
     'phonenumber_field',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +123,8 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL='/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/lk/accounts/login/'
+LOGOUT_URL ='/lk/accounts/logout/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -143,3 +146,5 @@ CKEDITOR_CONFIGS = {'default' :
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 #CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 # ------------------------
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

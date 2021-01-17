@@ -1,0 +1,42 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'blog/base.html' %}
+
+&nbsp;{% block content %}
+<h2>Профиль юридического лица</h2>
+<h3>{{ title }}</h3>
+<p><a href="{% url 'person_edit' pkk=0 %}">
+    <button type="button" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Добавить</button>
+    </a>
+</p>
+<table class="table table-bordered table-striped table-responsive">
+   <thead>
+    <tr>
+        <th>Фамилия <i class="bi bi-person-lines-fill"></i></th>
+        <th>Имя <i class="bi bi-person-lines-fill"></i></th>
+        <th>Отчество <i class="bi bi-person-lines-fill"></i></th>
+        <th>Контактный телефон <i class="bi bi-telephone-fill"></i></th>
+        <th>E-mail <i class="bi bi-envelope-fill"></i></th>
+        <th>Документ <i class="bi bi-files"></i></th>
+        <th>Изменить <i class="bi bi-pencil"></i></i></th>
+    </tr>
+   </thead>
+    <tbody>
+    {% for item in fio%}
+    <tr>
+        <td>{{ item.fio_sname }}</td>
+        <td>{{ item.fio_name }}</td>
+        <td>{{ item.fio_lname }}</td>
+        <td>{{ item.cont_tel }}</td>
+        <td>{{ item.cont_email }}</td>
+        <td>
+            {% if item.doc_polnomochia%}
+            <a href="{{ item.doc_polnomochia.url }}" title="{{ item.doc_polnomochia.name }}"><i class="bi bi-file-earmark-arrow-down-fill"></i></a>
+            {% endif %}
+        </td>
+        <td><a href="{% url 'person_edit' pkk=item.pk %}"><i class="bi bi-pencil-fill"></i></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

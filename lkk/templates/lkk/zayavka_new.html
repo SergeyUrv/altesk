@@ -1,0 +1,109 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+
+&nbsp;{% block content %}
+<h2>Заявка на технологическое присоединение</h2>
+{% for e in form.non_field_errors %}
+  <div class="alert alert-danger"> {{ e }} </div>
+{% endfor %}
+{% if form.subject.errors %}
+    <ol>
+    {% for error in form.subject.errors %}
+       <div class="alert alert-danger">{{ error|escape }}</div>
+    {% endfor %}
+    </ol>
+{% endif %}
+<form method="post" class="form-horizontal">
+    {% csrf_token %}
+    {% crispy form %}
+  <br>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+$('#id_tip_pris').change(function () {
+      var optionSelected = $("option:selected", this);
+      var valueSelected = $(this).val();
+
+      if (valueSelected === 'VR') {
+        $('#id_prichina_obr').parent().hide();
+        $('#div_id_prichina_obr > label').parent().hide();
+        $('#id_vremenniy_tehpris').parent().show();
+        $('#div_id_vremenniy_tehpris > label').parent().show();
+      } else if (valueSelected === 'PP') {
+        $('#id_prichina_obr').parent().show();
+        $('#div_id_prichina_obr > label').parent().show();
+        $('#id_vremenniy_tehpris').parent().hide();
+        $('#div_id_vremenniy_tehpris > label').parent().hide();
+        $('#id_vremenniy_tehpris_srok').parent().hide();
+        $('#div_id_vremenniy_tehpris_srok > label').parent().hide();
+        $('#id_name_so').parent().hide();
+        $('#div_id_name_so > label').parent().hide();
+        $('#id_dog_tehpris_num').parent().hide();
+        $('#div_id_dog_tehpris_num > label').parent().hide();
+        $('#id_dog_tehpris_date').parent().hide();
+        $('#div_id_dog_tehpris_date > label').parent().hide();
+        $('#id_dog_tehpris_file').parent().hide();
+        $('#div_id_dog_tehpris_file > label').parent().hide();
+      } else {
+        $('#id_prichina_obr').parent().hide();
+        $('#div_id_prichina_obr > label').parent().hide();
+        $('#id_vremenniy_tehpris').parent().hide();
+        $('#div_id_vremenniy_tehpris > label').parent().hide();
+        $('#id_vremenniy_tehpris_srok').parent().hide();
+        $('#div_id_vremenniy_tehpris_srok > label').parent().hide();
+        $('#id_name_so').parent().hide();
+        $('#div_id_name_so > label').parent().hide();
+        $('#id_dog_tehpris_num').parent().hide();
+        $('#div_id_dog_tehpris_num > label').parent().hide();
+        $('#id_dog_tehpris_date').parent().hide();
+        $('#div_id_dog_tehpris_date > label').parent().hide();
+        $('#id_dog_tehpris_file').parent().hide();
+        $('#div_id_dog_tehpris_file > label').parent().hide();
+
+      }
+    });
+$('#id_vremenniy_tehpris').change(function () {
+      var optionSelected = $("option:selected", this);
+      var valueSelected = $(this).val();
+
+      if (valueSelected === 'ПВ') {
+        $('#id_vremenniy_tehpris_srok').parent().hide();
+        $('#div_id_vremenniy_tehpris_srok > label').parent().hide();
+        $('#id_name_so').parent().show();
+        $('#div_id_name_so > label').parent().show();
+        $('#id_dog_tehpris_num').parent().show();
+        $('#div_id_dog_tehpris_num > label').parent().show();
+        $('#id_dog_tehpris_date').parent().show();
+        $('#div_id_dog_tehpris_date > label').parent().show();
+        $('#id_dog_tehpris_file').parent().show();
+        $('#div_id_dog_tehpris_file > label').parent().show();
+
+      } else if (valueSelected === 'ПО') {
+        $('#id_vremenniy_tehpris_srok').parent().show();
+        $('#div_id_vremenniy_tehpris_srok > label').parent().show();
+        $('#id_name_so').parent().hide();
+        $('#div_id_name_so > label').parent().hide();
+        $('#id_dog_tehpris_num').parent().hide();
+        $('#div_id_dog_tehpris_num > label').parent().hide();
+        $('#id_dog_tehpris_date').parent().hide();
+        $('#div_id_dog_tehpris_date > label').parent().hide();
+        $('#id_dog_tehpris_file').parent().hide();
+        $('#div_id_dog_tehpris_file > label').parent().hide();
+      } else {
+        $('#id_vremenniy_tehpris_srok').parent().hide();
+        $('#div_id_vremenniy_tehpris_srok > label').parent().hide();
+        $('#id_name_so').parent().hide();
+        $('#div_id_name_so > label').parent().hide();
+        $('#id_dog_tehpris_num').parent().hide();
+        $('#div_id_dog_tehpris_num > label').parent().hide();
+        $('#id_dog_tehpris_date').parent().hide();
+        $('#div_id_dog_tehpris_date > label').parent().hide();
+        $('#id_dog_tehpris_file').parent().hide();
+        $('#div_id_dog_tehpris_file > label').parent().hide();
+
+      }
+    });
+
+</script>
+{% endblock content %}

@@ -1,0 +1,25 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+
+&nbsp;{% block content %}
+<h2>Профиль юридического лица</h2>
+<h3>{{ title }}</h3>
+
+{% for e in form.non_field_errors %}
+  <div class="alert alert-danger"> {{ e }} </div>
+{% endfor %}
+{% if form.subject.errors %}
+    <ol>
+    {% for error in form.subject.errors %}
+       <div class="alert alert-danger">{{ error|escape }}</div>
+    {% endfor %}
+    </ol>
+{% endif %}
+<form method="post" class="form-horizontal", enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br>
+        <button type="submit" class="btn btn-primary">Сохранить и перейти далее</button>
+</form>
+{% endblock content %}

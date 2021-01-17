@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
 
 #Список ГП и ЭСО
 class Eso(models.Model):
@@ -9,6 +12,7 @@ class Eso(models.Model):
 
     def __str__(self):
         return self.gp
+
 #Адреса
 class Adres(models.Model):
     #
@@ -29,6 +33,9 @@ class Adres(models.Model):
     #Люди
 class People(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # people_type = models.CharField(max_length=3, choices=[('zay','Заявитель'),
+    #                                         ('ruk','Руководитель'),
+    #                                         ('pre','Представитель'),])
     fio_sname = models.CharField(max_length=80, verbose_name="Фамилия")
     fio_name = models.CharField(max_length=80, verbose_name="Имя")
     fio_lname = models.CharField(max_length=100, blank=True, verbose_name="Отчество")
@@ -38,9 +45,9 @@ class People(models.Model):
     fio_lname_rod = models.CharField(max_length=100, blank=True, verbose_name="Отчество (в родительном падеже)")
     #контактные данные
     cont_tel = PhoneNumberField(region='RU', blank=False, unique=True, verbose_name="Телефон")
-    cont_tel_podtverzden = models.BooleanField(verbose_name='Телефонный номер подтвержден')
+    cont_tel_podtverzden = models.BooleanField(blank=True, null=True, verbose_name='Телефонный номер подтвержден')
     cont_email = models.EmailField (blank=False, unique=True, verbose_name="Email")
-    cont_email_podtverzden = models.BooleanField(verbose_name='E-mail подтвержден')
+    cont_email_podtverzden = models.BooleanField(blank=True, null=True, verbose_name='E-mail подтвержден')
     doc_polnomochia = models.FileField(verbose_name='Сканированная копия документа, подтверждающее полномочия лица', blank=True)
 
 
@@ -108,17 +115,24 @@ class Zayavka(models.Model):
         ('UM', 'Увеличение максимальной мощности')
     ]
     tip_pris = models.CharField(choices=spisok_tipe_pris, max_length=2, blank=False, null=True, verbose_name='Тип присоединения')
-    prichina_obr = models.CharField(choices=spisok_prichina_obr, max_length=2, blank=True, verbose_name='Причина обращения')
+    prichina_obr = models.CharField(choices=spisok_prichina_obr, max_length=2, blank=True, null=True, verbose_name='Причина обращения')
     vremenniy_tehpris = models.CharField(choices=[('ПВ', 'на период выполнения постоянной схемы электроснабжения'),
                                                   ('ПО', 'передвижных объектов')],
-                                         blank=True, verbose_name='Временное присоединение', max_length=2)
-    vremenniy_tehpris_srok = models.IntegerField(blank=True, null=True, verbose_name='сроком на (дней)')
+                                         blank=True, verbose_name='Временное присоединение', max_length=2,
+                                         help_text='Под передвижными объектами понимаются энергопринимающие устройства,'
+                                                   ' предназначенные для эксплуатации с периодическим перемещением и установкой на различных территориях')
+    vremenniy_tehpris_srok = models.IntegerField(blank=True, null=True, verbose_name='сроком на (дней)',
+                                                 help_text='Присоединение передвижных объектов может осуществляется сроком до 12 месяцев (365/366 дней)')
 
     #Договор о технологическом подключении на постоянное электроснабжение
-    name_so = models.CharField(default='ООО "Алтайская электросетевая компания"', blank=True, max_length=100, verbose_name='Наименование сетевой организации, с которой заключен договор')
+    name_so = models.CharField(default='ООО "Алтайская электросетевая компания"', blank=True, max_length=100,
+                               verbose_name='Наименование сетевой организации, с которой заключен договор')
     dog_tehpris_num = models.CharField(blank=True, max_length=30, verbose_name='№ договора')
     dog_tehpris_date = models.DateField(blank=True, null=True, verbose_name='Дата договора')
-    dog_tehpris_file = models.FileField(blank=True, verbose_name='Сканированная копия договора')
+    dog_tehpris_file = models.FileField(blank=True, verbose_name='Сканированная копия договора',
+                                        help_text='Максимальный размер файла - 5 Мб.'
+                                                  ' Допустимые форматы документа - doc, docx, xls, xlsx, odt, ods, pdf, tif, tiff, jpg, bmp, png, gif, txt, rtf, rar, zip.'
+                                                  ' Если требуется приложить более одного файла к одному документу, поместите их в архив.')
 
     #Энергопринимающие устройства
     name_ustroystv = models.CharField(max_length=255, blank=False, null=True, verbose_name="Наименование устройств")
@@ -144,18 +158,33 @@ class Zayavka(models.Model):
         ('23', 'II и III'),
         ('123', 'I, II и III'),
     ]
-    type_mesnosti = models.CharField(choices=spisok_type_mesnosti, max_length=3, blank=False, null=True, verbose_name='Тип местности')
-    kad_number = models.CharField(max_length=100, blank=True, verbose_name="Кадастровый номер")
-    mestopolozenie_ustroystv = models.ForeignKey(Adres, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Адрес присоединяемых энергопринимающих устройств')
-    max_p = models.IntegerField(blank=False, null=True, verbose_name="Максимальная мощность устройств (всего), кВт")
-    napr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=False, verbose_name='при напряжении')
-    max_p_prisoed_ustr = models.IntegerField(blank=False, null=True, verbose_name="Максимальная мощность присоединяемых устройств, кВт")
-    napr_prisoed_ustr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=False, verbose_name='при напряжении')
-    max_p_rprisoed_ustr = models.IntegerField(blank=False, null=True, verbose_name="Максимальная мощность ранее присоединенных устройств, кВт")
-    napr_rprisoed_ustr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=False, verbose_name='при напряжении')
+    type_mesnosti = models.CharField(choices=spisok_type_mesnosti, max_length=3, blank=False, null=True, verbose_name='Тип местности',
+                                     help_text='Города и поселки городского типа относятся к городской местности. Остальные типы населенных пунктов - к сельской.')
+    kad_number = models.CharField(max_length=100, blank=True, verbose_name="Кадастровый номер",
+                                  help_text='Укажите кадастровый номер земельного участка (помещения, здания),'
+                                            ' на котором располагаются (будут располагаться) энергопринимающие устройства'
+                                            ' для наиболее точного определения местоположения объекта.'
+                                            ' Данная информация указана в правоустанавливающих документах на земельный участок (помещение, здание).')
+    mestopolozenie_ustroystv = models.ForeignKey(Adres, blank=False, null=True, on_delete=models.CASCADE,
+                                                 verbose_name='Адрес присоединяемых энергопринимающих устройств')
+    max_p = models.IntegerField(blank=False, null=True, verbose_name="Максимальная мощность устройств (всего), кВт",
+                                help_text='Указывается максимальная мощность энергопринимающих устройств всего:'
+                                          ' присоединяемых по данной заявке и ранее присоединенных (если были присоединены ранее)')
+    napr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=False, verbose_name='при напряжении',
+                            help_text='Уровень напряжения в сети переменного тока в точке присоединения')
+    max_p_prisoed_ustr = models.IntegerField(blank=False, null=True, verbose_name="Максимальная мощность присоединяемых устройств, кВт",
+                                             help_text='Указывается максимальная мощность устройств, присоединяемых по данной заявке')
+    napr_prisoed_ustr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=False, verbose_name='при напряжении',
+                                         help_text='Уровень напряжения в сети переменного тока в точке присоединения')
+    max_p_rprisoed_ustr = models.IntegerField(blank=False, null=True, verbose_name="Максимальная мощность ранее присоединенных устройств, кВт",
+                                              help_text='Указывается в случае, если объект уже присоединен к сетям,'
+                                                        ' в соответствии с документами, подтверждающими технологическое присоединение')
+    napr_rprisoed_ustr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=False, verbose_name='при напряжении',
+                                          help_text='Уровень напряжения в сети переменного тока в точке присоединения')
     harakter_nagr = models.CharField(max_length=100, blank=False, null=True, verbose_name="Характер нагрузки")
     kat_nadeznosti =models.CharField(choices=spisok_kat_nadeznosti, default='3', blank=False, max_length=3, verbose_name='Категория надежности')
-    vid_deyat_okved = models.CharField(max_length=100, blank=False, null=True, verbose_name="Вид деятельности по ОКВЭД 2")
+    vid_deyat_okved = models.CharField(max_length=100, blank=False, null=True, verbose_name="Вид деятельности по ОКВЭД 2",
+                                       help_text='Укажите вид экономической деятельности. Если ни один из вариантов не подходит, выберите значение "Прочее".')
 
     #Энергосбытовая организация
     spisok_vid_dogovora = [
@@ -165,22 +194,72 @@ class Zayavka(models.Model):
         ('Пр.', 'Иной вид договора'),
 
     ]
-    eso=models.ForeignKey(Eso, blank=True, null=True, on_delete=models.PROTECT)
-    vid_dogovora = models.CharField(choices=spisok_vid_dogovora, max_length=3, blank=True  , verbose_name='Вид договора')
-    dog_number = models.CharField(max_length=30, blank=True, verbose_name='Номер договора (если заключен)')
-    dog_date = models.DateField(blank=True, null=True, verbose_name='Дата договора (если заключен)')
+    eso=models.ForeignKey(Eso, blank=True, null=True, on_delete=models.PROTECT, verbose_name='Наименование ГП (ЭСО)',
+                          help_text='Укажите организацию (гарантирующего поставщика),'
+                                    ' с которой планируется заключить договор,'
+                                    ' обеспечивающий продажу электрической энергии (мощности).')
+    vid_dogovora = models.CharField(choices=spisok_vid_dogovora, max_length=3, blank=True  , verbose_name='Вид договора',
+                                    help_text='Укажите вид договора, обеспечивающий продажу электроэнергии (мощности) на розничном рынке,'
+                                              ' который планируете заключить с энергосбытовой организацией:'
+                                              ' договор энергоснабжения или договор купли-продажи электроэнергии.'
+                                              ' При заключении договора купли-продажи электроэнергии требуется заключение договора '
+                                              'на оказание услуг по передаче электроэнергии с сетевой организацией.')
+    dog_number = models.CharField(max_length=30, blank=True, verbose_name='Номер договора (если заключен)',
+                                  help_text='Укажите реквизиты договора, обеспечивающего продажу электрической энергии, если договор уже заключен')
+    dog_date = models.DateField(blank=True, null=True, verbose_name='Дата договора (если заключен)',
+                                help_text='Укажите реквизиты договора, обеспечивающего продажу электрической энергии, если договор уже заключен')
     persdannie_soglasie_eso = models.FileField(blank=True, verbose_name='Согласие на обработку персональных данных сетевой организацией и субъектом розничного рынка, с которым представитель заявителя намеревается заключить договор, обеспечивающий продажу электроэнергии на розничном рынке')
 
     #Документы и файлы
     ur_doc = models.ForeignKey(Doc_ur, null=True, on_delete=models.RESTRICT, verbose_name='Документы юр.лица')
     plan_raspolozenia = models.FileField(null=True, verbose_name='План расположения энергопринимающих устройств')
     pravo_sobstvennosti = models.FileField(null=True, verbose_name='Документ, подтверждающий право собственности на объект или иное предусмотренное законом основание')
-    mkd = models.BooleanField(default=False, verbose_name='Осуществляется присоединение устройств, находящихся в нежилых помещениях многоквартирного дома')
-    mkd_vru = models.CharField(choices=[('Да', 'Да'), ('Нет','Нет')], blank=True, null=True, max_length=3, verbose_name='Проектом на многоквартирный дом для нежилого помещения предусмотрено индивидуальное вводно-распределительное устройство')
-    mkd_soglasie = models.FileField(blank=True, verbose_name='Документ, подтверждающий согласие на присоединение устройств в нежилом помещении в многоквартирном доме')
-    snt =  models.BooleanField(default=False, verbose_name='Осуществляется присоединение устройств на территории садоводческого, огороднического или дачного некоммерческого объединения граждан с использованием объектов инфраструктуры и другого имущества общего пользования этого объединения')
+    mkd = models.BooleanField(default=False,
+                              verbose_name='Осуществляется присоединение устройств, находящихся в нежилых помещениях многоквартирного дома',
+                              help_text='Поставьте отметку в случае присоединения энергопринимающих устройств,'
+                                        ' находящихся в нежилых помещениях, расположенных в многоквартирных домах'
+                                        ' и иных объектах капитального строительства')
+    mkd_vru = models.CharField(choices=[('Да', 'Да'), ('Нет','Нет')], blank=True, null=True, max_length=3,
+                               verbose_name='Проектом на многоквартирный дом для нежилого помещения'
+                                            ' предусмотрено индивидуальное вводно-распределительное устройство',
+                               help_text='- Укажите <Да> в случае, если проектом на многоквартирный дом для соответствующего'
+                                         ' нежилого помещения предусмотрено индивидуальное вводно-распределительное устройство'
+                                         ' с непосредственным присоединением к питающей линии сетевой организации.'
+                                         '- Укажите <Нет> в обратном случае.')
+    mkd_soglasie = models.FileField(blank=True, verbose_name='Документ, подтверждающий согласие на присоединение устройств'
+                                                             ' в нежилом помещении в многоквартирном доме',
+                                    help_text='Под согласием понимается согласие на организацию присоединения нежилого помещения'
+                                              ' отдельными линиями от вводного устройства (вводно-распределительного устройства,'
+                                              ' главного распределительного щита),'
+                                              ' установленного на вводе питающей линии сетевой организации'
+                                              ' в соответствующем здании или его обособленной части.'
+                                              'Таким документом является: В случае наличия организации, осуществляющей управление'
+                                              ' многоквартирным домом, наделенной соответствующими полномочиями:'
+                                              '- Документ, подтверждающий согласие организации, осуществляющей управление '
+                                              'многоквартирным домом, В случае отсутствия такой организации или отсутствия у'
+                                              ' нее полномочий: - Документ, подтверждающий согласие общего собрания владельцев'
+                                              ' жилых помещений многоквартирного дома.')
+    snt =  models.BooleanField(default=False,
+                               verbose_name='Осуществляется присоединение устройств на территории садоводческого,'
+                                            ' огороднического или дачного некоммерческого объединения граждан'
+                                            ' с использованием объектов инфраструктуры и'
+                                            ' другого имущества общего пользования этого объединения',
+                               help_text='Поставьте отметку в случае, если: - Вы ведете садоводство, огородничество или'
+                                         ' дачное хозяйство в индивидуальном порядке на территории садоводческого,'
+                                         ' огороднического или дачного некоммерческого объединения и '
+                                         '- присоединение энергопринимающих устройств осуществляется с использованием объектов'
+                                         ' инфраструктуры и другого имущества общего пользования этого объединения.')
     snt_spravka = models.FileField(blank=True, verbose_name='Справка о количестве земельных участков, расположенных в границах территории садоводства или огородничества')
-    snt_soglasie = models.FileField(blank=True, verbose_name='Согласие всех граждан, осуществляющих ведение садоводства или огородничества на земельных участках на территории садоводства или огородничества, на обработку персональных данных сетевой организацией и субъектом розничного рынка')
+    snt_soglasie = models.FileField(blank=True, verbose_name='Согласие всех граждан, осуществляющих ведение садоводства'
+                                                             ' или огородничества на земельных участках на территории садоводства или огородничества,'
+                                                             ' на обработку персональных данных сетевой организацией и субъектом розничного рынка',
+                                    help_text='Заполненное всеми гражданами, осуществляющими ведение садоводства или огородничества на земельных участках,'
+                                              ' расположенных в границах территории садоводства или огородничества, иными правообладателями объектов недвижимости,'
+                                              ' расположенных в границах территории садоводства или огородничества, или собственниками,'
+                                              ' или иными законными владельцами гаражей либо иных объектов, расположенных в границах территории кооператива,'
+                                              ' в отношении энергопринимающих устройств которых подается заявка, согласие на обработку персональных данных '
+                                              'сетевой организацией и субъектом розничного рынка, с которым заявитель намеревается заключить договор, обеспечивающий'
+                                              ' продажу электрической энергии (мощности) на розничном рынке')
     gsk = models.BooleanField(default=False, verbose_name='Осуществляется присоединение устройств, принадлежащих потребительскому кооперативу (гаражно-строительному, гаражному кооперативу) либо его членам')
     gsk_spravka = models.FileField(blank=True, verbose_name='Справка о количестве гаражей либо иных объектов, расположенных в границах территории кооператива')
     sobstvennikov_neskolko = models.BooleanField(default=False, verbose_name='Осуществляется присоединение устройств на объекте/земельном участке, правоустанавливающие документы которого подразумевают долевую/совместную собственность')
@@ -202,12 +281,30 @@ class Zayavka(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     #published_date = models.DateTimeField(blank=True, null=True)
 
-    # def clean(self):
-    #     #тип присоединения
-    #     if self.tip_pris == 'PP' and self.prichina_obr is None:
-    #         raise ValidationError(('Причина обращения не выбрана'))
-        # if self.tip_pris == 'VR' and self.vremenniy_tehpris_srok is None :
-        #     raise ValidationError('')
+    def clean(self):
+        if self.tip_pris == 'PP' and self.prichina_obr is None:
+            raise ValidationError({'prichina_obr' : _('Причина обращения не выбрана')})
+        if self.tip_pris == 'VR' and self.vremenniy_tehpris is None:
+            raise ValidationError({'vremenniy_tehpris': _(
+                'Не выбраны параметры временного присоединения.'
+                ' Под передвижными объектами понимаются энергопринимающие устройства, предназначенные для эксплуатации с периодическим перемещением и установкой на различных территориях')})
+        if self.tip_pris == 'VR' and self.vremenniy_tehpris == 'ПО':
+            if self.vremenniy_tehpris_srok is None:
+                raise ValidationError({'vremenniy_tehpris_srok': _('Присоединение передвижных объектов может осуществляется сроком до 12 месяцев (365/366 дней), срок не может быть пустым')})
+            elif self.vremenniy_tehpris_srok > 366 or self.vremenniy_tehpris_srok < 1:
+                raise ValidationError({'vremenniy_tehpris_srok': _('Присоединение передвижных объектов может осуществляется сроком до 12 месяцев (365/366 дней). Вы указали невозможный срок.')})
+        if self.tip_pris == 'VR' and self.vremenniy_tehpris == 'ПВ' and (self.name_so is None or self.dog_tehpris_date is None or self.dog_tehpris_num is None or self.dog_tehpris_file is None):
+            raise ValidationError({'name_so': _('Нужно заполнить все сведения про договор о технологическом подключении на постоянное электроснабжение')})
+        if self.mkd and self.mkd_vru is None:
+            raise ValidationError({'mkd_vru': _('- Укажите <Да> в случае, если проектом на многоквартирный дом для соответствующего нежилого помещения предусмотрено индивидуальное вводно-распределительное устройство с непосредственным присоединением к питающей линии сетевой организации.'
+                                                '- Укажите <Нет> в обратном случае.')})
+        if self.mkd and self.mkd_vru == 'Нет' and self.mkd_soglasie is None:
+            raise ValidationError({'mkd_soglasie' : _('Приложите файл! Под согласием понимается согласие на организацию присоединения нежилого помещения отдельными линиями от вводного устройства (вводно-распределительного устройства, главного распределительного щита), установленного на вводе питающей линии сетевой организации в соответствующем здании или его обособленной части.')})
+        if self.snt and self.snt_soglasie is None:
+            raise ValidationError({'snt_soglasie': _('Приложите согласие')})
+        if self.snt and self.snt_spravka is None:
+            raise ValidationError({'snt_spravka': _('Приложите справку')})
+
         # if self.vremenniy_tehpris_srok > 366:
         #     raise ValidationError('Присоединение передвижных объектов может осуществляется сроком до 12 месяцев (365/366 дней)')
 
