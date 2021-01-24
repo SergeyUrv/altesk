@@ -1,5 +1,5 @@
 <!-- templates/lkk/zayavka_new.html -->
-{% extends 'blog/base.html' %}
+{% extends 'lkk/menu.html' %}
 {% load crispy_forms_tags %}
 
 &nbsp;{% block content %}
@@ -14,7 +14,7 @@
     {% endfor %}
     </ol>
 {% endif %}
-<form method="post" class="form-horizontal">
+<form method="post" class="form-horizontal" enctype="multipart/form-data">
     {% csrf_token %}
     {% crispy form %}
   <br>

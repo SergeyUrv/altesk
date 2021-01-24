@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people
-from .models import People
+from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zayavitel_form
+from .models import People, Adres, Zayavitel_ur, Zayavka
 from django.shortcuts import redirect
 from django.utils import timezone
 
@@ -11,23 +11,12 @@ from django.utils import timezone
 
 # Create your views here.
 
+#вывод формы входа
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
 
-def zayavka_new(request):
-    if request.method == "POST":
-        form = ZayavkaForm(request.POST)
-        if form.is_valid():
-            zayavka = form.save(commit=False)
-            zayavka.author = request.user
-            zayavka.created_date = timezone.now()
-            zayavka.save()
-            return redirect('zayavka_detail', pk=zayavka.pk)
-    else:
-        form = ZayavkaForm()
-    return render(request, 'lkk/zayavka_new.html', {'form': form})
 
 def profile_ur(request):
     if request.method == "POST":
@@ -47,72 +36,134 @@ def profile_ur(request):
     return render(request, 'lkk/profile.html', {'form1': form1, 'form2': form2, 'title': 'Редактирование'})
 
 #@login_required
-def profile(request, step):
-    if step == 1 :
-        try:
-            people1 = People.objects.get(author=request.user)
-            people_nayden = True
-        except People.DoesNotExist:
-            people_nayden = False
-        #people1 = get_object_or_404(People, author=request.user)
-        if request.method == "POST":
-            if people_nayden:
-                form = Zayavitel_people(request.POST, instance=people1)
-            else:
-                form = Zayavitel_people(request.POST)
-            if form.is_valid():
-                people = form.save(commit=False)
-                people.author = request.user
-                people.created_date = timezone.now()
-                people.save()
-                return redirect('/lk/profile/2')
-        else:
-            if people_nayden:
-                form = Zayavitel_people(instance=people1)
-            else:
-                form = Zayavitel_people()
-        return render(request, 'lkk/profile_step.html', {'form': form, 'title': 'Данные о заявителе'})
-    elif step == 2:
-        if request.method == "POST":
-            form = Zayavitel_yur(request.POST)
-            if form.is_valid():
-                people = form.save(commit=False)
-                people.author = request.user
-                people.created_date = timezone.now()
-                people.save()
-                return redirect('profile', step=3)
-        else:
-            form = Zayavitel_yur()
-            form.fields['fio'] = People.objects.get(author=request.user)
-        return render(request, 'lkk/profile_step.html', {'form': form, 'title': 'Данные об организации'})
+#def profile(request, step):
 
-def profile_view(request):
-        fio = People.objects.filter(author=request.user)
-        return render(request, 'lkk/profile_view.html', {'fio': fio, 'title' : 'Персоны'})
-
-
-def profile_edit(request, pkk):
+# функция вывода редактирования формы
+# запрос, ID в базе, Модель, Форма модели, перенаправить после сохранения формы, заголовок, какой рендерить шаблон
+def get_form(request, pkk, SModel, Model_form, redir, title, rendering='lkk/profile_form_edit.html'):
     try:
-        people1 = People.objects.get(pk=pkk, author=request.user)
-        people_nayden = True
-    except People.DoesNotExist:
-        people_nayden = False
+        find_object = SModel.objects.get(pk=pkk, author=request.user)
+        object_nayden = True
+    except SModel.DoesNotExist:
+        object_nayden = False
     #people1 = get_object_or_404(People, author=request.user)
     if request.method == "POST":
-        if people_nayden:
-            form = Zayavitel_people(request.POST, request.FILES, instance=people1)
+        if object_nayden:
+            form = Model_form(request.POST, request.FILES, instance=find_object, users=request.user)
         else:
-            form = Zayavitel_people(request.POST, request.FILES)
+            form = Model_form(request.POST, request.FILES, users=request.user)
         if form.is_valid():
-            people = form.save(commit=False)
+            vform = form.save(commit=False)
             #people.doc_polnomochia = People(request.FILES['doc_polnomochia'])
-            people.author = request.user
-            people.created_date = timezone.now()
-            people.save()
-            return redirect('person')
+            vform.author = request.user
+            vform.created_date = timezone.now()
+            vform.status = 'save'
+            vform.status_date = timezone.now()
+            vform.save()
+            return redirect(redir)
     else:
-        if people_nayden:
-            form = Zayavitel_people(instance=people1)
+        if object_nayden:
+            form = Model_form(instance=find_object, users=request.user)
         else:
-            form = Zayavitel_people()
-    return render(request, 'lkk/profile_step.html', {'form': form, 'title': 'Данные о персонах'})
+            form = Model_form(users=request.user)
+    return render(request, rendering, {'form': form, 'title': title})
+
+# добавление и редактирование заявки
+def zayavka_new(request, pkk):
+    try:
+        item = Zayavka.objects.get(pk=pkk, author=request.user)
+        if item.status == 'save' or item.status == 'edit':
+            return get_form(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm, redir='zayavki',
+                            title='Подача заявки на тех.присоединение',
+                            rendering='lkk/zayavka_new.html')
+        else:
+            return redirect('zayavki')
+    except Zayavka.DoesNotExist:
+        return get_form(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm, redir='zayavki',
+                        title='Подача заявки на тех.присоединение', rendering='lkk/zayavka_new.html')
+
+
+# добавление и редактирование людей
+def profile_edit(request, pkk):
+    return get_form(request=request, pkk=pkk, SModel=People, Model_form=Zayavitel_people, redir='person', title='Данные о персонах')
+
+# добавление и редактирование адресов
+def profile_adres_edit(request, pkk):
+    return get_form(request=request, pkk=pkk, SModel=Adres, Model_form=Adres_form, redir='adres', title='Данные об адресах')
+
+# добавление и редактирование юр.лица
+def zayavitel_edit(request, pkk):
+    return get_form(request, pkk, Zayavitel_ur, Zayavitel_form, 'zayavitel', 'Данные о заявителе')
+
+# удаление людей
+def profile_del(request, pkk):
+    try:
+        people1 = People.objects.get(pk=pkk, author=request.user)
+        people1.delete()
+    except People.DoesNotExist:
+        people_nayden = False
+    return redirect('person')
+
+# удаление адресов
+def profile_adres_del(request, pkk):
+    try:
+        people1 = Adres.objects.get(pk=pkk, author=request.user)
+        people1.delete()
+    except Adres.DoesNotExist:
+        people_nayden = False
+    return redirect('adres')
+
+# удаление юр.лица
+def zayavitel_del(request, pkk):
+    try:
+        item = Zayavitel_ur.objects.get(pk=pkk, author=request.user)
+        item.delete()
+    except Zayavitel_ur.DoesNotExist:
+        people_nayden = False
+    return redirect('zayavitel')
+
+def zayavka_del(request, pkk):
+    try:
+        item = Zayavka.objects.get(pk=pkk, author=request.user)
+        if item.status == 'save' or item.status == 'edit':
+            item.delete()
+        else:
+            return redirect('zayavki')
+    except Zayavka.DoesNotExist:
+        people_nayden = False
+    return redirect('zayavki')
+
+def zayavka_send(request, pkk):
+    try:
+        item = Zayavka.objects.get(pk=pkk, author=request.user)
+        if item.status == 'save' or item.status == 'edit':
+            item.status_date = timezone.now()
+            item.created_date = timezone.now()
+            item.status = 'send'
+            item.save()
+    except Zayavka.DoesNotExist:
+        people_nayden = False
+    return redirect('zayavki')
+# просмотр списка людей
+def profile_view(request):
+    fio = People.objects.filter(author=request.user)
+    return render(request, 'lkk/profile_view.html', {'fio': fio, 'title' : 'Персоны'})
+
+# просмотр списка адресов
+def profile_adres(request):
+    adres = Adres.objects.filter(author=request.user)
+    return render(request, 'lkk/profile_adres_view.html', {'adres': adres, 'title': 'Адреса'})
+
+# просмотр списка юр.лиц
+def zayavitel(request):
+    zaya = Zayavitel_ur.objects.filter(author=request.user)
+    return render(request, 'lkk/profile_zayavitel_view.html', {'zaya': zaya, 'title': 'Заявители', 'user': request.user})
+
+# просмотр списка заявок
+def zayavka_view(request):
+    zaya = Zayavka.objects.filter(author=request.user)
+    return render(request, 'lkk/profile_zayavka_view.html', {'zaya': zaya, 'title': 'Заявки на технологическое присоединение',
+                                                             'user': request.user})
+# Вывод главной страницы ЛКК
+def main_lk(request):
+    return render(request, 'lkk/main.html')

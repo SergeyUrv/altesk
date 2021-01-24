@@ -4,7 +4,7 @@ from django.utils import timezone
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
+from ckeditor_uploader.fields import RichTextUploadingField
 
 #Список ГП и ЭСО
 class Eso(models.Model):
@@ -39,6 +39,7 @@ class People(models.Model):
     fio_sname = models.CharField(max_length=80, verbose_name="Фамилия")
     fio_name = models.CharField(max_length=80, verbose_name="Имя")
     fio_lname = models.CharField(max_length=100, blank=True, verbose_name="Отчество")
+    snils = models.CharField(max_length=11, blank=True, verbose_name="СНИЛС")
     #ФИО в родительном падеже
     fio_sname_rod = models.CharField(max_length=80, verbose_name="Фамилия (в родительном падеже)")
     fio_name_rod = models.CharField(max_length=80, verbose_name="Имя (в родительном падеже)")
@@ -54,29 +55,30 @@ class People(models.Model):
     def __str__(self):
         return self.fio_sname+' '+self.fio_name+' '+self.fio_lname
 
-class Doc_ur(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    ucheriditelnie = models.FileField(verbose_name='Учредительные документы юридического лица')
-    vipiska_egpul = models.FileField(verbose_name='Выписка из ЕГРЮЛ')
+# class Doc_ur(models.Model):
+#     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     ucheriditelnie = models.FileField(verbose_name='Учредительные документы юридического лица')
+#     vipiska_egpul = models.FileField(verbose_name='Выписка из ЕГРЮЛ')
 
 # Create your models here.
 class Zayavitel_ur(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     #данные о заявителе
-    fio = models.ForeignKey(People, blank=False, null=True, related_name='zayavitel', on_delete=models.CASCADE, verbose_name="Заявитель")
-    org_name = models.CharField(max_length=255, blank=True, verbose_name="Наименование организации")
-    snils = models.CharField(max_length=11, blank=True, verbose_name="СНИЛС")
-    inn = models.CharField(max_length=12, blank=True, verbose_name="ИНН")
-    org_forma = models.CharField(max_length=255, blank=True, verbose_name="Организационно-правовая форма")
-    org_ogrn = models.CharField(max_length=13, blank=True, verbose_name="ОГРН (ЮЛ)")
+    #fio = models.ForeignKey(People, blank=False, null=True, related_name='zayavitel', on_delete=models.CASCADE, verbose_name="Заявитель")
+    org_name = models.CharField(max_length=255, blank=False, null=True, verbose_name="Наименование организации")
+    #snils = models.CharField(max_length=11, blank=True, verbose_name="СНИЛС")
+    inn = models.CharField(max_length=12, blank=False, null=True, verbose_name="ИНН")
+    org_forma = models.CharField(max_length=255, blank=False, null=True, verbose_name="Организационно-правовая форма")
+    org_ogrn = models.CharField(max_length=13, blank=False, null=True, verbose_name="ОГРН (ЮЛ)")
     org_data_egrul = models.DateField(verbose_name="Дата внесения записи в ЕГРЮЛ")
     #данные о руководителе
     ruk_fio = models.ForeignKey(People, blank=False, null=True, related_name='rukovod', on_delete=models.CASCADE, verbose_name='Руководитель')
     #данные о представителе
-    pred_fio = models.ForeignKey(People, blank=False, null=True, related_name='predstavitel',on_delete=models.RESTRICT, verbose_name='Представитель')
+    pred_fio = models.ForeignKey(People, blank=True, null=True, related_name='predstavitel',on_delete=models.RESTRICT, verbose_name='Представитель',
+                                 help_text='Выберите этот пункт, если интересы организации будет представлять лицо, отличное от руководителя')
     #pred_document = models.FileField(verbose_name="Документ подтверждающий полномочия представителя")
-    pred_document_num = models.CharField(max_length=80, blank=True, verbose_name="Номер документа подтверждающего полномочия представителя")
-    pred_document_date = models.DateField(verbose_name="Дата документа подтверждающего полномочия представителя")
+    pred_document_num = models.CharField(max_length=80, blank=True, null=True, verbose_name="Номер документа подтверждающего полномочия представителя")
+    pred_document_date = models.DateField(blank=True, null=True, verbose_name="Дата документа подтверждающего полномочия представителя")
 
     #Адрес юридический
     adr_ur = models.ForeignKey(Adres, blank=False, null=True, related_name='yuridicheskiy', on_delete=models.RESTRICT, verbose_name='Юридический адрес')
@@ -85,7 +87,7 @@ class Zayavitel_ur(models.Model):
     adr_post_aya = models.CharField(max_length=100, blank=True, verbose_name="Абонентский ящик")
     adr_post_poluchatel = models.CharField(max_length=255, blank=True, verbose_name="Получатель")
     #Адрес фактический
-    adr_fakt = models.ForeignKey(Adres, blank=False, null=True, related_name='fakticheskiy', on_delete=models.RESTRICT, verbose_name='Юридический адрес')
+    adr_fakt = models.ForeignKey(Adres, blank=False, null=True, related_name='fakticheskiy', on_delete=models.RESTRICT, verbose_name='Фактический адрес')
 
     #платежные реквизиты
     plat_kpp = models.CharField(max_length=9, blank=False, verbose_name="КПП")
@@ -96,12 +98,21 @@ class Zayavitel_ur(models.Model):
 
     created_date = models.DateTimeField(default=timezone.now)
 
+    def clean(self):
+        #if self.fio is None:
+        #    raise ValidationError({'fio' : _('Выбирите заявителя')})
+        if self.org_name is None:
+            raise ValidationError({'org_name' : _('Заполните данные об организации')})
+        if self.pred_fio is not None and self.pred_document_num is None:
+            raise ValidationError({'pred_document_num' : _('Необходимо ввести номер документа, подтверждающего полномочия представителя')})
+        if self.pred_fio is not None and self.pred_document_date is None:
+            raise ValidationError({'pred_document_date' : _('Необходимо ввести дату документа, подтверждающего полномочия представителя')})
     def publish(self):
         self.created_date = timezone.now()
         self.save()
 
     def __str__(self):
-        return self.title
+        return self.org_name
 
 class Zayavka(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -114,6 +125,10 @@ class Zayavka(models.Model):
         ('NP', 'Новое присоединение'),
         ('UM', 'Увеличение максимальной мощности')
     ]
+    fio = models.ForeignKey(People, blank=False, null=True, related_name='zayavitel', on_delete=models.CASCADE,
+                            verbose_name="Заявитель", help_text='Выберите кто будет выступать заявителем')
+    org = models.ForeignKey(Zayavitel_ur, blank=False, null=True, related_name='organizaciya', on_delete=models.CASCADE, verbose_name='Организация',
+                            help_text='Выберите организацию заявителя')
     tip_pris = models.CharField(choices=spisok_tipe_pris, max_length=2, blank=False, null=True, verbose_name='Тип присоединения')
     prichina_obr = models.CharField(choices=spisok_prichina_obr, max_length=2, blank=True, null=True, verbose_name='Причина обращения')
     vremenniy_tehpris = models.CharField(choices=[('ПВ', 'на период выполнения постоянной схемы электроснабжения'),
@@ -176,10 +191,10 @@ class Zayavka(models.Model):
                                              help_text='Указывается максимальная мощность устройств, присоединяемых по данной заявке')
     napr_prisoed_ustr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=False, verbose_name='при напряжении',
                                          help_text='Уровень напряжения в сети переменного тока в точке присоединения')
-    max_p_rprisoed_ustr = models.IntegerField(blank=False, null=True, verbose_name="Максимальная мощность ранее присоединенных устройств, кВт",
+    max_p_rprisoed_ustr = models.IntegerField(blank=True, null=True, verbose_name="Максимальная мощность ранее присоединенных устройств, кВт",
                                               help_text='Указывается в случае, если объект уже присоединен к сетям,'
                                                         ' в соответствии с документами, подтверждающими технологическое присоединение')
-    napr_rprisoed_ustr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=False, verbose_name='при напряжении',
+    napr_rprisoed_ustr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=True, verbose_name='при напряжении',
                                           help_text='Уровень напряжения в сети переменного тока в точке присоединения')
     harakter_nagr = models.CharField(max_length=100, blank=False, null=True, verbose_name="Характер нагрузки")
     kat_nadeznosti =models.CharField(choices=spisok_kat_nadeznosti, default='3', blank=False, max_length=3, verbose_name='Категория надежности')
@@ -211,7 +226,9 @@ class Zayavka(models.Model):
     persdannie_soglasie_eso = models.FileField(blank=True, verbose_name='Согласие на обработку персональных данных сетевой организацией и субъектом розничного рынка, с которым представитель заявителя намеревается заключить договор, обеспечивающий продажу электроэнергии на розничном рынке')
 
     #Документы и файлы
-    ur_doc = models.ForeignKey(Doc_ur, null=True, on_delete=models.RESTRICT, verbose_name='Документы юр.лица')
+    ucheriditelnie = models.FileField(null=True, verbose_name='Учредительные документы юридического лица')
+    vipiska_egpul = models.FileField(null=True, verbose_name='Выписка из ЕГРЮЛ')
+    #ur_doc = models.ForeignKey(Doc_ur, null=True, on_delete=models.RESTRICT, verbose_name='Документы юр.лица')
     plan_raspolozenia = models.FileField(null=True, verbose_name='План расположения энергопринимающих устройств')
     pravo_sobstvennosti = models.FileField(null=True, verbose_name='Документ, подтверждающий право собственности на объект или иное предусмотренное законом основание')
     mkd = models.BooleanField(default=False,
@@ -278,6 +295,13 @@ class Zayavka(models.Model):
     persdannie_file = models.FileField(blank=True, verbose_name='Согласие на обработку персональных данных ООО «Алтайская электросетевая компания», сетевой организации и субъектом розничного рынка, с которым имеется намерение заключить договор, обеспечивающий продажу электроэнергии на розничном рынке')
 
 
+    status = models.CharField(choices=[('save','Сохранено, но не направлено'),
+                                       ('send', 'Направлена, ожидает рассмотрения'),
+                                       ('edit','Возвращена на доработку'),
+                                       ('vrab','Принята в работу')],
+                                        default='ЭВ', max_length=4, verbose_name='Статус заявки', blank=True, null=True)
+    status_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
+    status_error = RichTextUploadingField(null=True, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     #published_date = models.DateTimeField(blank=True, null=True)
 

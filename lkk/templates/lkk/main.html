@@ -1,0 +1,74 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'lkk/menu.html' %}
+
+{% block content %}
+
+
+</div>
+<div class="card-group">
+  <div class="card">
+    <div class="card-header">
+       Подключение к электросетям
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><i class="bi bi-wrench"></i> Технологическое присоединение</h5>
+      <p class="card-text">Технологическое присоединение энергопринимающих устройств потребителей электрической энергии</p>
+      <a href="{% url 'new_zayavka' pkk=0 %}" class="btn btn-primary">Подать заявку</a>
+      <a href="{% url 'zayavki' %}" class="btn btn-secondary">Посмотреть заявки</a>
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-header">
+       Подключение к электросетям
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><i class="bi bi-shuffle"></i> Перераспределение (снижение) мощности</h5>
+      <p class="card-text">Перераспределение (снижение) мощности присоединенных энергопринимающих устройств</p>
+      <a href="#" class="btn btn-primary">Подать заявку</a>
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-header">
+       Подключение к электросетям
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><i class="bi bi-file-earmark-arrow-up"></i> Восстановление (переоформление) документов ТП</h5>
+      <p class="card-text">Восстановление (переоформление) документов о технологическом присоединении</p>
+      <a href="#" class="btn btn-primary">Подать заявку</a>
+    </div>
+  </div>
+</div>
+
+<div class="card-group">
+  <div class="card">
+    <div class="card-header">
+       Потребление и учет электроэнергии
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><i class="bi bi-wrench"></i> Технологическое присоединение</h5>
+      <p class="card-text">Технологическое присоединение энергопринимающих устройств потребителей электрической энергии</p>
+      <a href="#" class="btn btn-primary">Подать заявку</a>
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-header">
+       Потребление и учет электроэнергии
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><i class="bi bi-shuffle"></i> Перераспределение (снижение) мощности</h5>
+      <p class="card-text">Перераспределение (снижение) мощности присоединенных энергопринимающих устройств</p>
+      <a href="#" class="btn btn-primary">Подать заявку</a>
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-header">
+       Потребление и учет электроэнергии
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><i class="bi bi-file-earmark-arrow-up"></i> Восстановление (переоформление) документов ТП</h5>
+      <p class="card-text">Восстановление (переоформление) документов о технологическом присоединении</p>
+      <a href="#" class="btn btn-primary">Подать заявку</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

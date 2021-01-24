@@ -1,5 +1,5 @@
 <!-- templates/lkk/zayavka_new.html -->
-{% extends 'blog/base.html' %}
+{% extends 'lkk/menu.html' %}
 
 &nbsp;{% block content %}
 <h2>Профиль юридического лица</h2>
@@ -26,14 +26,34 @@
         <td>{{ item.fio_sname }}</td>
         <td>{{ item.fio_name }}</td>
         <td>{{ item.fio_lname }}</td>
-        <td>{{ item.cont_tel }}</td>
-        <td>{{ item.cont_email }}</td>
+        <td>{{ item.cont_tel }}
+            {% if item.cont_tel_podtverzden %}
+            <i class="bi bi-check2", style="color: green", title="Подтвержден"></i>
+            {% else %}
+            <a href="#">
+            <i class="bi bi-x", style="color: red", title="Не подтвержден"></i>
+            </a>
+            {% endif %}
+        </td>
         <td>
-            {% if item.doc_polnomochia%}
+            {{ item.cont_email }}
+            {% if item.cont_email_podtverzden %}
+                <i class="bi bi-check2", style="color: green", title="Подтвержден"></i>
+            {% else %}
+            <a href="#">
+            <i class="bi bi-x", style="color: red", title="Не подтвержден"></i>
+            </a>
+            {% endif %}
+        </td>
+        <td>
+            {% if item.doc_polnomochia %}
             <a href="{{ item.doc_polnomochia.url }}" title="{{ item.doc_polnomochia.name }}"><i class="bi bi-file-earmark-arrow-down-fill"></i></a>
             {% endif %}
         </td>
-        <td><a href="{% url 'person_edit' pkk=item.pk %}"><i class="bi bi-pencil-fill"></i></a></td>
+        <td>
+            <a href="{% url 'person_edit' pkk=item.pk %}", title="Редактировать"><i class="bi bi-pencil-fill"></i></a>
+            <a href="{% url 'person_del' pkk=item.pk %}", title="Удалить"><i class="bi bi-trash"></i></a>
+        </td>
     </tr>
     {% endfor %}
     </tbody>

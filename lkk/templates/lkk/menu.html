@@ -1,0 +1,16 @@
+<!-- templates/lkk/menu.html -->
+{% extends 'blog/base.html' %}
+
+{% block menu %}
+
+<div class="btn-group" role="group" aria-label="Basic example">
+  <a class="btn btn-light" href="{% url 'main_lk' %}">Личный кабинет</a>
+  <a class="btn btn-light" href="{% url 'person' %}">Представители</a>
+  <a class="btn btn-light" href="{% url 'adres' %}">Адреса</a>
+  <a class="btn btn-light" href="{% url 'zayavitel' %}">Юридические лица</a>
+  <a class="btn btn-light" href="#">Энергопринимающие устройства</a>
+  <a class="btn btn-light" href="#">Заявки и обращения</a>
+</div>
+{% endblock menu %}
+{% block content %}
+{% endblock content %}
