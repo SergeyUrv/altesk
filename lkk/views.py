@@ -6,7 +6,12 @@ from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zay
 from .models import People, Adres, Zayavitel_ur, Zayavka
 from django.shortcuts import redirect
 from django.utils import timezone
+from docxtpl import DocxTemplate
 
+#импорты для рендеринга заявки
+from django.conf import settings
+import os
+import uuid
 
 
 # Create your views here.
@@ -73,6 +78,7 @@ def zayavka_new(request, pkk):
     try:
         item = Zayavka.objects.get(pk=pkk, author=request.user)
         if item.status == 'save' or item.status == 'edit':
+            #item._zaya_file = zayavka_tp_render(item)
             return get_form(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm, redir='zayavki',
                             title='Подача заявки на тех.присоединение',
                             rendering='lkk/zayavka_new.html')
@@ -133,6 +139,7 @@ def zayavka_del(request, pkk):
         people_nayden = False
     return redirect('zayavki')
 
+# отправка заявки
 def zayavka_send(request, pkk):
     try:
         item = Zayavka.objects.get(pk=pkk, author=request.user)
@@ -144,6 +151,7 @@ def zayavka_send(request, pkk):
     except Zayavka.DoesNotExist:
         people_nayden = False
     return redirect('zayavki')
+
 # просмотр списка людей
 def profile_view(request):
     fio = People.objects.filter(author=request.user)
@@ -167,3 +175,110 @@ def zayavka_view(request):
 # Вывод главной страницы ЛКК
 def main_lk(request):
     return render(request, 'lkk/main.html')
+
+
+# создание файла с заявкой
+def zayavka_tp_render (item):
+    '''необходимо доделать'''
+    doc = DocxTemplate(os.path.join(settings.STATIC_ROOT, 'Заявка на ТП.docx'))
+    if item.tip_pris == 'PP':
+        tip_pris = item.get_tip_pris_display() + ', причина обращения: ' + item.get_prichina_obr_display()
+    else:
+        if item.vremenniy_tehpris == 'ПО':
+            tip_pris = item.get_tip_pris_display() + ' ' + item.get_vremenniy_tehpris_display() + ', сроком на ' + str(item.vremenniy_tehpris_srok)
+        else:
+            tip_pris = item.get_tip_pris_display() + ' ' + item.get_vremenniy_tehpris_display() + ' по договору тех.присоединения с ' + item.name_so +' №' + item.dog_tehpris_num + ' от ' + item.dog_tehpris_date
+    if item.kad_number is not None:
+        kad_number='Кадастровый номер' + item.kad_number
+    else:
+        kad_number=''
+    if item.dog_number is None or item.dog_date is None:
+        dogovor = ''
+    else:
+        dogovor = ' №' + item.dog_number + ' от ' + item.dog_date
+    fio = item.fio.fio_sname +' ' + item.fio.fio_name + ' ' + item.fio.fio_lname
+
+    def check_filedfile(filedfile):
+        '''Проверяем есть ли файл, ставить ли галочку'''
+        if filedfile:
+            return 'V'
+        else:
+            return '-'
+
+    context = {'org_name': item.org.org_name,
+               'inn': item.org.inn,
+               'org_ogrn': item.org.org_ogrn,
+               'org_data_egrul': item.org.org_data_egrul,
+               'adr_ur': item.org.adr_ur,
+               'adr_fakt': item.org.adr_fakt,
+               'adr_post': item.org.adr_post, #+', ая.'+item.org.adr_post_aya+', получатель: '+item.org.adr_post_poluchatel,
+               'name_ustroystv': item.name_ustroystv,
+               'tip_pris': tip_pris,
+               'mestopolozenie_ustroystv': item.mestopolozenie_ustroystv,
+               'max_p': item.max_p,
+               'napr': item.napr,
+               'max_p_prisoed_ustr': item.max_p_prisoed_ustr,
+               'napr_prisoed_ustr': item.napr_prisoed_ustr,
+               'max_p_rprisoed_ustr': item.max_p_rprisoed_ustr,
+               'napr_rprisoed_ustr': item.napr_rprisoed_ustr,
+               'harakter_nagr': item.harakter_nagr,
+               'kat_nadeznosti': item.get_kat_nadeznosti_display(),
+               'vid_deyat_okved': item.vid_deyat_okved,
+               'kad_number': kad_number,
+               'eso': item.eso.gp,
+               'vid_dogovora': item.get_vid_dogovora_display(),
+               'dogovor': dogovor,
+               'kolvo_tochek': item.kolvo_tochek,
+               'fip': fio,
+               'dolznost': item.fio.dolznost,
+               'tel': item.fio.cont_tel,
+               'date': item.created_date,
+               'persdannie_soglasie_eso': check_filedfile(item.persdannie_soglasie_eso),
+               'ucheriditelnie': check_filedfile(item.ucheriditelnie),
+               'vipiska_egpul' : check_filedfile(item.vipiska_egpul),
+               'plan_raspolozenia': check_filedfile(item.plan_raspolozenia),
+               'pravo_sobstvennosti': check_filedfile(item.pravo_sobstvennosti),
+               'mkd_soglasie': check_filedfile(item.mkd_soglasie),
+               'snt_spravka': check_filedfile(item.snt_spravka),
+               'snt_soglasie': check_filedfile(item.snt_soglasie),
+               'gsk_spravka': check_filedfile(item.gsk_spravka),
+               'soglasie_sobstvennikov': check_filedfile(item.soglasie_sobstvennikov),
+               'protivoavariynaya_avtomatica': check_filedfile(item.protivoavariynaya_avtomatica),
+               'persdannie_file': check_filedfile(item.persdannie_file),
+               'doc_tehpris': check_filedfile(item.doc_tehpris),
+               }
+    doc.render(context)
+    if item.zaya_file is None:
+        path = 'zayavki_tp/Заявка на ТП %s-%s.docx' % (item.pk, str(uuid.uuid4()))
+    else:
+        path = item.zaya_file.name
+    doc.save(os.path.join(settings.MEDIA_ROOT, path))
+    #print(doc)
+    return (path)
+
+def zayavka_create(request, pkk):
+    '''нелюходимо доделать'''
+    '''вьюшка вызывает создание заявки в вердовском формате'''
+    try:
+        item = Zayavka.objects.get(pk=pkk, author=request.user)
+        if item.status == 'save' or item.status == 'edit':
+            item.zaya_file = zayavka_tp_render(item)
+            item.status_date = timezone.now()
+            item.created_date = timezone.now()
+            item.status = 'save'
+            item.save()
+    except Zayavka.DoesNotExist:
+        people_nayden = False
+    return redirect('zayavki')
+
+def zayavka_detail(request, pkk):
+    '''детализированный просмотр заявки'''
+    try:
+        item = Zayavka.objects.get(pk=pkk, author=request.user)
+        if item.status == 'save' or item.status == 'edit':
+            return render(request, 'lkk/profile_zayavka_detail.html',
+                          {'zaya': item,
+                           'user': request.user})
+    except Zayavka.DoesNotExist:
+        people_nayden = False
+    return redirect('zayavki')

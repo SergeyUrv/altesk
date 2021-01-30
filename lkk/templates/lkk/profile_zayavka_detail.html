@@ -1,0 +1,63 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'lkk/menu.html' %}
+
+&nbsp;{% block content %}
+
+<h2>Профиль юридического лица {{ user }}</h2>
+<h3>{{ title }}</h3>
+<p><a href="{% url 'new_zayavka' pkk=0 %}">
+    <button type="button" class="btn btn-primary"><i class="bi bi-building"></i> Добавить</button>
+    </a>
+</p>
+<table class="table table-bordered table-striped table-responsive">
+   <thead>
+    <tr>
+        <th>Номер заявки <i class="bi bi-list-ol"></i></th>
+        <th>Дата изменения <i class="bi bi-calendar4-event"></i></th>
+        <th>Статус заявки <i class="bi bi-journal-check"></i></th>
+        <th>Дата изменения статуса <i class="bi bi-calendar4-event"></i></th>
+        <th>Изменить <i class="bi bi-pencil"></i></i></th>
+
+    </tr>
+   </thead>
+    <tbody>
+    {% for item in zaya%}
+    <tr>
+        <td>{{ item.pk }}</td>
+        <td>{{ item.created_date }}</td>
+        <td>
+            {% if item.status == 'save'  %}
+            <i class="bi bi-save"></i>
+            {% endif %}
+            {% if item.status == 'send'  %}
+            <i class="bi bi-hourglass-top"></i>
+            {% endif %}
+            {% if item.status == 'vrab'  %}
+            <i class="bi bi-hourglass-split"></i>
+            {% endif %}
+            {% if item.status == 'edit'  %}
+            <i class="bi bi-folder-symlink-fill"></i>
+            {% endif %}
+            {{ item.get_status_display }}
+            {% if item.status == 'edit'  %}
+            <h5>Замечания:</h5>
+            {% autoescape off %}
+            {{ item.status_error }}
+            {% endautoescape %}
+            {% endif %}
+            </p>
+        </td>
+        <td>{{ item.status_date }}</td>
+        <td>
+            {% if item.status == 'save' or item.status == 'edit' %}
+            <a href="{% url 'new_zayavka' pkk=item.pk %}" title="Редактировать"><i class="bi bi-pencil-fill"></i></a>
+            <a href="{% url 'zayavka_del' pkk=item.pk %}" title="Удалить"><i class="bi bi-trash"></i></i></a>
+            <a href="{% url 'zayavka_send' pkk=item.pk %}" title="Отправить" class="btn btn-primary">Отправить <i class="bi bi-arrow-right-circle-fill"></i></a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

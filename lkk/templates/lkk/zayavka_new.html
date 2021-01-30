@@ -21,6 +21,31 @@
 </form>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
+
+$(document).ready(function() {
+    $('#id_prichina_obr').parent().hide();
+    $('#div_id_prichina_obr > label').parent().hide();
+    $('#id_vremenniy_tehpris').parent().hide();
+    $('#div_id_vremenniy_tehpris > label').parent().hide();
+    $('#id_vremenniy_tehpris_srok').parent().hide();
+    $('#div_id_vremenniy_tehpris_srok > label').parent().hide();
+    $('#id_name_so').parent().hide();
+    $('#div_id_name_so > label').parent().hide();
+    $('#id_dog_tehpris_num').parent().hide();
+    $('#div_id_dog_tehpris_num > label').parent().hide();
+    $('#id_dog_tehpris_date').parent().hide();
+    $('#div_id_dog_tehpris_date > label').parent().hide();
+    $('#id_dog_tehpris_file').parent().hide();
+    $('#div_id_dog_tehpris_file > label').parent().hide();
+    $('#div_id_mkd_vru').hide(100);
+    $('#div_id_snt_spravka').hide(100);
+    $('#div_id_snt_soglasie').hide(100);
+    $('#div_id_gsk_spravka').hide(100);
+    $('#div_id_soglasie_sobstvennikov').hide(100);
+    $('#div_id_protivoavariynaya_avtomatica').hide(100);
+    $('#div_id_mkd_soglasie').hide();
+});
+
 $('#id_tip_pris').change(function () {
       var optionSelected = $("option:selected", this);
       var valueSelected = $(this).val();
@@ -104,6 +129,58 @@ $('#id_vremenniy_tehpris').change(function () {
 
       }
     });
+$('#id_mkd_vru').change(function () {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = $(this).val();
+    if (valueSelected === 'Нет') {
+        $('#div_id_mkd_soglasie').show();
+    } else {
+        $('#div_id_mkd_soglasie').hide();
+    }
+});
+$('#id_mkd').click(function(){
+	if ($(this).is(':checked')){
+		$('#div_id_mkd_vru').show(100);
+	} else {
+		$('#div_id_mkd_vru').hide(100);
+	}
+});
+
+$('#id_snt').click(function(){
+	if ($(this).is(':checked')){
+		$('#div_id_snt_spravka').show(100);
+		$('#div_id_snt_soglasie').show(100);
+	} else {
+		$('#div_id_snt_spravka').hide(100);
+		$('#div_id_snt_soglasie').hide(100);
+	}
+});
+
+$('#id_gsk').click(function(){
+	if ($(this).is(':checked')){
+		$('#div_id_gsk_spravka').show(100);
+	} else {
+		$('#div_id_gsk_spravka').hide(100);
+	}
+});
+
+$('#id_sobstvennikov_neskolko').click(function(){
+	if ($(this).is(':checked')){
+		$('#div_id_soglasie_sobstvennikov').show(100);
+	} else {
+		$('#div_id_soglasie_sobstvennikov').hide(100);
+	}
+});
+
+$('#id_protivoavariynaya_avtomatic').click(function(){
+	if ($(this).is(':checked')){
+		$('#div_id_protivoavariynaya_avtomatica').show(100);
+	} else {
+		$('#div_id_protivoavariynaya_avtomatica').hide(100);
+	}
+});
+
+
 
 </script>
 {% endblock content %}

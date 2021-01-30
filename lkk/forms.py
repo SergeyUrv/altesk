@@ -17,7 +17,7 @@ class ZayavkaForm(forms.ModelForm):
     class Meta:
         model = Zayavka
         #fields = ('__all__')
-        exclude = ('created_date', 'author', 'status', 'status_date', 'status_error')
+        exclude = ('created_date', 'author', 'status', 'status_date', 'status_error', 'zaya_file')
 
     def __init__(self, *args, **kwargs):
         user_id = kwargs.pop('users')

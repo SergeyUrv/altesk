@@ -40,6 +40,7 @@ class People(models.Model):
     fio_name = models.CharField(max_length=80, verbose_name="Имя")
     fio_lname = models.CharField(max_length=100, blank=True, verbose_name="Отчество")
     snils = models.CharField(max_length=11, blank=True, verbose_name="СНИЛС")
+    dolznost = models.CharField(max_length=255, blank=True, null=True, verbose_name="Должность")
     #ФИО в родительном падеже
     fio_sname_rod = models.CharField(max_length=80, verbose_name="Фамилия (в родительном падеже)")
     fio_name_rod = models.CharField(max_length=80, verbose_name="Имя (в родительном падеже)")
@@ -198,6 +199,7 @@ class Zayavka(models.Model):
                                           help_text='Уровень напряжения в сети переменного тока в точке присоединения')
     harakter_nagr = models.CharField(max_length=100, blank=False, null=True, verbose_name="Характер нагрузки")
     kat_nadeznosti =models.CharField(choices=spisok_kat_nadeznosti, default='3', blank=False, max_length=3, verbose_name='Категория надежности')
+    kolvo_tochek = models.IntegerField(default=1, blank=False, null=True, verbose_name='Количество точек присоединения')
     vid_deyat_okved = models.CharField(max_length=100, blank=False, null=True, verbose_name="Вид деятельности по ОКВЭД 2",
                                        help_text='Укажите вид экономической деятельности. Если ни один из вариантов не подходит, выберите значение "Прочее".')
 
@@ -303,6 +305,7 @@ class Zayavka(models.Model):
     status_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
     status_error = RichTextUploadingField(null=True, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
+    zaya_file = models.FileField(blank=True, verbose_name='Заявка')
     #published_date = models.DateTimeField(blank=True, null=True)
 
     def clean(self):
@@ -336,8 +339,19 @@ class Zayavka(models.Model):
         self.published_date = timezone.now()
         self.save()
 
-
-
+class documenty(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='autor')
+    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel')
+    doc_type = models.CharField(choices=[('ДоТП', 'Договор техприсоединения'),
+                                         ('ТУ', 'Технические условия'),
+                                         ('АТП', 'Акт технологического присоединения'),
+                                         ('Счет', 'Счет'),
+                                         ('Пись', 'Письмо'),
+                                         ('Проч', 'Прочие документы'),
+                                         ], max_length=4, verbose_name='Тип документа')
+    comment = RichTextUploadingField(null=True, blank=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    file = models.FileField(blank=True, verbose_name='Файл')
 
 class Test(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
