@@ -32,34 +32,74 @@ class Adres(models.Model):
 
     #Люди
 class People(models.Model):
+    '''база данных физических лиц'''
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # people_type = models.CharField(max_length=3, choices=[('zay','Заявитель'),
-    #                                         ('ruk','Руководитель'),
-    #                                         ('pre','Представитель'),])
+    people_type = models.CharField(max_length=3, blank=False, null=True, choices=[('fiz','Физическое лицо'),
+                                            ('ruk','Руководитель организации'),
+                                            ('pre','Представитель организации'),], verbose_name='Тип')
     fio_sname = models.CharField(max_length=80, verbose_name="Фамилия")
     fio_name = models.CharField(max_length=80, verbose_name="Имя")
     fio_lname = models.CharField(max_length=100, blank=True, verbose_name="Отчество")
-    snils = models.CharField(max_length=11, blank=True, verbose_name="СНИЛС")
+    #snils = models.CharField(max_length=11, blank=True, null=True, verbose_name="СНИЛС")
     dolznost = models.CharField(max_length=255, blank=True, null=True, verbose_name="Должность")
     #ФИО в родительном падеже
     fio_sname_rod = models.CharField(max_length=80, verbose_name="Фамилия (в родительном падеже)")
     fio_name_rod = models.CharField(max_length=80, verbose_name="Имя (в родительном падеже)")
     fio_lname_rod = models.CharField(max_length=100, blank=True, verbose_name="Отчество (в родительном падеже)")
+    #Документ, удостоверяющий личность
+    snils = models.CharField(max_length=11, blank=True, verbose_name="СНИЛС")
+    doc_vid = models.CharField(max_length=80, blank=True, null=True, verbose_name='Вид документа', default='Паспорт')
+    doc_seria = models.CharField(max_length=80, blank=True, null=True, verbose_name='Серия')
+    doc_number = models.CharField(max_length=80, blank=True, null=True, verbose_name='Номер')
+    doc_vidan = models.CharField(max_length=80, blank=True, null=True, verbose_name='Выдан')
+    doc_data = models.DateField(blank=True, null=True, verbose_name='Дата выдачи')
+    doc_file = models.FileField(blank=True, null=True, verbose_name='Сканированная копия документа')
     #контактные данные
     cont_tel = PhoneNumberField(region='RU', blank=False, unique=True, verbose_name="Телефон")
     cont_tel_podtverzden = models.BooleanField(blank=True, null=True, verbose_name='Телефонный номер подтвержден')
     cont_email = models.EmailField (blank=False, unique=True, verbose_name="Email")
     cont_email_podtverzden = models.BooleanField(blank=True, null=True, verbose_name='E-mail подтвержден')
+    #Адрес юридический
+    adr_main = models.ForeignKey(Adres, blank=True, null=True, related_name='mestonahozdenie_fiz', on_delete=models.RESTRICT, verbose_name='Адрес места регистрации')
+    #Адрес почтовый
+    adr_post = models.ForeignKey(Adres, blank=True, null=True, related_name='pochtoviy_fiz', on_delete=models.RESTRICT, verbose_name='Почтовый адрес')
+    adr_post_aya = models.CharField(max_length=100, blank=True, verbose_name="Абонентский ящик")
+    adr_post_poluchatel = models.CharField(max_length=255, blank=True, verbose_name="Получатель")
+    #Адрес фактический
+    adr_fakt = models.ForeignKey(Adres, blank=True, null=True, related_name='fakticheskiy_fiz', on_delete=models.RESTRICT, verbose_name='Адрес места жительства')
+    #Документ подтверждающий полномочия
     doc_polnomochia = models.FileField(verbose_name='Сканированная копия документа, подтверждающее полномочия лица', blank=True)
 
 
-    def __str__(self):
-        return self.fio_sname+' '+self.fio_name+' '+self.fio_lname
 
-# class Doc_ur(models.Model):
-#     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     ucheriditelnie = models.FileField(verbose_name='Учредительные документы юридического лица')
-#     vipiska_egpul = models.FileField(verbose_name='Выписка из ЕГРЮЛ')
+    def clean(self):
+        #if self.fio is None:
+        #    raise ValidationError({'fio' : _('Выбирите заявителя')})
+        if self.people_type == 'fiz':
+            if self.doc_vid is None:
+                raise ValidationError({'doc_vid' : _('Введите тип документа подтверждающего личность')})
+            if self.doc_number is None:
+                raise ValidationError({'doc_number' : _('Введите номер документа подтверждающего личность')})
+            if self.doc_seria is None:
+                raise ValidationError({'doc_seria' : _('Введите серию документа подтверждающего личность')})
+            if not self.doc_file :
+                raise ValidationError({'doc_file' : _('Прикрепите скан-копию документа подтверждающего личность')})
+            if self.doc_vidan is None:
+                raise ValidationError({'doc_vidan' : _('Введите кем выдан документ подтверждающий личность')})
+            if self.doc_data is None:
+                raise ValidationError({'doc_data' : _('Введите дату выдачи документа подтверждающего личность')})
+            if self.adr_main is None:
+                raise ValidationError({'adr_main' : _('Для физического лица обязательно необходимо указать адрес регистрации')})
+            if self.adr_post is None:
+                raise ValidationError({'adr_post' : _('Для физического лица обязательно необходимо указать адрес для отправки корреспонденции')})
+            if self.adr_fakt is None:
+                raise ValidationError({'adr_fakt' : _('Для физического лица обязательно необходимо указать адрес местонахождения')})
+        else:
+            if self.dolznost is None:
+                raise ValidationError({'dolznost' : _('Введите должность')})
+
+    def __str__(self):
+        return self.fio_sname + ' ' + self.fio_name + ' ' + self.fio_lname
 
 # Create your models here.
 class Zayavitel_ur(models.Model):
@@ -128,7 +168,7 @@ class Zayavka(models.Model):
     ]
     fio = models.ForeignKey(People, blank=False, null=True, related_name='zayavitel', on_delete=models.CASCADE,
                             verbose_name="Заявитель", help_text='Выберите кто будет выступать заявителем')
-    org = models.ForeignKey(Zayavitel_ur, blank=False, null=True, related_name='organizaciya', on_delete=models.CASCADE, verbose_name='Организация',
+    org = models.ForeignKey(Zayavitel_ur, blank=True, null=True, related_name='organizaciya', on_delete=models.CASCADE, verbose_name='Организация',
                             help_text='Выберите организацию заявителя')
     tip_pris = models.CharField(choices=spisok_tipe_pris, max_length=2, blank=False, null=True, verbose_name='Тип присоединения')
     prichina_obr = models.CharField(choices=spisok_prichina_obr, max_length=2, blank=True, null=True, verbose_name='Причина обращения')
@@ -312,6 +352,8 @@ class Zayavka(models.Model):
     #published_date = models.DateTimeField(blank=True, null=True)
 
     def clean(self):
+        if self.fio.people_type == 'fiz' and not self.org is None:
+            raise ValidationError({'org': _('Заявителем является физическое лицо, наименование организации в этом случае не заполнятеся')})
         if self.tip_pris == 'PP' and self.prichina_obr is None:
             raise ValidationError({'prichina_obr' : _('Причина обращения не выбрана')})
         if self.tip_pris == 'VR' and self.vremenniy_tehpris is None:
@@ -342,7 +384,9 @@ class Zayavka(models.Model):
         self.published_date = timezone.now()
         self.save()
 
+
 class documenty(models.Model):
+    '''Документы по заявкам о тех.присоединении'''
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='autor')
     zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel')
     doc_type = models.CharField(choices=[('ДоТП', 'Договор техприсоединения'),
@@ -355,6 +399,14 @@ class documenty(models.Model):
     comment = RichTextUploadingField(null=True, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     file = models.FileField(blank=True, verbose_name='Файл')
+
+
+
+
+
+
+
+
 
 class Test(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

@@ -58,7 +58,10 @@ class Zayavitel_people(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user_id = kwargs.pop('users')
         super(Zayavitel_people, self).__init__(*args, **kwargs)
-
+        i=Adres.objects.filter(author=user_id)
+        self.fields['adr_main'].queryset = i
+        self.fields['adr_post'].queryset = i
+        self.fields['adr_fakt'].queryset = i
     class Meta:
         model = People
         #fields = ('__all__')
@@ -82,9 +85,10 @@ class Zayavitel_form(forms.ModelForm):
         self.fields['adr_ur'].queryset = i
         self.fields['adr_post'].queryset = i
         self.fields['adr_fakt'].queryset = i
-        i=People.objects.filter(author=user_id)
+        i=People.objects.filter(author=user_id, people_type='ruk')
         #self.fields['fio'].queryset = i
         self.fields['ruk_fio'].queryset = i
+        i = People.objects.filter(author=user_id, people_type='pre')
         self.fields['pred_fio'].queryset = i
 
     #pred_document_date = DateField(widget=AdminDateWidget)

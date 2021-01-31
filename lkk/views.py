@@ -78,7 +78,7 @@ def get_form(request, pkk, SModel, Model_form, redir, title, rendering='lkk/prof
 def zayavka_new(request, pkk):
     try:
         item = Zayavka.objects.get(pk=pkk, author=request.user)
-        if item.status == 'save' or item.status == 'edit':
+        if item.status == 'save' or item.status == 'edit' or item.status == 'nonf':
             #item._zaya_file = zayavka_tp_render(item)
             return get_form(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm, redir='zayavki',
                             title='Подача заявки на тех.присоединение',
@@ -92,7 +92,8 @@ def zayavka_new(request, pkk):
 
 # добавление и редактирование людей
 def profile_edit(request, pkk):
-    return get_form(request=request, pkk=pkk, SModel=People, Model_form=Zayavitel_people, redir='person', title='Данные о персонах')
+    return get_form(request=request, pkk=pkk, SModel=People, Model_form=Zayavitel_people, redir='person', title='Данные о персонах',
+                    rendering='lkk/people_form_edit.html')
 
 # добавление и редактирование адресов
 def profile_adres_edit(request, pkk):
@@ -183,7 +184,9 @@ def zayavka_tp_render (item):
     '''рендеринг вердовского шаблона заявки значениями полей заявки
     '''
     #locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
+    #открываем шаблон заявки
     doc = DocxTemplate(os.path.join(settings.STATIC_ROOT, 'Заявка на ТП.docx'))
+    # обрабатываем поля касающиеся типа присоединения
     if item.tip_pris == 'PP':
         tip_pris = item.get_tip_pris_display() + ', причина обращения: ' + item.get_prichina_obr_display()
     else:
@@ -192,14 +195,17 @@ def zayavka_tp_render (item):
         else:
             tip_pris = item.get_tip_pris_display() + ' ' + item.get_vremenniy_tehpris_display() + ' по договору тех.присоединения с ' +\
                        item.name_so +' №' + item.dog_tehpris_num + ' от ' + item.dog_tehpris_date.strftime("%d.%m.%Y")
+    # обрабатываем кадастровый номер если есть
     if item.kad_number is not None:
         kad_number='Кадастровый номер' + item.kad_number
     else:
         kad_number=''
+    # обрабатываем реквизиты договора если есть
     if item.dog_number is None or item.dog_date is None:
         dogovor = ''
     else:
         dogovor = ' №' + item.dog_number + ' от ' + item.dog_date.strftime("%d.%m.%Y")
+    #собираем ФИО в строку
     fio = item.fio.fio_sname + ' ' + item.fio.fio_name + ' ' + item.fio.fio_lname
 
     def check_filedfile(filedfile):
@@ -208,14 +214,49 @@ def zayavka_tp_render (item):
             return 'V'
         else:
             return '-'
-
-    context = {'org_name': item.org.org_name,
-               'inn': item.org.inn,
-               'org_ogrn': item.org.org_ogrn,
-               'org_data_egrul': item.org.org_data_egrul.strftime("%d.%m.%Y"),
-               'adr_ur': item.org.adr_ur,
-               'adr_fakt': item.org.adr_fakt,
-               'adr_post': item.org.adr_post, #+', ая.'+item.org.adr_post_aya+', получатель: '+item.org.adr_post_poluchatel,
+    #обрабатываем поля в зависимости от типа заявителя физ.лицо или юр.лицо
+    if item.org:
+        zayavitel_name = item.org.org_name
+        inn = '(ИНН:' + item.org.inn + ')'
+        org_ogrn = item.org.org_ogrn
+        org_data_egrul = item.org.org_data_egrul.strftime("%d.%m.%Y")
+        adr_ur = item.org.adr_ur
+        adr_fakt = item.org.adr_fakt
+        adr_post = item.org.adr_post
+        doc_vid = ''
+        doc_seria = ''
+        doc_number = ''
+        doc_vidan = ''
+        doc_data = ''
+        doc_file = ''
+    else:
+        zayavitel_name = fio
+        inn = ''
+        org_ogrn = ''
+        org_data_egrul = ''
+        adr_ur = item.fio.adr_main
+        adr_fakt = item.fio.adr_fakt
+        adr_post = item.fio.adr_post
+        doc_vid = item.fio.doc_vid
+        doc_seria = item.fio.doc_seria
+        doc_number = item.fio.doc_number
+        doc_vidan = item.fio.doc_vidan
+        doc_data = item.fio.doc_data.strftime("%d.%m.%Y")
+        doc_file = check_filedfile(item.fio.doc_file)
+    # создаем массив переменных для рендеринга шаблона
+    context = {'org_name': zayavitel_name,
+               'inn': inn,
+               'org_ogrn': org_ogrn,
+               'org_data_egrul': org_data_egrul,
+               'adr_ur': adr_ur,
+               'adr_fakt': adr_fakt,
+               'adr_post': adr_post, #+', ая.'+item.org.adr_post_aya+', получатель: '+item.org.adr_post_poluchatel,
+               'doc_vid' : doc_vid,
+               'doc_seria': doc_seria,
+               'doc_number': doc_number,
+               'doc_vidan': doc_vidan,
+               'doc_data': doc_data,
+               'doc_file': doc_file,
                'name_ustroystv': item.name_ustroystv,
                'tip_pris': tip_pris,
                'mestopolozenie_ustroystv': item.mestopolozenie_ustroystv,
@@ -252,13 +293,14 @@ def zayavka_tp_render (item):
                'doc_tehpris': check_filedfile(item.doc_tehpris),
                'etapi' :item.etapi,
                }
+    #рендерим шаблон
     doc.render(context)
     if not item.zaya_file:
         path = 'zayavki_tp/Заявка на ТП %s-%s.docx' % (item.pk, str(uuid.uuid4()))
     else:
         path = item.zaya_file.name
+    # сохраняем сформированную заявку
     doc.save(os.path.join(settings.MEDIA_ROOT, path))
-    #print(doc)
     return (path)
 
 def zayavka_create(request, pkk):

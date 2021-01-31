@@ -1,0 +1,98 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'lkk/menu.html' %}
+{% load crispy_forms_tags %}
+
+&nbsp;{% block content %}
+<h2>Редактирование</h2>
+<h3>{{ title }}</h3>
+
+{% for e in form.non_field_errors %}
+  <div class="alert alert-danger"> {{ e }} </div>
+{% endfor %}
+{% if form.subject.errors %}
+    <ol>
+    {% for error in form.subject.errors %}
+       <div class="alert alert-danger">{{ error|escape }}</div>
+    {% endfor %}
+    </ol>
+{% endif %}
+<form method="post" class="form-horizontal", enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br>
+        <button type="submit" class="btn btn-primary">Сохранить и перейти далее</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+
+$(document).ready(function() {
+    $('#div_id_dolznost').hide();
+    $('#div_id_snils').hide();
+    $('#div_id_doc_vid').hide();
+    $('#div_id_doc_seria').hide();
+    $('#div_id_doc_number').hide();
+    $('#div_id_doc_vidan').hide();
+    $('#div_id_doc_data').hide();
+    $('#div_id_doc_file').hide();
+    $('#div_id_adr_main').hide();
+    $('#div_id_adr_post').hide();
+    $('#div_id_adr_post_aya').hide();
+    $('#div_id_adr_post_poluchatel').hide();
+    $('#div_id_adr_fakt').hide();
+    $('#div_id_doc_polnomochia').hide();
+});
+
+$('#id_people_type').change(function () {
+      var optionSelected = $("option:selected", this);
+      var valueSelected = $(this).val();
+
+      if (valueSelected === 'fiz') {
+        $('#div_id_dolznost').hide();
+        $('#div_id_snils').show();
+        $('#div_id_doc_vid').show();
+        $('#div_id_doc_seria').show();
+        $('#div_id_doc_number').show();
+        $('#div_id_doc_vidan').show();
+        $('#div_id_doc_data').show();
+        $('#div_id_doc_file').show();
+        $('#div_id_adr_main').show();
+        $('#div_id_adr_post').show();
+        $('#div_id_adr_post_aya').show();
+        $('#div_id_adr_post_poluchatel').show();
+        $('#div_id_adr_fakt').show();
+        $('#div_id_doc_polnomochia').hide();
+
+      } else if (valueSelected === 'ruk') {
+        $('#div_id_dolznost').show();
+        $('#div_id_snils').hide();
+        $('#div_id_doc_vid').hide();
+        $('#div_id_doc_seria').hide();
+        $('#div_id_doc_number').hide();
+        $('#div_id_doc_vidan').hide();
+        $('#div_id_doc_data').hide();
+        $('#div_id_doc_file').hide();
+        $('#div_id_adr_main').hide();
+        $('#div_id_adr_post').hide();
+        $('#div_id_adr_post_aya').hide();
+        $('#div_id_adr_post_poluchatel').hide();
+        $('#div_id_adr_fakt').hide();
+        $('#div_id_doc_polnomochia').hide();
+      } else if (valueSelected === 'pre') {
+        $('#div_id_dolznost').show();
+        $('#div_id_snils').hide();
+        $('#div_id_doc_vid').hide();
+        $('#div_id_doc_seria').hide();
+        $('#div_id_doc_number').hide();
+        $('#div_id_doc_vidan').hide();
+        $('#div_id_doc_data').hide();
+        $('#div_id_doc_file').hide();
+        $('#div_id_adr_main').hide();
+        $('#div_id_adr_post').hide();
+        $('#div_id_dr_post_aya').hide();
+        $('#div_id_adr_post_poluchatel').hide();
+        $('#div_id_adr_fakt').hide();
+        $('#div_id_doc_polnomochia').show();
+      }
+    });
+</script>
+{% endblock content %}
