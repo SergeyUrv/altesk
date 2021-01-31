@@ -12,6 +12,7 @@ from docxtpl import DocxTemplate
 from django.conf import settings
 import os
 import uuid
+#import locale
 
 
 # Create your views here.
@@ -23,22 +24,22 @@ class SignUpView(generic.CreateView):
     template_name = 'signup.html'
 
 
-def profile_ur(request):
-    if request.method == "POST":
-        form1 = Zayavitel_yur(request.POST)
-        form2 = Zayavitel_people(request.POST)
-        if form1.is_valid() and form2.is_valid():
-            zayavitel1 = form1.save(commit=False)
-            zayavitel2 = form2.save(commit=False)
-            zayavitel1.author = request.user
-            zayavitel1.created_date = timezone.now()
-            zayavitel1.fio = zayavitel2.pk
-            zayavitel1.save()
-            return redirect('zayavka_detail', pk=zayavitel1.pk)
-    else:
-        form1 = Zayavitel_yur()
-        form2 = Zayavitel_people()
-    return render(request, 'lkk/profile.html', {'form1': form1, 'form2': form2, 'title': 'Редактирование'})
+# def profile_ur(request):
+#     if request.method == "POST":
+#         form1 = Zayavitel_yur(request.POST)
+#         form2 = Zayavitel_people(request.POST)
+#         if form1.is_valid() and form2.is_valid():
+#             zayavitel1 = form1.save(commit=False)
+#             zayavitel2 = form2.save(commit=False)
+#             zayavitel1.author = request.user
+#             zayavitel1.created_date = timezone.now()
+#             zayavitel1.fio = zayavitel2.pk
+#             zayavitel1.save()
+#             return redirect('zayavka_detail', pk=zayavitel1.pk)
+#     else:
+#         form1 = Zayavitel_yur()
+#         form2 = Zayavitel_people()
+#     return render(request, 'lkk/profile.html', {'form1': form1, 'form2': form2, 'title': 'Редактирование'})
 
 #@login_required
 #def profile(request, step):
@@ -62,7 +63,7 @@ def get_form(request, pkk, SModel, Model_form, redir, title, rendering='lkk/prof
             #people.doc_polnomochia = People(request.FILES['doc_polnomochia'])
             vform.author = request.user
             vform.created_date = timezone.now()
-            vform.status = 'save'
+            vform.status = 'nonf'
             vform.status_date = timezone.now()
             vform.save()
             return redirect(redir)
@@ -179,7 +180,9 @@ def main_lk(request):
 
 # создание файла с заявкой
 def zayavka_tp_render (item):
-    '''необходимо доделать'''
+    '''рендеринг вердовского шаблона заявки значениями полей заявки
+    '''
+    #locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
     doc = DocxTemplate(os.path.join(settings.STATIC_ROOT, 'Заявка на ТП.docx'))
     if item.tip_pris == 'PP':
         tip_pris = item.get_tip_pris_display() + ', причина обращения: ' + item.get_prichina_obr_display()
@@ -187,7 +190,8 @@ def zayavka_tp_render (item):
         if item.vremenniy_tehpris == 'ПО':
             tip_pris = item.get_tip_pris_display() + ' ' + item.get_vremenniy_tehpris_display() + ', сроком на ' + str(item.vremenniy_tehpris_srok)
         else:
-            tip_pris = item.get_tip_pris_display() + ' ' + item.get_vremenniy_tehpris_display() + ' по договору тех.присоединения с ' + item.name_so +' №' + item.dog_tehpris_num + ' от ' + item.dog_tehpris_date
+            tip_pris = item.get_tip_pris_display() + ' ' + item.get_vremenniy_tehpris_display() + ' по договору тех.присоединения с ' +\
+                       item.name_so +' №' + item.dog_tehpris_num + ' от ' + item.dog_tehpris_date.strftime("%d.%m.%Y")
     if item.kad_number is not None:
         kad_number='Кадастровый номер' + item.kad_number
     else:
@@ -195,8 +199,8 @@ def zayavka_tp_render (item):
     if item.dog_number is None or item.dog_date is None:
         dogovor = ''
     else:
-        dogovor = ' №' + item.dog_number + ' от ' + item.dog_date
-    fio = item.fio.fio_sname +' ' + item.fio.fio_name + ' ' + item.fio.fio_lname
+        dogovor = ' №' + item.dog_number + ' от ' + item.dog_date.strftime("%d.%m.%Y")
+    fio = item.fio.fio_sname + ' ' + item.fio.fio_name + ' ' + item.fio.fio_lname
 
     def check_filedfile(filedfile):
         '''Проверяем есть ли файл, ставить ли галочку'''
@@ -208,7 +212,7 @@ def zayavka_tp_render (item):
     context = {'org_name': item.org.org_name,
                'inn': item.org.inn,
                'org_ogrn': item.org.org_ogrn,
-               'org_data_egrul': item.org.org_data_egrul,
+               'org_data_egrul': item.org.org_data_egrul.strftime("%d.%m.%Y"),
                'adr_ur': item.org.adr_ur,
                'adr_fakt': item.org.adr_fakt,
                'adr_post': item.org.adr_post, #+', ая.'+item.org.adr_post_aya+', получатель: '+item.org.adr_post_poluchatel,
@@ -229,10 +233,10 @@ def zayavka_tp_render (item):
                'vid_dogovora': item.get_vid_dogovora_display(),
                'dogovor': dogovor,
                'kolvo_tochek': item.kolvo_tochek,
-               'fip': fio,
+               'fio': fio,
                'dolznost': item.fio.dolznost,
                'tel': item.fio.cont_tel,
-               'date': item.created_date,
+               'date': item.created_date.strftime("%d.%m.%Y"),
                'persdannie_soglasie_eso': check_filedfile(item.persdannie_soglasie_eso),
                'ucheriditelnie': check_filedfile(item.ucheriditelnie),
                'vipiska_egpul' : check_filedfile(item.vipiska_egpul),
@@ -246,9 +250,10 @@ def zayavka_tp_render (item):
                'protivoavariynaya_avtomatica': check_filedfile(item.protivoavariynaya_avtomatica),
                'persdannie_file': check_filedfile(item.persdannie_file),
                'doc_tehpris': check_filedfile(item.doc_tehpris),
+               'etapi' :item.etapi,
                }
     doc.render(context)
-    if item.zaya_file is None:
+    if not item.zaya_file:
         path = 'zayavki_tp/Заявка на ТП %s-%s.docx' % (item.pk, str(uuid.uuid4()))
     else:
         path = item.zaya_file.name
@@ -261,7 +266,7 @@ def zayavka_create(request, pkk):
     '''вьюшка вызывает создание заявки в вердовском формате'''
     try:
         item = Zayavka.objects.get(pk=pkk, author=request.user)
-        if item.status == 'save' or item.status == 'edit':
+        if item.status == 'nonf':
             item.zaya_file = zayavka_tp_render(item)
             item.status_date = timezone.now()
             item.created_date = timezone.now()

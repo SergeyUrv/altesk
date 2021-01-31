@@ -202,7 +202,9 @@ class Zayavka(models.Model):
     kolvo_tochek = models.IntegerField(default=1, blank=False, null=True, verbose_name='Количество точек присоединения')
     vid_deyat_okved = models.CharField(max_length=100, blank=False, null=True, verbose_name="Вид деятельности по ОКВЭД 2",
                                        help_text='Укажите вид экономической деятельности. Если ни один из вариантов не подходит, выберите значение "Прочее".')
-
+    etapi = models.TextField(blank=False, null=True, verbose_name='Сроки проектирования и поэтапного введения в эксплуатацию объекта'
+                                                                  ' (в том числе по этапам и очередям), планируемое поэтапное'
+                                                                  ' распределение максимальной мощности')
     #Энергосбытовая организация
     spisok_vid_dogovora = [
         ('ЭС', 'Договор энергоснабжения'),
@@ -298,6 +300,7 @@ class Zayavka(models.Model):
 
 
     status = models.CharField(choices=[('save','Сохранено, но не направлено'),
+                                       ('nonf', 'Заявка заполнена, но не сформирована'),
                                        ('send', 'Направлена, ожидает рассмотрения'),
                                        ('edit','Возвращена на доработку'),
                                        ('vrab','Принята в работу')],

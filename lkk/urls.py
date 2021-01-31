@@ -2,7 +2,7 @@
 from django.urls import path
 from .views import SignUpView,\
     zayavka_new,\
-    profile_ur, profile_view, profile_edit, profile_del, profile_adres, profile_adres_edit, profile_adres_del,\
+    profile_view, profile_edit, profile_del, profile_adres, profile_adres_edit, profile_adres_del,\
     zayavitel, zayavitel_edit, zayavitel_del,\
     main_lk, zayavka_view, zayavka_del, zayavka_send, zayavka_create, zayavka_detail
 from django.urls import include

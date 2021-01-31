@@ -16,7 +16,7 @@
         <th>Дата изменения <i class="bi bi-calendar4-event"></i></th>
         <th>Статус заявки <i class="bi bi-journal-check"></i></th>
         <th>Дата изменения статуса <i class="bi bi-calendar4-event"></i></th>
-        <th>Изменить <i class="bi bi-pencil"></i></i></th>
+        <th>Действия <i class="bi bi-pencil"></i></i></th>
 
     </tr>
    </thead>
@@ -28,6 +28,9 @@
         <td>
             {% if item.status == 'save'  %}
             <i class="bi bi-save"></i>
+            {% endif %}
+            {% if item.status == 'nonf'  %}
+            <i class="bi bi-file-earmark-text"></i>
             {% endif %}
             {% if item.status == 'send'  %}
             <i class="bi bi-hourglass-top"></i>
@@ -53,6 +56,14 @@
             <a href="{% url 'new_zayavka' pkk=item.pk %}" title="Редактировать"><i class="bi bi-pencil-fill"></i></a>
             <a href="{% url 'zayavka_del' pkk=item.pk %}" title="Удалить"><i class="bi bi-trash"></i></i></a>
             <a href="{% url 'zayavka_send' pkk=item.pk %}" title="Отправить" class="btn btn-primary">Отправить <i class="bi bi-arrow-right-circle-fill"></i></a>
+            {% endif %}
+            {% if item.status == 'nonf' %}
+            <a href="{% url 'new_zayavka' pkk=item.pk %}" title="Редактировать"><i class="bi bi-pencil-fill"></i></a>
+            <a href="{% url 'zayavka_del' pkk=item.pk %}" title="Удалить"><i class="bi bi-trash"></i></i></a>
+            <a href="{% url 'zayavka_create' pkk=item.pk %}" title="Сформировать заявку" class="btn btn-primary">Сформировать <i class="bi bi-arrow-return-right"></i></a>
+            {% endif %}
+            {% if item.status == 'save' or item.status == 'edit' or item.status == 'vrab' or item.status == 'send'%}
+            <a href="{{ item.zaya_file.url }}" title="Скачть заявку"><i class="bi bi-box-arrow-down"></i> Заявка</a>
             {% endif %}
         </td>
     </tr>
