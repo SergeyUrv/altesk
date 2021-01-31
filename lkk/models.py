@@ -167,9 +167,10 @@ class Zayavka(models.Model):
         ('UM', 'Увеличение максимальной мощности')
     ]
     fio = models.ForeignKey(People, blank=False, null=True, related_name='zayavitel', on_delete=models.CASCADE,
-                            verbose_name="Заявитель", help_text='Выберите кто будет выступать заявителем')
-    org = models.ForeignKey(Zayavitel_ur, blank=True, null=True, related_name='organizaciya', on_delete=models.CASCADE, verbose_name='Организация',
-                            help_text='Выберите организацию заявителя')
+                            verbose_name="Заявитель", help_text='Выберите кто будет выступать заявителем.')
+    org = models.ForeignKey(Zayavitel_ur, blank=True, null=True, related_name='organizaciya', on_delete=models.CASCADE, verbose_name='Организация заявитель',
+                            help_text='Выберите организацию являющуюся заявителем, если заявка подаётся от имени юридического лица.'
+                                      ' Если заявка подаётся от имени физического лица оставьте это поле не заполненным.')
     tip_pris = models.CharField(choices=spisok_tipe_pris, max_length=2, blank=False, null=True, verbose_name='Тип присоединения')
     prichina_obr = models.CharField(choices=spisok_prichina_obr, max_length=2, blank=True, null=True, verbose_name='Причина обращения')
     vremenniy_tehpris = models.CharField(choices=[('ПВ', 'на период выполнения постоянной схемы электроснабжения'),
@@ -237,7 +238,9 @@ class Zayavka(models.Model):
                                                         ' в соответствии с документами, подтверждающими технологическое присоединение')
     napr_rprisoed_ustr = models.CharField(choices=spisok_napr, null=True, max_length=4, blank=True, verbose_name='при напряжении',
                                           help_text='Уровень напряжения в сети переменного тока в точке присоединения')
-    harakter_nagr = models.CharField(max_length=100, blank=False, null=True, verbose_name="Характер нагрузки")
+    harakter_nagr = models.CharField(choices=[('Бытовая','Бытовая'),
+                                              ('Производственная','Производственная'),
+                                              ('Смешанная','Смешанная')], max_length=100, blank=False, null=True, verbose_name="Характер нагрузки")
     kat_nadeznosti =models.CharField(choices=spisok_kat_nadeznosti, default='3', blank=False, max_length=3, verbose_name='Категория надежности')
     kolvo_tochek = models.IntegerField(default=1, blank=False, null=True, verbose_name='Количество точек присоединения')
     vid_deyat_okved = models.CharField(max_length=100, blank=False, null=True, verbose_name="Вид деятельности по ОКВЭД 2",
@@ -270,8 +273,8 @@ class Zayavka(models.Model):
     persdannie_soglasie_eso = models.FileField(blank=True, verbose_name='Согласие на обработку персональных данных сетевой организацией и субъектом розничного рынка, с которым представитель заявителя намеревается заключить договор, обеспечивающий продажу электроэнергии на розничном рынке')
 
     #Документы и файлы
-    ucheriditelnie = models.FileField(null=True, verbose_name='Учредительные документы юридического лица')
-    vipiska_egpul = models.FileField(null=True, verbose_name='Выписка из ЕГРЮЛ')
+    ucheriditelnie = models.FileField(blank=True, null=True, verbose_name='Учредительные документы юридического лица')
+    vipiska_egpul = models.FileField(blank=True, null=True, verbose_name='Выписка из ЕГРЮЛ')
     #ur_doc = models.ForeignKey(Doc_ur, null=True, on_delete=models.RESTRICT, verbose_name='Документы юр.лица')
     plan_raspolozenia = models.FileField(null=True, verbose_name='План расположения энергопринимающих устройств')
     pravo_sobstvennosti = models.FileField(null=True, verbose_name='Документ, подтверждающий право собственности на объект или иное предусмотренное законом основание')
@@ -352,6 +355,11 @@ class Zayavka(models.Model):
     #published_date = models.DateTimeField(blank=True, null=True)
 
     def clean(self):
+        if self.fio.people_type != 'fiz':
+            if not self.ucheriditelnie:
+                raise ValidationError({'ucheriditelnie': _('Заявителем является юридическое лицо, приложите документ')})
+            if not self.vipiska_egpul:
+                raise ValidationError({'vipiska_egpul': _('Заявителем является юридическое лицо, приложите документ')})
         if self.fio.people_type == 'fiz' and not self.org is None:
             raise ValidationError({'org': _('Заявителем является физическое лицо, наименование организации в этом случае не заполнятеся')})
         if self.tip_pris == 'PP' and self.prichina_obr is None:
@@ -370,13 +378,20 @@ class Zayavka(models.Model):
         if self.mkd and self.mkd_vru is None:
             raise ValidationError({'mkd_vru': _('- Укажите <Да> в случае, если проектом на многоквартирный дом для соответствующего нежилого помещения предусмотрено индивидуальное вводно-распределительное устройство с непосредственным присоединением к питающей линии сетевой организации.'
                                                 '- Укажите <Нет> в обратном случае.')})
-        if self.mkd and self.mkd_vru == 'Нет' and self.mkd_soglasie is None:
+        if self.mkd and self.mkd_vru == 'Нет' and not self.mkd_soglasie:
             raise ValidationError({'mkd_soglasie' : _('Приложите файл! Под согласием понимается согласие на организацию присоединения нежилого помещения отдельными линиями от вводного устройства (вводно-распределительного устройства, главного распределительного щита), установленного на вводе питающей линии сетевой организации в соответствующем здании или его обособленной части.')})
-        if self.snt and self.snt_soglasie is None:
+        if self.snt and not self.snt_soglasie:
             raise ValidationError({'snt_soglasie': _('Приложите согласие')})
-        if self.snt and self.snt_spravka is None:
+        if self.snt and not self.snt_spravka:
             raise ValidationError({'snt_spravka': _('Приложите справку')})
-
+        if self.gsk and not self.gsk_spravka:
+            raise ValidationError({'gsk_spravka': _('Приложите справку')})
+        if self.sobstvennikov_neskolko and not self.soglasie_sobstvennikov:
+            raise ValidationError({'soglasie_sobstvennikov': _('Приложите согласие')})
+        if self.protivoavariynaya_avtomatic and not self.protivoavariynaya_avtomatica:
+            raise ValidationError({'protivoavariynaya_avtomatica': _('Приложите перечень')})
+        if not self.persdannie:
+            raise ValidationError({'persdannie': _('Мы не сможем принять заявку без согласия на обработку персональных данных')})
         # if self.vremenniy_tehpris_srok > 366:
         #     raise ValidationError('Присоединение передвижных объектов может осуществляется сроком до 12 месяцев (365/366 дней)')
 
