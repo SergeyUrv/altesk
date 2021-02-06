@@ -129,13 +129,11 @@ LOGOUT_URL ='/lk/accounts/logout/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-from os import path as op
-DEPLOY_DIR = op.dirname(op.dirname(__file__))
-STATIC_ROOT = op.join(DEPLOY_DIR, 'static')
+
 
 # настройки для статических файлов и медив
 STATIC_URL = '/static/'
-#STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
+STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 
@@ -152,3 +150,8 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 # ------------------------
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
