@@ -25,7 +25,7 @@ SECRET_KEY = '6g=#a*^ido%dw9t0m$vd9lvs!sr68k13*c6_4&pkx9l2a3s79m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['77.222.42.56', '127.0.0.1']
+ALLOWED_HOSTS = ['77.222.42.56', '127.0.0.1', 'altesk.ru']
 
 
 # Application definition
@@ -129,9 +129,13 @@ LOGOUT_URL ='/lk/accounts/logout/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+from os import path as op
+DEPLOY_DIR = op.dirname(op.dirname(__file__))
+STATIC_ROOT = op.join(DEPLOY_DIR, 'static')
+
 # настройки для статических файлов и медив
 STATIC_URL = '/static/'
-STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
+#STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 
