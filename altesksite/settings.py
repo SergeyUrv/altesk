@@ -20,12 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6g=#a*^ido%dw9t0m$vd9lvs!sr68k13*c6_4&pkx9l2a3s79m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['77.222.42.56', '127.0.0.1', 'altesk.ru']
 
 
 # Application definition
@@ -154,4 +152,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 try:
     from .local_settings import *
 except ImportError:
-    pass
+    from .deploy_settings import *
