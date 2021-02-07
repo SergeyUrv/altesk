@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Регистрация в личном кабиненте{% endblock %}
+
+{% block content %}
+    <h1>Регистрация в личном кабинете</h1>
+    <p>Пожалуйста, заполните все поля формы:</p>
+    <form action="." method="post">
+        {{ user_form | crispy }}
+        {% csrf_token %}
+        <p><input type="submit" class="btn btn-primary" value="Зарегистрироваться"></p>
+    </form>
+{% endblock %}

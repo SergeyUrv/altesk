@@ -1,0 +1,8 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Добро пожаловать в личный кабинет!{% endblock %}
+
+{% block content %}
+    <h1>Добро пожаловать {{ new_user.first_name }}!</h1>
+    <p>Ваш аккаунт успешно создан. Вы можете войти в личный кабинет <a href="{% url "login" %}" class="btn btn-primary">Войти</a>.</p>
+{% endblock %}

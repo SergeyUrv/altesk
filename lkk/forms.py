@@ -9,6 +9,22 @@ from django.urls import reverse
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
 
+from django.contrib.auth.models import User
+
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'email')
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Пароли не корректны.')
+        return cd['password2']
+
 #форма подачи заявки на тех присоединение
 class ZayavkaForm(forms.ModelForm):
     #error_css_class = 'valid-feedback'
