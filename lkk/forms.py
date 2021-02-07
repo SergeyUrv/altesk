@@ -6,9 +6,6 @@ from crispy_forms.layout import Submit
 
 from django.urls import reverse
 
-from django.contrib.admin.widgets import AdminDateWidget
-from django.forms.fields import DateField
-
 from django.contrib.auth.models import User
 
 class UserRegistrationForm(forms.ModelForm):

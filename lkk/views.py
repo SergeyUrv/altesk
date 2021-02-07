@@ -1,7 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views import generic
 from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zayavitel_form
 from .models import People, Adres, Zayavitel_ur, Zayavka
 from django.shortcuts import redirect
@@ -36,33 +33,6 @@ def register(request):
     else:
         user_form = UserRegistrationForm()
     return render(request, 'register.html', {'user_form': user_form})
-
-#вывод формы входа
-class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'signup.html'
-
-
-# def profile_ur(request):
-#     if request.method == "POST":
-#         form1 = Zayavitel_yur(request.POST)
-#         form2 = Zayavitel_people(request.POST)
-#         if form1.is_valid() and form2.is_valid():
-#             zayavitel1 = form1.save(commit=False)
-#             zayavitel2 = form2.save(commit=False)
-#             zayavitel1.author = request.user
-#             zayavitel1.created_date = timezone.now()
-#             zayavitel1.fio = zayavitel2.pk
-#             zayavitel1.save()
-#             return redirect('zayavka_detail', pk=zayavitel1.pk)
-#     else:
-#         form1 = Zayavitel_yur()
-#         form2 = Zayavitel_people()
-#     return render(request, 'lkk/profile.html', {'form1': form1, 'form2': form2, 'title': 'Редактирование'})
-
-#@login_required
-#def profile(request, step):
 
 # функция вывода редактирования формы
 # запрос, ID в базе, Модель, Форма модели, перенаправить после сохранения формы, заголовок, какой рендерить шаблон

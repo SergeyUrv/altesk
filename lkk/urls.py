@@ -1,7 +1,6 @@
 # lkk/urls.py
 from django.urls import path
-from .views import SignUpView,\
-    zayavka_new,\
+from .views import zayavka_new,\
     profile_view, profile_edit, profile_del, profile_adres, profile_adres_edit, profile_adres_del,\
     zayavitel, zayavitel_edit, zayavitel_del,\
     main_lk, zayavka_view, zayavka_del, zayavka_send, zayavka_create, zayavka_detail, register
@@ -9,7 +8,6 @@ from django.urls import include
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
-    #path('signup/', SignUpView.as_view(), name='signup'),
     path('register/', register, name='signup'),
     path('zayavka/', zayavka_view, name='zayavki'),
     path('zayavka/edit/<int:pkk>/', zayavka_new, name='new_zayavka'),
@@ -17,7 +15,6 @@ urlpatterns = [
     path('zayavka/send/<int:pkk>/', zayavka_send, name='zayavka_send'),
     path('zayavka/create/<int:pkk>/', zayavka_create, name='zayavka_create'),
     path('zayavka/detail/<int:pkk>/', zayavka_detail, name='zayavka_detail'),
-    #path('profile/<int:step>/', profile, name='profile'),
     path('profile_fio/', profile_view, name='person'),
     path('profile_fio/edit/<int:pkk>/', profile_edit, name='person_edit'),
     path('profile_fio/delete/<int:pkk>/', profile_del, name='person_del'),
