@@ -14,6 +14,7 @@ import os
 import uuid
 #import locale
 
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -75,6 +76,7 @@ def get_form(request, pkk, SModel, Model_form, redir, title, rendering='lkk/prof
     return render(request, rendering, {'form': form, 'title': title})
 
 # добавление и редактирование заявки
+@login_required()
 def zayavka_new(request, pkk):
     try:
         item = Zayavka.objects.get(pk=pkk, author=request.user)
@@ -91,19 +93,23 @@ def zayavka_new(request, pkk):
 
 
 # добавление и редактирование людей
+@login_required()
 def profile_edit(request, pkk):
     return get_form(request=request, pkk=pkk, SModel=People, Model_form=Zayavitel_people, redir='person', title='Данные о персонах',
                     rendering='lkk/people_form_edit.html')
 
 # добавление и редактирование адресов
+@login_required()
 def profile_adres_edit(request, pkk):
     return get_form(request=request, pkk=pkk, SModel=Adres, Model_form=Adres_form, redir='adres', title='Данные об адресах')
 
 # добавление и редактирование юр.лица
+@login_required()
 def zayavitel_edit(request, pkk):
     return get_form(request, pkk, Zayavitel_ur, Zayavitel_form, 'zayavitel', 'Данные о заявителе')
 
 # удаление людей
+@login_required()
 def profile_del(request, pkk):
     try:
         people1 = People.objects.get(pk=pkk, author=request.user)
@@ -113,6 +119,7 @@ def profile_del(request, pkk):
     return redirect('person')
 
 # удаление адресов
+@login_required()
 def profile_adres_del(request, pkk):
     try:
         people1 = Adres.objects.get(pk=pkk, author=request.user)
@@ -122,6 +129,7 @@ def profile_adres_del(request, pkk):
     return redirect('adres')
 
 # удаление юр.лица
+@login_required()
 def zayavitel_del(request, pkk):
     try:
         item = Zayavitel_ur.objects.get(pk=pkk, author=request.user)
@@ -130,6 +138,7 @@ def zayavitel_del(request, pkk):
         people_nayden = False
     return redirect('zayavitel')
 
+@login_required()
 def zayavka_del(request, pkk):
     try:
         item = Zayavka.objects.get(pk=pkk, author=request.user)
@@ -142,6 +151,7 @@ def zayavka_del(request, pkk):
     return redirect('zayavki')
 
 # отправка заявки
+@login_required()
 def zayavka_send(request, pkk):
     try:
         item = Zayavka.objects.get(pk=pkk, author=request.user)
@@ -155,26 +165,31 @@ def zayavka_send(request, pkk):
     return redirect('zayavki')
 
 # просмотр списка людей
+@login_required()
 def profile_view(request):
     fio = People.objects.filter(author=request.user)
     return render(request, 'lkk/profile_view.html', {'fio': fio, 'title' : 'Персоны'})
 
 # просмотр списка адресов
+@login_required()
 def profile_adres(request):
     adres = Adres.objects.filter(author=request.user)
     return render(request, 'lkk/profile_adres_view.html', {'adres': adres, 'title': 'Адреса'})
 
 # просмотр списка юр.лиц
+@login_required()
 def zayavitel(request):
     zaya = Zayavitel_ur.objects.filter(author=request.user)
     return render(request, 'lkk/profile_zayavitel_view.html', {'zaya': zaya, 'title': 'Заявители', 'user': request.user})
 
 # просмотр списка заявок
+@login_required()
 def zayavka_view(request):
     zaya = Zayavka.objects.filter(author=request.user)
     return render(request, 'lkk/profile_zayavka_view.html', {'zaya': zaya, 'title': 'Заявки на технологическое присоединение',
                                                              'user': request.user})
 # Вывод главной страницы ЛКК
+@login_required
 def main_lk(request):
     return render(request, 'lkk/main.html')
 
@@ -303,6 +318,7 @@ def zayavka_tp_render (item):
     doc.save(os.path.join(settings.MEDIA_ROOT, path))
     return (path)
 
+@login_required()
 def zayavka_create(request, pkk):
     '''нелюходимо доделать'''
     '''вьюшка вызывает создание заявки в вердовском формате'''
@@ -318,6 +334,7 @@ def zayavka_create(request, pkk):
         people_nayden = False
     return redirect('zayavki')
 
+@login_required()
 def zayavka_detail(request, pkk):
     '''детализированный просмотр заявки'''
     try:
