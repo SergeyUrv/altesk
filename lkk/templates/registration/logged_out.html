@@ -1,0 +1,7 @@
+<!-- templates/registration/login.html -->
+{% extends 'blog/base.html' %}
+&nbsp;{% block content %}
+<h2>Вы выщли из личного кабинета!</h2>
+<a href="{% url 'login'%}" class="btn btn-primary">Войти снова</a>
+
+{% endblock content %}

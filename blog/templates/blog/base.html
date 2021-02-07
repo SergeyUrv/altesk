@@ -34,7 +34,13 @@
     <a class="p-2 text-dark" href="/">Главная</a>
     <a class="p-2 text-dark" href="/ru/raskritie_informacii">Раскрытие информации</a>
   </nav>
-  <a class="btn btn-outline-primary" href="/lk/">Кабинет</a>
+
+  {% if user.is_authenticated %}
+    <a class="btn btn-outline-primary" href="{% url 'main_lk' %}">Кабинет</a>
+    <a class="btn btn-outline-primary" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Выйти из аккаунта {{ user.username }}</a>
+  {% else %}
+    <a class="btn btn-outline-primary" href="{% url 'main_lk' %}"><i class="bi bi-box-arrow-in-right"></i> Войти в кабинет</a>
+  {% endif %}
 </header>
   <main class="container">
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">

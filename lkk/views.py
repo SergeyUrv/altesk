@@ -14,6 +14,7 @@ import os
 import uuid
 #import locale
 
+#импорт логин-декоратора
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
