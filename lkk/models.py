@@ -400,10 +400,10 @@ class Zayavka(models.Model):
         self.save()
 
 
-class documenty(models.Model):
+class Documenty(models.Model):
     '''Документы по заявкам о тех.присоединении'''
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='autor')
-    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel')
+    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_doc')
     doc_type = models.CharField(choices=[('ДоТП', 'Договор техприсоединения'),
                                          ('ТУ', 'Технические условия'),
                                          ('АТП', 'Акт технологического присоединения'),
@@ -415,12 +415,69 @@ class documenty(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     file = models.FileField(blank=True, verbose_name='Файл')
 
+class Obracheniya(models.Model):
+    '''Обращения потребителя'''
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_obr')
+    obrachenie_type = models.CharField(choices=[('БЗП>', 'Сообщить о хищении, неучтенном потреблении электроэнергии'),
+                                         ('Спр', 'Запрос справочной информации и консультации'),
+                                         ('Жал', 'Жалоба'),
+                                         ], max_length=4, verbose_name='Тип обращения')
+    comment = models.TextField(null=True, blank=False, verbose_name='Текст обращения')
+    file = models.FileField(blank=True, verbose_name='Приложить материалы')
+    created_date = models.DateTimeField(default=timezone.now)
 
+class Epu(models.Model):
+    '''Энергопринимающие устройства'''
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_epu')
+    epu_ps = models.CharField(null=True, blank=True, max_length=100, verbose_name='Наименование высоковольной ПС')
+    epu_yacheyka = models.CharField(null=True, blank=True, max_length=30, verbose_name='Номер высоковольной ячейки')
+    epu_linia = models.CharField(null=True, blank=True, max_length=30, verbose_name='Наименование отходящей высоковольной линии')
+    epu_opora_vv = models.CharField(null=True, blank=True, max_length=10, verbose_name='Номер опоры высоковольной линии')
+    epu_ktp = models.CharField(null=True, blank=True, max_length=10, verbose_name='Наименование КТП/ТП')
+    epu_fider = models.CharField(null=True, blank=True, max_length=30, verbose_name='Наименование фидера 0,4 кВ')
+    epu_opora_nv = models.CharField(null=True, blank=True, max_length=10, verbose_name='Номер опоры 0,4 кВ')
+    epu_grbp = models.CharField(null=True, blank=True, max_length=255, verbose_name='Описание границы раздела балансовой принадлежности')
+    epu_p_max = models.IntegerField(null=True, blank=True, verbose_name='Максимальная мощность')
+    epu_adres = models.ForeignKey(Adres, blank=False, null=True, on_delete=models.CASCADE,
+                                  verbose_name='Адрес присоединяемых энергопринимающих устройств')
+    comment = models.TextField(null=True, blank=False, verbose_name='Комментарий')
+    file = models.FileField(blank=True, null=True, verbose_name='Приложить материалы')
+    created_date = models.DateTimeField(default=timezone.now)
 
+class Zayavka_pu(models.Model):
+    '''Заявки касаемо ПУ'''
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_pu')
+    obrachenie_type = models.CharField(choices=[('522-ФЗ>', 'Установка/замена/допуск в эксплуатацию прибора учета электрической энергии'),
+                                         ('Допуск', 'Допуск в эксплуатацию прибора учета электрической энергии'),
+                                         ('Снятие', 'Снятие показаний существующего прибора учета электрической энергии'),
+                                         ('Устан', 'Оборудование точки поставки приборами учета электрической энергии'),
+                                         ('Показ', 'Передать показания прибора учета электрической энергии'),
+                                         ], max_length=7, verbose_name='Тип обращения')
+    epu = models.ForeignKey(Epu, on_delete=models.CASCADE, related_name='epu', verbose_name='Энергопринимающее устройство')
+    pu_type = models.CharField(null=True, blank=True, max_length=100, verbose_name='Тип прибора учета')
+    pu_number = models.CharField(null=True, blank=True, max_length=100, verbose_name='Номер прибора учета')
+    pu_mesto_ustanovki = models.CharField(null=True, blank=True, max_length=100, verbose_name='Место установки прибора учета')
+    pu_pokazanie = models.IntegerField(null=True, blank=True, verbose_name='Показание прибора учета в настоящий момент')
+    comment = models.TextField(null=True, blank=False, verbose_name='Дополнительная информация')
+    file = models.FileField(blank=True, null=True, verbose_name='Приложить материалы')
+    created_date = models.DateTimeField(default=timezone.now)
 
-
-
-
+    def clean(self):
+        if self.obrachenie_type == 'Показ':
+            if not self.pu_number:
+                raise ValidationError({'pu_number': _('При передаче показаний необходимо обязательно передать номер ПУ')})
+            if not self.pu_type:
+                raise ValidationError({'pu_type': _('При передаче показаний необходимо обязательно передать тип ПУ')})
+        if self.obrachenie_type == 'Допуск':
+            if not self.pu_number:
+                raise ValidationError({'pu_number': _('Для допуска ПУ необходимо обязательно указать его номер')})
+            if not self.pu_type:
+                raise ValidationError({'pu_type': _('Для допуска ПУ необходимо обязательно указать его тип')})
+            if not self.pu_mesto_ustanovki:
+                raise ValidationError({'pu_mesto_ustanovki': _('Для допуска ПУ необходимо обязательно указать его место установки')})
 
 
 class Test(models.Model):
