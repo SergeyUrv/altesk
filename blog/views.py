@@ -14,3 +14,9 @@ def post_detail(request, pk):
 
 def show_genres(request):
     return render(request, "blog/genres.html", {'genres': Genre.objects.all()})
+
+def main_zagl(request):
+    return render(request, 'blog/main.html')
+
+def main_raskritie(request):
+    return render(request, 'blog/main_raskritie.html')
