@@ -403,6 +403,7 @@ class Zayavka(models.Model):
 class Documenty(models.Model):
     '''Документы по заявкам о тех.присоединении'''
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='autor')
+    #тут косяк нужно исправит поле zayavitel
     zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_doc')
     doc_type = models.CharField(choices=[('ДоТП', 'Договор техприсоединения'),
                                          ('ТУ', 'Технические условия'),
@@ -418,7 +419,10 @@ class Documenty(models.Model):
 class Obracheniya(models.Model):
     '''Обращения потребителя'''
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_obr')
+    fio = models.ForeignKey(People, blank=False, null=True, related_name='zayavitel_obr', on_delete=models.CASCADE,
+                            verbose_name="Обращение от имени", help_text='Выберите лицо от имени которого направляется обращение.')
+    org = models.ForeignKey(Zayavitel_ur, blank=True, null=True, related_name='organizaciya_obr', on_delete=models.CASCADE, verbose_name='Обращение от имени организации',
+                            help_text='Выберите организацию от имени которой направляется обращение.')
     obrachenie_type = models.CharField(choices=[('БЗП>', 'Сообщить о хищении, неучтенном потреблении электроэнергии'),
                                          ('Спр', 'Запрос справочной информации и консультации'),
                                          ('Жал', 'Жалоба'),
@@ -426,6 +430,10 @@ class Obracheniya(models.Model):
     comment = models.TextField(null=True, blank=False, verbose_name='Текст обращения')
     file = models.FileField(blank=True, verbose_name='Приложить материалы')
     created_date = models.DateTimeField(default=timezone.now)
+    def clean(self):
+        if self.fio.peole_type == 'fiz' and not self.org is None:
+            raise ValidationError(
+                {'org': _('Заявителем является физическое лицо, наименование организации в этом случае не заполнятеся')})
 
 class Epu(models.Model):
     '''Энергопринимающие устройства'''
@@ -449,7 +457,10 @@ class Epu(models.Model):
 class Zayavka_pu(models.Model):
     '''Заявки касаемо ПУ'''
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_pu')
+    fio = models.ForeignKey(People, blank=False, null=True, related_name='zayavitel_pu', on_delete=models.CASCADE,
+                            verbose_name="Заявитель", help_text='Выберите лицо от имени которого направляется заявка.')
+    org = models.ForeignKey(Zayavitel_ur, blank=True, null=True, related_name='organizaciya_pu', on_delete=models.CASCADE, verbose_name='Организация заявитель',
+                            help_text='Выберите организацию от имени которой направляется заявка.')
     obrachenie_type = models.CharField(choices=[('522-ФЗ>', 'Установка/замена/допуск в эксплуатацию прибора учета электрической энергии'),
                                          ('Допуск', 'Допуск в эксплуатацию прибора учета электрической энергии'),
                                          ('Снятие', 'Снятие показаний существующего прибора учета электрической энергии'),

@@ -16,6 +16,12 @@ class UserRegistrationForm(forms.ModelForm):
         model = User
         fields = ('username', 'first_name', 'email')
 
+    def clean_email(self):
+        cd = self.cleaned_data
+        if not cd['email']:
+            raise forms.ValidationError('Введите email, иначе мы не сможем восстановить доступ к личному кабинету, если Вы забудите пароль.')
+        return cd['email']
+
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
@@ -118,3 +124,33 @@ class Zayavitel_form(forms.ModelForm):
             'adr_post': 'Почтовый адрес <a href="/lk/profile_adres/edit/0", title="Добавить..."><i class="bi bi-globe"></i></a>',
             'adr_fakt': 'Фактический адрес <a href="/lk/profile_adres/edit/0", title="Добавить..."><i class="bi bi-globe"></i></a>',
         }
+
+class Obrachenia_form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user_id = kwargs.pop('users')
+        super(Obrachenia_form, self).__init__(*args, **kwargs)
+        #обрабатываем списки, выдаем только значения созданные пользователем
+        i = Zayavitel_ur.objects.filter(author=user_id)
+        self.fields['org'].queryset = i
+        i = People.objects.filter(author=user_id)
+        self.fields['fio'].queryset = i
+
+    class Meta:
+        model = People
+        #fields = ('__all__')
+        exclude = ('created_date', 'author')
+
+class Zayavka_pu_form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user_id = kwargs.pop('users')
+        super(Zayavka_pu_form, self).__init__(*args, **kwargs)
+        #обрабатываем списки, выдаем только значения созданные пользователем
+        i = Zayavitel_ur.objects.filter(author=user_id)
+        self.fields['org'].queryset = i
+        i = People.objects.filter(author=user_id)
+        self.fields['fio'].queryset = i
+
+    class Meta:
+        model = People
+        #fields = ('__all__')
+        exclude = ('created_date', 'author')
