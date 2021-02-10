@@ -23,7 +23,8 @@ class Post(models.Model):
     text = RichTextUploadingField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    post_category = TreeForeignKey(Genre, on_delete=models.CASCADE, null=True, blank=True, related_name='Cat', verbose_name='Выберите пункт меню')
+    #post_category = TreeForeignKey(Genre, on_delete=models.CASCADE, null=True, blank=True, related_name='Cat', verbose_name='Выберите пункт меню')
+    url = models.SlugField(blank=False, null=True, unique=True, verbose_name='Адрес ссылки')
 
     def publish(self):
         self.published_date = timezone.now()

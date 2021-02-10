@@ -1,7 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
       <div>
-          <p>published: {{ post.created_date }}</p>
           <h1>{{ post.title }}</h1>
           <p>{% autoescape off %} {{ post.text }} {% endautoescape %}</p>
       </div>
