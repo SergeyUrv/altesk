@@ -1,0 +1,448 @@
+<nav id="sidebar" class="sidebar">
+    <div class="sidebar-content js-simplebar" data-simplebar="init">
+        <div class="simplebar-wrapper" style="margin: 0px;">
+            <div class="simplebar-height-auto-observer-wrapper">
+                <div class="simplebar-height-auto-observer"></div>
+            </div>
+            <div class="simplebar-mask">
+                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                    <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
+                        <div id="selectBackground" class="simplebar-content" style="padding: 0px;">
+                            <a class="sidebar-brand" href="{% url 'index' %}">
+                                <span class="align-middle mr-3">Алтайская электросетевая компания</span>
+                            </a>
+                            <ul class="sidebar-nav">
+                                <li id="glavnaya" class="sidebar-item">
+                                    <a href="{% url 'index' %}" class="sidebar-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor"
+                                             class="bi bi-house-door" viewBox="0 0 16 16">
+                                            <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+                                        </svg>
+                                        <span class="align-middle">Главная страница</span>
+                                    </a>
+                                </li>
+                                <li id="o_nas_vision" class="sidebar-item">
+                                    <a href="#o_nas" data-toggle="collapse" class="sidebar-link collapsed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                            <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                        </svg>
+                                        <span class="align-middle">О нас</span>
+                                    </a>
+                                    <ul id="o_nas" class="sidebar-dropdown list-unstyled collapse"
+                                        data-parent="#sidebar">
+                                        <li id="kontakty" class="sidebar-item">
+                                            <a href="{% url 'o_nas_kontakty' %}" class="sidebar-link">
+                                                <span class="align-middle">Контакты</span>
+                                                <span class="badge badge-sidebar-primary">Обновлено</span>
+                                            </a>
+                                        </li>
+                                        <li id="rekvizity" class="sidebar-item"><a class="sidebar-link"
+                                                                                   href="{% url 'o_nas_rekvizity' %}">Реквизиты</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="raskrytie_informacii_vision" class="sidebar-item">
+                                    <a href="#raskrytie_informacii" data-toggle="collapse"
+                                       class="sidebar-link collapsed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round"
+                                             class="feather feather-list align-middle">
+                                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                        </svg>
+                                        <span class="align-middle">Раскрытие информации</span>
+                                    </a>
+                                    <ul id="raskrytie_informacii" class="sidebar-dropdown list-unstyled collapse"
+                                        data-parent="#sidebar">
+                                        <li id="godovaya_finansovaya_otchetnost" class="sidebar-item">
+                                            <a href="{% url 'raskr_inf_godovaya_finansovaya_otchetnost' %}"
+                                               class="sidebar-link">
+                                                Финансовая отчетность
+                                            </a>
+                                        </li>
+                                        <li id="struktura_i_obem_zatrat" class="sidebar-item">
+                                            <a href="{% url 'raskr_inf_struktura_i_obem_zatrat' %}"
+                                               class="sidebar-link">
+                                                Структура и объем затрат
+                                            </a>
+                                        </li>
+                                        <li id="metod_dohodnosti_investirovannogo_kapitala" class="sidebar-item">
+                                            <a href="{% url 'raskr_inf_metod_dohodnosti_investirovannogo_kapitala' %}"
+                                               class="sidebar-link">
+                                                Метод доходности инвестированного капитала
+                                            </a>
+                                        </li>
+                                        <li id="predlozheniya_o_razmere_cen" class="sidebar-item">
+                                            <a href="{% url 'raskr_inf_predlozheniya_o_razmere_cen' %}"
+                                               class="sidebar-link">
+                                                Предложения о размере цен
+                                            </a>
+                                        </li>
+                                        <li id="o_cenah_na_tovary_raboty_i_uslugi" class="sidebar-item">
+                                            <a href="{% url 'raskr_inf_o_cenah_na_tovary_raboty_i_uslugi' %}"
+                                               class="sidebar-link">
+                                                О ценах на услуги
+                                            </a>
+                                        </li>
+                                        <li id="o_raskhodah_svyazannyh_s_osushchestvleniem_tekhnologicheskogo_prisoedineniya_ne_vklyuchaemyh_v_platu_za_tekhnologicheskoe_prisoedinenie"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_raskhodah_svyazannyh_s_osushchestvleniem_tekhnologicheskogo_prisoedineniya_ne_vklyuchaemyh_v_platu_za_tekhnologicheskoe_prisoedinenie' %}">
+                                                О расходах на тех. присоединение,
+                                                не включаемых в плату
+                                            </a>
+                                        </li>
+                                        <li id="o_raskhodah_na_stroitelstvo_vvedennyh_v_ekspluataciyu_obektov_elektrosetevogo_hozyajstva"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_raskhodah_na_stroitelstvo_vvedennyh_v_ekspluataciyu_obektov_elektrosetevogo_hozyajstva' %}">
+                                                О расходах на строительство объектов
+                                                электросетевого хозяйства
+                                            </a>
+                                        </li>
+                                        <li id="ob_osnovnyh_potrebitelskih_harakteristikah_reguliruemyh_tovarov_rabot_i_uslug"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_ob_osnovnyh_potrebitelskih_harakteristikah_reguliruemyh_tovarov_rabot_i_uslug' %}">
+                                                О потребительских характеристиках
+                                            </a>
+                                        </li>
+                                        <li id="o_nalichii_tekhnicheskoj_vozmozhnosti_dostupa_k_reguliruemym_tovaram_rabotam_i_uslugam"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_nalichii_tekhnicheskoj_vozmozhnosti_dostupa_k_reguliruemym_tovaram_rabotam_i_uslugam' %}">
+                                                О доступе к регулируемым услугам
+                                            </a>
+                                        </li>
+                                        <li id="o_velichine_rezerviruemoj_maksimalnoj_moshchnosti" class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_velichine_rezerviruemoj_maksimalnoj_moshchnosti' %}">
+                                                О величине резервируемой максимальной мощности
+                                            </a>
+                                        </li>
+                                        <li id="o_rezultatah_kontrolnyh_zamerov_elektricheskih_parametrov"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_rezultatah_kontrolnyh_zamerov_elektricheskih_parametrov' %}">
+                                                О результатах контрольных замеров
+                                            </a>
+                                        </li>
+                                        <li id="ob_usloviyah_na_kotoryh_osushchestvlyaetsya_postavka_reguliruemyh_tovarov_rabot_i_uslug"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_ob_usloviyah_na_kotoryh_osushchestvlyaetsya_postavka_reguliruemyh_tovarov_rabot_i_uslug' %}">
+                                                Об условиях поставки регулируемых услуг
+                                            </a>
+                                        </li>
+                                        <li id="o_poryadke_vypolneniya_tekhnologicheskih_tekhnicheskih_i_drugih_meropriyatij_svyazannyh_s_tekhnologicheskim_prisoedineniem"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_poryadke_vypolneniya_tekhnologicheskih_tekhnicheskih_i_drugih_meropriyatij_svyazannyh_s_tekhnologicheskim_prisoedineniem' %}">
+                                                О порядке выполнения тех. присоединения
+                                            </a>
+                                        </li>
+                                        <li id="o_vozmozhnosti_podachi_zayavki_na_osushchestvlenie_tekhnologicheskogo_prisoedineniya"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_vozmozhnosti_podachi_zayavki_na_osushchestvlenie_tekhnologicheskogo_prisoedineniya' %}">
+                                                О возможности тех. присоединения
+                                            </a>
+                                        </li>
+                                        <li id="ob_osnovnyh_etapah_obrabotki_zayavok_na_tekhnologicheskoe_prisoedinenie"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_ob_osnovnyh_etapah_obrabotki_zayavok_na_tekhnologicheskoe_prisoedinenie' %}">
+                                                Об основных этапах тех. присоединения
+                                            </a>
+                                        </li>
+                                        <li id="ob_investicionnyh_programmah" class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_ob_investicionnyh_programmah' %}">
+                                                Об инвестиционных программах
+                                            </a>
+                                        </li>
+                                        <li id="ob_otchetah_o_realizacii_investicionnyh_programm" class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_ob_otchetah_o_realizacii_investicionnyh_programm' %}">
+                                                Об отчетах о реализации инвестиционных программ
+                                            </a>
+                                        </li>
+                                        <li id="o_sposobah_priobreteniya_stoimosti_i_ob_obemah_tovarov_neobhodimyh_dlya_okazaniya_uslug_po_peredache_elektroenergii"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_sposobah_priobreteniya_stoimosti_i_ob_obemah_tovarov_neobhodimyh_dlya_okazaniya_uslug_po_peredache_elektroenergii' %}">
+                                                О приобретении товаров для
+                                                оказания услуг
+                                            </a>
+                                        </li>
+                                        <li id="o_pasportah_uslug" class="sidebar-item">
+                                            <a class="sidebar-link" href="{% url 'raskr_inf_o_pasportah_uslug' %}">
+                                                О паспортах услуг
+                                            </a>
+                                        </li>
+                                        <li id="o_licah_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_licah_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost' %}">
+                                                О лицах, намеревающихся перераспределить максимальную мощность
+                                            </a>
+                                        </li>
+                                        <li id="o_kachestve_obsluzhivaniya_potrebitelej_uslug" class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_kachestve_obsluzhivaniya_potrebitelej_uslug' %}">
+                                                О качестве обслуживания потребителей услуг
+                                            </a>
+                                        </li>
+                                        <li id="ob_obeme_i_o_stoimosti_elektricheskoj_energii_za_raschetnyj_period_priobretennoj_v_celyah_kompensacii_poter"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_ob_obeme_i_o_stoimosti_elektricheskoj_energii_za_raschetnyj_period_priobretennoj_v_celyah_kompensacii_poter' %}">
+                                                Об объеме и о стоимости потерь
+                                            </a>
+                                        </li>
+                                        <li id="o_vydelennyh_abonentskih_nomerah_i_adresah_elektronnoj_pochty"
+                                            class="sidebar-item">
+                                            <a class="sidebar-link"
+                                               href="{% url 'raskr_inf_o_vydelennyh_abonentskih_nomerah_i_adresah_elektronnoj_pochty' %}">
+                                                О выделенных абонентских номерах
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="sidebar-header">
+                                    Потребителям
+                                </li>
+                                <li id="territoriya_obsluzhivaniya_setevoj_organizacii_vision" class="sidebar-item">
+                                    <a href="#territoriya_obsluzhivaniya_setevoj_organizacii" data-toggle="collapse"
+                                       class="sidebar-link collapsed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-map" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98l4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z"/>
+                                        </svg>
+                                        <span class="align-middle">Территория обслуживания &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;сетевой организации</span>
+                                    </a>
+                                    <ul id="territoriya_obsluzhivaniya_setevoj_organizacii"
+                                        class="sidebar-dropdown list-unstyled collapse"
+                                        data-parent="#sidebar">
+                                        <li id="obshchaya_informaciya" class="sidebar-item"><a class="sidebar-link"
+                                                                                               href="{% url 'potr_ter_obsl_so_obshchaya_informaciya' %}">Общая
+                                            информация</a>
+                                        </li>
+                                        <li id="tekhnicheskoe_sostoyanie_setej" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'potr_ter_obsl_so_tekhnicheskoe_sostoyanie_setej' %}">Техническое
+                                            состояние
+                                            сетей</a></li>
+                                    </ul>
+                                </li>
+                                <li id="peredacha_elektricheskoj_energii_vision" class="sidebar-item">
+                                    <a href="#peredacha_elektricheskoj_energii" data-toggle="collapse"
+                                       class="sidebar-link collapsed"
+                                       aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+                                            <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                        </svg>
+                                        <span class="align-middle">Передача электрической &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;энергии</span>
+                                    </a>
+                                    <ul id="peredacha_elektricheskoj_energii"
+                                        class="sidebar-dropdown list-unstyled collapse"
+                                        data-parent="#sidebar" style="">
+                                        <li id="obshchaya_informaciya_o_peredache_elektricheskoj_energii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_peredacha_ee_obshchaya_informaciya_o_peredache_elektricheskoj_energii' %}">Общая
+                                            информация о
+                                            передаче электрической энергии</a></li>
+                                        <li id="normativnye_dokumenty" class="sidebar-item"><a class="sidebar-link"
+                                                                                               href="{% url 'potr_peredacha_ee_normativnye_dokumenty' %}">Нормативные
+                                            документы</a></li>
+                                        <li id="pasporta_uslug_processov" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'potr_peredacha_ee_pasporta_uslug_processov' %}">Паспорта
+                                            услуг
+                                            (процессов)</a></li>
+                                        <li id="tipovye_formy_dokumentov" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'potr_peredacha_ee_tipovye_formy_dokumentov' %}">Типовые
+                                            формы
+                                            документов</a></li>
+                                        <li id="tarify_na_uslugi_po_peredache_elektricheskoj_energii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_peredacha_ee_tarify_na_uslugi_po_peredache_elektricheskoj_energii' %}">Тарифы
+                                            на
+                                            услуги по
+                                            передаче электрической энергии</a></li>
+                                        <li id="balans_elektricheskoj_energii_i_moshchnosti" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'potr_peredacha_ee_balans_elektricheskoj_energii_i_moshchnosti' %}">Баланс
+                                            электрической
+                                            энергии и мощности</a></li>
+                                        <li id="zatraty_na_oplatu_poter" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'potr_peredacha_ee_zatraty_na_oplatu_poter' %}">Затраты
+                                            на
+                                            оплату
+                                            потерь</a></li>
+                                    </ul>
+                                <li id="tekhnologicheskoe_prisoedinenie_vision" class="sidebar-item">
+                                    <a href="#tekhnologicheskoe_prisoedinenie" data-toggle="collapse"
+                                       class="sidebar-link collapsed"
+                                       aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-wrench" viewBox="0 0 16 16">
+                                            <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019l.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"/>
+                                        </svg>
+                                        <span class="align-middle">Технологическое &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;присоединение</span>
+                                    </a>
+                                    <ul id="tekhnologicheskoe_prisoedinenie"
+                                        class="sidebar-dropdown list-unstyled collapse"
+                                        data-parent="#sidebar" style="">
+                                        <li id="obshchaya_informaciya_o_tekhnologicheskom_prisoedinenii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_tp_obshchaya_informaciya_o_tekhnologicheskom_prisoedinenii' %}">Общая
+                                            информация о
+                                            технологическом присоединении</a></li>
+                                        <li id="normativnye_dokumenty_o_tekhnologicheskom_prisoedinenii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_tp_normativnye_dokumenty_o_tekhnologicheskom_prisoedinenii' %}">Нормативные
+                                            документы</a></li>
+                                        <li id="pasporta_uslug_processov_o_tekhnologicheskom_prisoedinenii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_tp_pasporta_uslug_processov_o_tekhnologicheskom_prisoedinenii' %}">Паспорта
+                                            услуг
+                                            (процессов)</a></li>
+                                        <li id="poryadok_vypolneniya_meropriyatij_svyazannyh_s_prisoedineniem_k_setyam"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_tp_poryadok_vypolneniya_meropriyatij_svyazannyh_s_prisoedineniem_k_setyam' %}">Порядок
+                                            выполнения
+                                            мероприятий, связанных с присоединением к сетям</a></li>
+                                        <li id="tipovye_formy_dokumentov_o_tekhnologicheskom_prisoedinenii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_tp_tipovye_formy_dokumentov_o_tekhnologicheskom_prisoedinenii' %}">Типовые
+                                            формы
+                                            документов</a></li>
+                                        <li id="tarify_na_tekhnologicheskoe_prisoedinenie" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'potr_tp_tarify_na_tekhnologicheskoe_prisoedinenie' %}">Тарифы
+                                            на
+                                            технологическое присоединение</a></li>
+                                        <li id="svedeniya_o_nalichii_moshchnosti_svobodnoj_dlya_tekhnologicheskogo_prisoedineniya"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_tp_svedeniya_o_nalichii_moshchnosti' %}">Сведения
+                                            о наличии
+                                            мощности, свободной для технологического присоединения</a></li>
+                                        <li id="svedeniya_o_podannyh_zayavkah_na_tekhnologicheskoe_prisoedinenie_zaklyuchennyh_dogovorah_i_vypolnennyh_prisoedineniyah"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_tp_svedeniya_o_podannyh_zayavkah_na_tp' %}">Сведения
+                                            о
+                                            поданных
+                                            заявках на технологическое присоединение, заключенных договорах и
+                                            выполненных присоединениях</a></li>
+                                    </ul>
+                                </li>
+                                <li id="kommercheskij_uchet_vision" class="sidebar-item">
+                                    <a href="#kommercheskij_uchet" data-toggle="collapse" class="sidebar-link collapsed"
+                                       aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-calculator" viewBox="0 0 16 16">
+                                            <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+                                            <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-4z"/>
+                                        </svg>
+                                        <span class="align-middle">Коммерческий учет &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;электрической энергии</span>
+                                    </a>
+                                    <ul id="kommercheskij_uchet" class="sidebar-dropdown list-unstyled collapse"
+                                        data-parent="#sidebar" style="">
+                                        <li id="obshchaya_informaciya_o_kommercheskom_uchete_elektricheskoj_energii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_kom_uchet_ee_obshchaya_informaciya' %}">Общая
+                                            информация</a>
+                                        </li>
+                                        <li id="normativnye_dokumenty_o_kommercheskom_uchete_elektricheskoj_energii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_kom_uchet_ee_obshchaya_normativnye_dokumenty' %}">Нормативные
+                                            документы</a></li>
+                                        <li id="pasporta_processov_o_kommercheskom_uchete_elektricheskoj_energii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_kom_uchet_ee_obshchaya_pasporta_processov' %}">Паспорта
+                                            процессов</a>
+                                        </li>
+                                        <li id="tipovye_formy_dokumentov_o_kommercheskom_uchete_elektricheskoj_energii"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'potr_kom_uchet_ee_obshchaya_tipovye_formy_dokumentov' %}">Типовые
+                                            формы
+                                            документов</a></li>
+                                        <li id="rebovaniya_k_organizacii_ucheta" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'potr_kom_uchet_ee_obshchaya_trebovaniya_k_organizacii_ucheta' %}">Требования
+                                            к
+                                            организации учета</a></li>
+                                    </ul>
+                                </li>
+                                <li id="obsluzhivanie_potrebitelej_vision" class="sidebar-item">
+                                    <a href="#obsluzhivanie_potrebitelej" data-toggle="collapse"
+                                       class="sidebar-link collapsed"
+                                       aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor"
+                                             class="bi bi-person" viewBox="0 0 16 16">
+                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                        </svg>
+                                        <span class="align-middle">Обслуживание &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;потребителей</span>
+                                    </a>
+                                    <ul id="obsluzhivanie_potrebitelej" class="sidebar-dropdown list-unstyled collapse"
+                                        data-parent="#sidebar" style="">
+                                        <li id="ofisy_obsluzhivaniya_potrebitelej" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'obsl_potr_ofisy_obsluzhivaniya_potrebitelej' %}">Офисы
+                                            обслуживания
+                                            потребителей</a></li>
+                                        <li id="zaochnoe_obsluzhivanie_posredstvom_telefonnoj_svyazi"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'obsl_potr_zaochnoe_obsluzhivanie_posredstvom_telefonnoj_svyazi' %}">Заочное
+                                            обслуживание
+                                            посредством телефонной связи (Единый центр обработки вызовов)</a></li>
+                                        <li id="interaktivnaya_obratnaya_svyaz" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'obsl_potr_interaktivnaya_obratnaya_svyaz' %}">Интерактивная
+                                            обратная
+                                            связь (интернет-приемная)</a></li>
+                                        <li id="normativnye_dokumenty_po_obsluzhivaniyu_potrebitelej"
+                                            class="sidebar-item"><a class="sidebar-link"
+                                                                    href="{% url 'obsl_potr_normativnye_dokumenty_po_obsluzhivaniyu_potrebitelej' %}">Нормативные
+                                            документы</a></li>
+                                        <li id="lichnyj_kabinet_potrebitelya" class="sidebar-item"><a
+                                                class="sidebar-link"
+                                                href="{% url 'obsl_potr_lichnyj_kabinet_potrebitelya' %}">Личный кабинет
+                                            потребителя</a></li>
+                                        <li id="voprosy_i_otvety" class="sidebar-item"><a class="sidebar-link"
+                                                                                          href="{% url 'obsl_potr_voprosy_i_otvety' %}">Вопросы
+                                            и
+                                            ответы</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="simplebar-placeholder" style="width: auto; height: 1254px;"></div>
+        </div>
+        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+            <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+        </div>
+        <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+            <div class="simplebar-scrollbar"
+                 style="height: 212px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+        </div>
+    </div>
+</nav>

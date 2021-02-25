@@ -36,12 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
     'ckeditor',
     'ckeditor_uploader',
     'mptt',
     'phonenumber_field',
     'crispy_forms',
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +134,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
-
+FILES_URL = '/files/'
+FILES_ROOT = Path.joinpath(BASE_DIR, 'files')
 
 # настройки для ckeditor
 #CKEDITOR_BASEPATH = Path.joinpath(STATIC_ROOT, 'ckeditor/ckeditor')
