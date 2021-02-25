@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Eso, Zayavka, Zayavitel_ur, Adres, People
+from .models import Eso, Zayavka, Zayavitel_ur, Adres, People, Epu, Obracheniya, Zayavka_pu
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -136,7 +136,7 @@ class Obrachenia_form(forms.ModelForm):
         self.fields['fio'].queryset = i
 
     class Meta:
-        model = People
+        model = Obracheniya
         #fields = ('__all__')
         exclude = ('created_date', 'author')
 
@@ -151,6 +151,13 @@ class Zayavka_pu_form(forms.ModelForm):
         self.fields['fio'].queryset = i
 
     class Meta:
-        model = People
+        model = Zayavka_pu
+        #fields = ('__all__')
+        exclude = ('created_date', 'author')
+
+class Epu_form(forms.ModelForm):
+
+    class Meta:
+        model = Epu
         #fields = ('__all__')
         exclude = ('created_date', 'author')

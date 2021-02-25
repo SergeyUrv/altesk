@@ -438,7 +438,7 @@ class Obracheniya(models.Model):
 class Epu(models.Model):
     '''Энергопринимающие устройства'''
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_epu')
+    #zayavitel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='zayavitel_epu')
     epu_ps = models.CharField(null=True, blank=True, max_length=100, verbose_name='Наименование высоковольной ПС')
     epu_yacheyka = models.CharField(null=True, blank=True, max_length=30, verbose_name='Номер высоковольной ячейки')
     epu_linia = models.CharField(null=True, blank=True, max_length=30, verbose_name='Наименование отходящей высоковольной линии')

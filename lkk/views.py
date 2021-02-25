@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zayavitel_form
-from .models import People, Adres, Zayavitel_ur, Zayavka
+from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zayavitel_form, Epu_form
+from .models import People, Adres, Zayavitel_ur, Zayavka, Epu
 from django.shortcuts import redirect
 from django.utils import timezone
 from docxtpl import DocxTemplate
@@ -97,6 +97,16 @@ def profile_adres_edit(request, pkk):
 def zayavitel_edit(request, pkk):
     return get_form(request, pkk, Zayavitel_ur, Zayavitel_form, 'zayavitel', 'Данные о заявителе')
 
+# добавление и редактирование энергопринимающего устройства
+@login_required()
+def epu_edit(request, pkk):
+    return get_form(request, pkk, Epu, Epu_form, 'epu', 'Данные об энергопринимающем устройстве')
+
+# удаление epu
+@login_required()
+def epu_del(request, pkk):
+    pass
+
 # удаление людей
 @login_required()
 def profile_del(request, pkk):
@@ -152,6 +162,11 @@ def zayavka_send(request, pkk):
     except Zayavka.DoesNotExist:
         people_nayden = False
     return redirect('zayavki')
+
+# просмотр списка людей
+@login_required()
+def epu_view(request):
+    pass
 
 # просмотр списка людей
 @login_required()
@@ -335,3 +350,4 @@ def zayavka_detail(request, pkk):
     except Zayavka.DoesNotExist:
         people_nayden = False
     return redirect('zayavki')
+
