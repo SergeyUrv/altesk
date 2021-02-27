@@ -21,6 +21,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def git_update(rrequest):
     subprocess.call("gitupdate.sh")
+    return "Ok"
 
 
 from .forms import UserRegistrationForm
