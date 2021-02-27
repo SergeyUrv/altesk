@@ -7,6 +7,7 @@ from docxtpl import DocxTemplate
 
 #импорт для запуска bash
 import subprocess
+from django.http import HttpResponse
 
 #импорты для рендеринга заявки
 from django.conf import settings
