@@ -4,7 +4,7 @@ from .views import zayavka_new,\
     profile_view, profile_edit, profile_del, profile_adres, profile_adres_edit, profile_adres_del,\
     zayavitel, zayavitel_edit, zayavitel_del,\
     main_lk, zayavka_view, zayavka_del, zayavka_send, zayavka_create, zayavka_detail, register,\
-    epu_edit, epu_del, epu_view
+    epu_edit, epu_del, epu_view, git_update
 from django.urls import include
 
 urlpatterns = [
@@ -29,5 +29,6 @@ urlpatterns = [
     path('profile_epu/edit/<int:pkk>/', epu_edit, name='zayavitel_edit'),
     path('profile_epu/delete/<int:pkk>/', epu_del, name='zayavitel_del'),
     path('', main_lk, name='main_lk'),
+    path('cajryrtkrybktktukjvrbjykkturvjecevjtuktiyllkrreqwwgeqh5thrtjrw', git_update, name='git_update'),
 
 ]

@@ -5,6 +5,9 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from docxtpl import DocxTemplate
 
+#импорт для запуска bash
+import subprocess
+
 #импорты для рендеринга заявки
 from django.conf import settings
 import os
@@ -16,6 +19,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+def git_update(rrequest):
+    subprocess.call("gitupdate.sh")
+
 
 from .forms import UserRegistrationForm
 
