@@ -28,7 +28,7 @@ urlpatterns = [
     path('profile_epu/<int:pkk>/', epu_view, name='epu'),
     path('profile_epu/edit/<int:pkk>/', epu_edit, name='zayavitel_edit'),
     path('profile_epu/delete/<int:pkk>/', epu_del, name='zayavitel_del'),
+    path('cajryrtkrybktktukjvrbjykkturvjecevjtuktiyllkrreqwwgeqh5thrtjrw/', git_update, name='git_update'),
     path('', main_lk, name='main_lk'),
-    path('cajryrtkrybktktukjvrbjykkturvjecevjtuktiyllkrreqwwgeqh5thrtjrw', git_update, name='git_update'),
 
 ]
