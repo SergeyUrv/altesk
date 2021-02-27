@@ -21,7 +21,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def git_update():
     subprocess.call("/var/www/pyapps/altesk/lkk/gitupdate.sh")
-    return "Ok"
+    return HttpResponse(html)
 
 
 from .forms import UserRegistrationForm
