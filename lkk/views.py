@@ -20,7 +20,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-def git_update():
+def git_update(request):
     subprocess.call("/var/www/pyapps/altesk/lkk/gitupdate.sh")
     return HttpResponse("Ok")
 
