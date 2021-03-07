@@ -101,7 +101,7 @@ class raskr_inf_priobretenii_tovarov_dlya_okazaniya_uslug(View):
 class raskr_inf_peredacha_ee_tarify_na_uslugi_po_peredache_elektroenergii(View):
     @staticmethod
     def get(request):
-        content = ContentRaskrInf.objects.get(name="Цены (тарифы) на услуги о передаче электрической энергии")
+        content = ContentRaskrInf.objects.get(name="Тарифы на услуги о передаче электрической энергии")
         content_files = content.contentfile_set.order_by('-date_year', '-date_quarter', '-date_month')
         return render(request, "main/simple_page.html",
                       {"content": content, "content_files": content_files})
@@ -149,7 +149,7 @@ class raskr_inf_peredacha_ee_obem_i_stoimost_poter(View):
 class raskr_inf_tp_tarify_na_tekhnologicheskoe_prisoedinenie(View):
     @staticmethod
     def get(request):
-        content = ContentRaskrInf.objects.get(name="Цены (тарифы) на технологическое присоединение")
+        content = ContentRaskrInf.objects.get(name="Тарифы на технологическое присоединение")
         content_files = content.contentfile_set.order_by('-date_year', '-date_quarter', '-date_month')
         return render(request, "main/simple_page.html",
                       {"content": content, "content_files": content_files})
