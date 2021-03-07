@@ -3,15 +3,19 @@
 
 {% block menu %}
 
-<div class="btn-group" role="group" aria-label="Basic example">
-  <a class="btn btn-light" href="{% url 'main_lk' %}">Личный кабинет</a>
-  <a class="btn btn-light" href="{% url 'person' %}">Представители</a>
-  <a class="btn btn-light" href="{% url 'adres' %}">Адреса</a>
-  <a class="btn btn-light" href="{% url 'zayavitel' %}">Юридические лица</a>
-  <a class="btn btn-light" href="#">Энергопринимающие устройства</a>
-  <a class="btn btn-light" href="#">Заявки и обращения</a>
-  <a class="btn btn-light" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Выйти из кабинета</a>
-</div>
+    <div class="row justify-content-start mt-3 mb-2">
+        <div class="col-auto">
+            <nav class="nav btn-group mt-auto">
+                <a class="btn btn-outline-primary mr-1 my-1" href="{% url 'main_lk' %}">Личный кабинет</a>
+                <a class="btn btn-outline-primary mr-1 my-1" href="{% url 'person' %}">Представители</a>
+                <a class="btn btn-outline-primary mr-1 my-1" href="{% url 'adres' %}">Адреса</a>
+                <a class="btn btn-outline-primary mr-1 my-1" href="{% url 'zayavitel' %}">Юридические лица</a>
+                <a class="btn btn-outline-primary mr-1 my-1" href="#">Энергопринимающие устройства</a>
+                <a class="btn btn-outline-primary mr-1 my-1" href="#">Заявки и обращения</a>
+            </nav>
+        </div>
+    </div>
+
 {% endblock menu %}
 {% block content %}
 {% endblock content %}

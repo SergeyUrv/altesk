@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -23,8 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-
 
 # Application definition
 
@@ -74,7 +71,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'altesksite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -84,7 +80,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -104,7 +99,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -118,15 +112,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-LOGIN_REDIRECT_URL='/lk/'
+LOGIN_REDIRECT_URL = '/potrebitelyam/obsluzhivanie_potrebitelej/lichnyj_kabinet_potrebitelya/'
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = '/lk/accounts/login/'
-LOGOUT_URL ='/lk/accounts/logout/'
+LOGIN_URL = '/potrebitelyam/obsluzhivanie_potrebitelej/lichnyj_kabinet_potrebitelya/accounts/login/'
+LOGOUT_URL = '/potrebitelyam/obsluzhivanie_potrebitelej/lichnyj_kabinet_potrebitelya/accounts/logout/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 
 
 # настройки для статических файлов и медив
@@ -138,14 +130,12 @@ FILES_URL = '/files/'
 FILES_ROOT = Path.joinpath(BASE_DIR, 'files')
 
 # настройки для ckeditor
-#CKEDITOR_BASEPATH = Path.joinpath(STATIC_ROOT, 'ckeditor/ckeditor')
+# CKEDITOR_BASEPATH = Path.joinpath(STATIC_ROOT, 'ckeditor/ckeditor')
 CKEDITOR_UPLOAD_PATH = 'uploads/'
-CKEDITOR_CONFIGS = {'default' :
-                       {'toolbar':'none',}
-    ,}
+CKEDITOR_CONFIGS = {'default': {'toolbar': 'none', }, }
 
 CKEDITOR_IMAGE_BACKEND = 'pillow'
-#CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+# CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 # ------------------------
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,0 +1,346 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <ul xmlns="http://www.w3.org/1999/html">
+        <li>
+            <a href="{% url 'index' %}">
+                <span>Главная страница</span>
+            </a>
+        </li>
+        <li>
+            <span>О нас</span>
+            <ul>
+                <li>
+                    <a href="{% url 'o_nas_kontakty' %}">
+                        <span class="align-middle">Контакты</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'o_nas_rekvizity' %}">
+                        Реквизиты
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Потребителям
+        </li>
+        <li>
+            <span>Территория обслуживания сетевой организации</span>
+            <ul>
+                <li>
+                    <a href="{% url 'potr_ter_obsl_so_obshchaya_informaciya' %}">
+                        Общая информация
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_ter_obsl_so_tekhnicheskoe_sostoyanie_setej' %}">
+                        Техническое состояние сетей
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="align-middle">Передача электрической энергии</span>
+            <ul>
+                <li>
+                    <a href="{% url 'potr_peredacha_ee_obshchaya_informaciya_o_peredache_elektricheskoj_energii' %}">
+                        Общая информация о передаче электрической энергии
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_peredacha_ee_normativnye_dokumenty' %}">
+                        Нормативные документы
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_peredacha_ee_pasporta_uslug_processov' %}">
+                        Паспорта услуг (процессов)
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_peredacha_ee_tipovye_formy_dokumentov' %}">
+                        Типовые формы документов
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_peredacha_ee_tarify_na_uslugi_po_peredache_elektricheskoj_energii' %}">
+                        Тарифы на услуги по передаче электрической энергии
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_peredacha_ee_balans_elektricheskoj_energii_i_moshchnosti' %}">
+                        Баланс электрической энергии и мощности
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_peredacha_ee_zatraty_na_oplatu_poter' %}">
+                        Затраты на оплату потерь
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="align-middle">Технологическое присоединение</span>
+            <ul>
+                <li>
+                    <a href="{% url 'potr_tp_obshchaya_informaciya_o_tekhnologicheskom_prisoedinenii' %}">
+                        Общая информация о технологическом присоединении
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_tp_normativnye_dokumenty_o_tekhnologicheskom_prisoedinenii' %}">
+                        Нормативные документы
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_tp_pasporta_uslug_processov_o_tekhnologicheskom_prisoedinenii' %}">
+                        Паспорта услуг (процессов)
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_tp_poryadok_vypolneniya_meropriyatij_svyazannyh_s_prisoedineniem_k_setyam' %}">
+                        Порядок выполнения мероприятий, связанных с присоединением к сетям
+                    </a>
+                </li>
+                <li><a href="{% url 'potr_tp_tipovye_formy_dokumentov_o_tekhnologicheskom_prisoedinenii' %}">
+                    Типовые формы документов
+                </a>
+                </li>
+                <li><a href="{% url 'potr_tp_tarify_na_tekhnologicheskoe_prisoedinenie' %}">
+                    Тарифы на технологическое присоединение
+                </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_tp_svedeniya_o_nalichii_moshchnosti' %}">
+                        Сведения о наличии мощности, свободной для технологического присоединения
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_tp_svedeniya_o_podannyh_zayavkah_na_tp' %}">
+                        Сведения о поданных заявках на технологическое присоединение, заключенных договорах и
+                        выполненных присоединениях
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span>Коммерческий учет электрической энергии</span>
+            <ul>
+                <li>
+                    <a href="{% url 'potr_kom_uchet_ee_obshchaya_informaciya' %}">
+                        Общая информация
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_kom_uchet_ee_obshchaya_normativnye_dokumenty' %}">
+                        Нормативные документы
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_kom_uchet_ee_obshchaya_pasporta_processov' %}">
+                        Паспорта процессов
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_kom_uchet_ee_obshchaya_tipovye_formy_dokumentov' %}">
+                        Типовые формы документов
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'potr_kom_uchet_ee_obshchaya_trebovaniya_k_organizacii_ucheta' %}">
+                        Требования к организации учета
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="align-middle">Обслуживание потребителей</span>
+            <ul>
+                <li>
+                    <a href="{% url 'obsl_potr_ofisy_obsluzhivaniya_potrebitelej' %}">
+                        Офисы обслуживания потребителей
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'obsl_potr_zaochnoe_obsluzhivanie_posredstvom_telefonnoj_svyazi' %}">
+                        Заочное обслуживание посредством телефонной связи (Единый центр обработки вызовов)
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'obsl_potr_interaktivnaya_obratnaya_svyaz' %}">
+                        Интерактивная обратная связь (интернет-приемная)
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'obsl_potr_normativnye_dokumenty_po_obsluzhivaniyu_potrebitelej' %}">
+                        Нормативные документы
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'main_lk' %}">
+                        Личный кабинет потребителя
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'obsl_potr_voprosy_i_otvety' %}">
+                        Вопросы и ответы</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Раскрытие информации
+        </li>
+        <li>
+            <span class="align-middle">Финансовые показатели</span>
+            <ul>
+                <li id="godovaya_finansovaya_otchetnost" class="sidebar-item">
+                    <a href="{% url 'raskr_inf_godovaya_finansovaya_otchetnost' %}">
+                        Финансовая отчетность
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_struktura_i_obem_zatrat' %}">
+                        Структура и объем затрат
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_metod_dohodnosti_investirovannogo_kapitala' %}">
+                        Метод доходности инвестированного капитала
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_predlozheniya_o_razmere_cen' %}">
+                        Предложения о размере цен
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_investicionnye_programmy' %}">
+                        Инвестиционные программы
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_otchety_o_realizacii_investicionnyh_programm' %}">
+                        Отчеты о реализации инвестиционных программ
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_priobretenii_tovarov_dlya_okazaniya_uslug' %}">
+                        Приобретении товаров для оказания услуг
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="align-middle">Передача электрической энергии</span>
+            <ul>
+                <li>
+                    <a href="{% url 'raskr_inf_peredacha_ee_tarify_na_uslugi_po_peredache_elektroenergii' %}">
+                        Тарифы на услуги по передаче электроэнергии
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_peredacha_ee_osnovnye_potrebitelskie_harakteristiki' %}">
+                        Основные потребительские характеристики
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_peredacha_ee_usloviya_postavki_reguliruemyh_uslug' %}">
+                        Условия поставки регулируемых услуг
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_peredacha_ee_pasporta_uslug' %}">
+                        Паспорта услуг
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_peredacha_ee_obem_i_stoimost_poter' %}">
+                        Объем и стоимость потерь
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="align-middle">Технологическое присоединение</span>
+            <ul>
+                <li>
+                    <a href="{% url 'raskr_inf_tp_tarify_na_tekhnologicheskoe_prisoedinenie' %}">
+                        Тарифы на технологическое присоединение
+                    </a>
+                </li>
+                <li id="raskhody_na_tekhnologicheskoe_prisoedinenie_ne_vklyuchaemye_v_platu"
+                    class="sidebar-item">
+                    <a href="{% url 'raskr_inf_raskhody_na_tekhnologicheskoe_prisoedinenie_ne_vklyuchaemye_v_platu' %}">
+                        Расходы на тех. присоединение, не включаемые в плату
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_raskhody_na_stroitelstvo_obektov_elektrosetevogo_hozyajstva' %}">
+                        Расходы на строительство объектов
+                        электросетевого хозяйства
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_tp_osnovnye_potrebitelskie_harakteristiki' %}">
+                        Основные потребительские характеристики
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_dostup_k_reguliruemym_uslugam' %}">
+                        Доступ к регулируемым услугам
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_velichina_rezerviruemoj_maksimalnoj_moshchnosti' %}">
+                        Величина резервируемой максимальной мощности
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_rezultaty_kontrolnyh_zamerov' %}">
+                        Результаты контрольных замеров
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_tp_usloviya_postavki_reguliruemyh_uslug' %}">
+                        Условия поставки регулируемых услуг
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_poryadok_vypolneniya_tekhnologicheskih_tekhnicheskih' %}">
+                        Порядок выполнения тех. присоединения
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_vozmozhnost_tekhnologicheskogo_prisoedineniya' %}">
+                        Возможность тех. присоединения
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_osnovnye_etapi_tekhnologicheskogo_prisoedineniya' %}">
+                        Основные этапы тех. присоединения
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_tp_pasporta_uslug' %}">
+                        Паспортах услуг
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'raskr_inf_lica_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost' %}">
+                        Лица, намеревающиеся перераспределить максимальную мощность
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="{% url 'raskr_inf_kachestvo_obsluzhivaniya_potrebitelej_uslug' %}">
+                <span class="align-middle">Качество обслуживания потребителей услуг</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'raskr_inf_vydelennye_abonentskih_nomerah' %}">
+                <span class="align-middle">Выделенные абонентские номера</span>
+            </a>
+        </li>
+    </ul>
+{% endblock content %}

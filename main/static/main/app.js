@@ -10,8 +10,7 @@ if (window.location.pathname === '/raskrytie_informacii') {
 }
 ;
 
-if (window.location.pathname === '/o_nas/kontakty' ||
-    window.location.pathname === '/o_nas/rekvizity') {
+if (window.location.pathname.indexOf('/o_nas/') > -1) {
     $("#o_nas_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
     $("#o_nas_vision a").addClass('sidebar-link');
     $("#o_nas_vision a").attr("aria-expanded", "true");
@@ -28,7 +27,171 @@ if (window.location.pathname === '/o_nas/rekvizity') {
 }
 ;
 
+if (window.location.pathname.indexOf('/raskrytie_informacii/finansovaya_informaciya/') > -1) {
+    $("#raskrytie_informacii_finansovaya_pokazateli_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
+    $("#raskrytie_informacii_finansovaya_pokazateli_vision a").addClass('sidebar-link');
+    $("#raskrytie_informacii_finansovaya_pokazateli_vision a").attr("aria-expanded", "true");
+}
+;
 
+    if (window.location.pathname === '/raskrytie_informacii/finansovaya_informaciya/godovaya_finansovaya_otchetnost') {
+    $("#godovaya_finansovaya_otchetnost").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/finansovaya_informaciya/struktura_i_obem_zatrat') {
+    $("#struktura_i_obem_zatrat").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/finansovaya_informaciya/metod_dohodnosti_investirovannogo_kapitala') {
+    $("#metod_dohodnosti_investirovannogo_kapitala").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/finansovaya_informaciya/predlozheniya_o_razmere_cen') {
+    $("#predlozheniya_o_razmere_cen").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/finansovaya_informaciya/investicionnye_programmy') {
+    $("#investicionnye_programmy").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/finansovaya_informaciya/otchety_o_realizacii_investicionnyh_programm') {
+    $("#otchety_o_realizacii_investicionnyh_programm").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/finansovaya_informaciya/priobretenii_tovarov_dlya_okazaniya_uslug') {
+    $("#priobretenii_tovarov_dlya_okazaniya_uslug").addClass('sidebar-item active');
+}
+;
+
+
+
+
+
+if (window.location.pathname.indexOf('/raskrytie_informacii/peredacha_elektricheskoj_energii/') > -1) {
+    $("#raskrytie_informacii_peredacha_elektricheskoj_energii_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
+    $("#raskrytie_informacii_peredacha_elektricheskoj_energii_vision a").addClass('sidebar-link');
+    $("#raskrytie_informacii_peredacha_elektricheskoj_energii_vision a").attr("aria-expanded", "true");
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/peredacha_elektricheskoj_energii/tarify_na_uslugi_po_peredache_elektroenergii') {
+    $("#tarify_na_uslugi_po_peredache_elektroenergii").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/peredacha_elektricheskoj_energii/osnovnye_potrebitelskie_harakteristiki') {
+    $("#osnovnye_potrebitelskie_harakteristiki").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/peredacha_elektricheskoj_energii/usloviya_postavki_reguliruemyh_uslug') {
+    $("#usloviya_postavki_reguliruemyh_uslug").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/peredacha_elektricheskoj_energii/pasporta_uslug') {
+    $("#pasporta_uslug_pe").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/peredacha_elektricheskoj_energii/obem_i_stoimost_poter') {
+    $("#obem_i_stoimost_poter").addClass('sidebar-item active');
+}
+;
+
+
+
+if (window.location.pathname.indexOf('/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/') > -1) {
+    $("#raskrytie_informacii_tekhnologicheskoe_prisoedinenie_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
+    $("#raskrytie_informacii_tekhnologicheskoe_prisoedinenie_vision a").addClass('sidebar-link');
+    $("#raskrytie_informacii_tekhnologicheskoe_prisoedinenie_vision a").attr("aria-expanded", "true");
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/tarify_na_tekhnologicheskoe_prisoedinenie') {
+    $("#tarify_na_tekhnologicheskoe_prisoedinenie_ri").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/raskhody_na_tekhnologicheskoe_prisoedinenie_ne_vklyuchaemye_v_platu') {
+    $("#raskhody_na_tekhnologicheskoe_prisoedinenie_ne_vklyuchaemye_v_platu").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/raskhody_na_stroitelstvo_obektov_elektrosetevogo_hozyajstva') {
+    $("#raskhody_na_stroitelstvo_obektov_elektrosetevogo_hozyajstva").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/osnovnye_potrebitelskie_harakteristiki') {
+    $("#osnovnye_potrebitelskie_harakteristiki_tp").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/dostup_k_reguliruemym_uslugam') {
+    $("#dostup_k_reguliruemym_uslugam").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/velichina_rezerviruemoj_maksimalnoj_moshchnosti') {
+    $("#velichina_rezerviruemoj_maksimalnoj_moshchnosti").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/rezultaty_kontrolnyh_zamerov') {
+    $("#rezultaty_kontrolnyh_zamerov").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/usloviya_postavki_reguliruemyh_uslug') {
+    $("#usloviya_postavki_reguliruemyh_uslug_ri").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/poryadok_vypolneniya_tekhnologicheskih_tekhnicheskih') {
+    $("#poryadok_vypolneniya_tekhnologicheskih_tekhnicheskih").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/vozmozhnost_tekhnologicheskogo_prisoedineniya') {
+    $("#vozmozhnost_tekhnologicheskogo_prisoedineniya").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/osnovnye_etapi_tekhnologicheskogo_prisoedineniya') {
+    $("#osnovnye_etapi_tekhnologicheskogo_prisoedineniya").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/pasporta_uslug') {
+    $("#pasporta_uslug_tp").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/lica_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost') {
+    $("#lica_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost").addClass('sidebar-item active');
+}
+;
+
+
+
+    if (window.location.pathname === '/raskrytie_informacii/kachestvo_obsluzhivaniya_potrebitelej_uslug') {
+    $("#kachestvo_obsluzhivaniya_potrebitelej_uslug").addClass('sidebar-item active');
+}
+;
+
+    if (window.location.pathname === '/raskrytie_informacii/vydelennye_abonentskih_nomerah') {
+    $("#vydelennye_abonentskih_nomerah").addClass('sidebar-item active');
+}
+;
+
+/*
 if (window.location.pathname === '/raskrytie_informacii/godovaya_finansovaya_otchetnost' ||
     window.location.pathname === '/raskrytie_informacii/struktura_i_obem_zatrat' ||
     window.location.pathname === '/raskrytie_informacii/metod_dohodnosti_investirovannogo_kapitala' ||
@@ -172,10 +335,9 @@ if (window.location.pathname === '/raskrytie_informacii/ob_obeme_i_o_stoimosti_e
 if (window.location.pathname === '/raskrytie_informacii/o_vydelennyh_abonentskih_nomerah_i_adresah_elektronnoj_pochty') {
     $("#o_vydelennyh_abonentskih_nomerah_i_adresah_elektronnoj_pochty").addClass('sidebar-item active');
 }
-;
+;*/
 
-if (window.location.pathname === '/potrebitelyam/territoriya_obsluzhivaniya_setevoj_organizacii/tekhnicheskoe_sostoyanie_setej' ||
-    window.location.pathname === '/potrebitelyam/territoriya_obsluzhivaniya_setevoj_organizacii/obshchaya_informaciya') {
+if (window.location.pathname.indexOf('/potrebitelyam/territoriya_obsluzhivaniya_setevoj_organizacii/') > -1) {
     $("#territoriya_obsluzhivaniya_setevoj_organizacii_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
     $("#territoriya_obsluzhivaniya_setevoj_organizacii_vision a").addClass('sidebar-link');
     $("#territoriya_obsluzhivaniya_setevoj_organizacii_vision a").attr("aria-expanded", "true");
@@ -192,13 +354,7 @@ if (window.location.pathname === '/potrebitelyam/territoriya_obsluzhivaniya_sete
 }
 ;
 
-if (window.location.pathname === '/potrebitelyam/peredacha_elektricheskoj_energii/obshchaya_informaciya_o_peredache_elektricheskoj_energii' ||
-    window.location.pathname === '/potrebitelyam/peredacha_elektricheskoj_energii/normativnye_dokumenty' ||
-    window.location.pathname === '/potrebitelyam/peredacha_elektricheskoj_energii/pasporta_uslug_processov' ||
-    window.location.pathname === '/potrebitelyam/peredacha_elektricheskoj_energii/tipovye_formy_dokumentov' ||
-    window.location.pathname === '/potrebitelyam/peredacha_elektricheskoj_energii/tarify_na_uslugi_po_peredache_elektricheskoj_energii' ||
-    window.location.pathname === '/potrebitelyam/peredacha_elektricheskoj_energii/balans_elektricheskoj_energii_i_moshchnosti' ||
-    window.location.pathname === '/potrebitelyam/peredacha_elektricheskoj_energii/zatraty_na_oplatu_poter') {
+if (window.location.pathname.indexOf('/potrebitelyam/peredacha_elektricheskoj_energii/') > -1) {
     $("#peredacha_elektricheskoj_energii_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
     $("#peredacha_elektricheskoj_energii_vision a").addClass('sidebar-link');
     $("#peredacha_elektricheskoj_energii_vision a").attr("aria-expanded", "true");
@@ -240,14 +396,7 @@ if (window.location.pathname === '/potrebitelyam/peredacha_elektricheskoj_energi
 }
 ;
 
-if (window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie/obshchaya_informaciya_o_tekhnologicheskom_prisoedinenii' ||
-    window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie/normativnye_dokumenty_o_tekhnologicheskom_prisoedinenii' ||
-    window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie/pasporta_uslug_processov_o_tekhnologicheskom_prisoedinenii' ||
-    window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie/poryadok_vypolneniya_meropriyatij_svyazannyh_s_prisoedineniem_k_setyam' ||
-    window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie/tipovye_formy_dokumentov_o_tekhnologicheskom_prisoedinenii' ||
-    window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie/tarify_na_tekhnologicheskoe_prisoedinenie' ||
-    window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie/svedeniya_o_nalichii_moshchnosti_svobodnoj_dlya_tekhnologicheskogo_prisoedineniya' ||
-    window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie/svedeniya_o_podannyh_zayavkah_na_tekhnologicheskoe_prisoedinenie_zaklyuchennyh_dogovorah_i_vypolnennyh_prisoedineniyah') {
+if (window.location.pathname.indexOf('/potrebitelyam/tekhnologicheskoe_prisoedinenie/') > -1) {
     $("#tekhnologicheskoe_prisoedinenie_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
     $("#tekhnologicheskoe_prisoedinenie_vision a").addClass('sidebar-link');
     $("#tekhnologicheskoe_prisoedinenie_vision a").attr("aria-expanded", "true");
@@ -294,11 +443,7 @@ if (window.location.pathname === '/potrebitelyam/tekhnologicheskoe_prisoedinenie
 }
 ;
 
-if (window.location.pathname === '/potrebitelyam/kommercheskij_uchet_elektricheskoj_energii/obshchaya_informaciya_o_kommercheskom_uchete_elektricheskoj_energii' ||
-    window.location.pathname === '/potrebitelyam/kommercheskij_uchet_elektricheskoj_energii/normativnye_dokumenty_o_kommercheskom_uchete_elektricheskoj_energii' ||
-    window.location.pathname === '/potrebitelyam/kommercheskij_uchet_elektricheskoj_energii/pasporta_processov_o_kommercheskom_uchete_elektricheskoj_energii' ||
-    window.location.pathname === '/potrebitelyam/kommercheskij_uchet_elektricheskoj_energii/tipovye_formy_dokumentov_o_kommercheskom_uchete_elektricheskoj_energii' ||
-    window.location.pathname === '/potrebitelyam/kommercheskij_uchet_elektricheskoj_energii/trebovaniya_k_organizacii_ucheta') {
+if (window.location.pathname.indexOf('/potrebitelyam/kommercheskij_uchet_elektricheskoj_energii/') > -1) {
     $("#kommercheskij_uchet_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
     $("#kommercheskij_uchet_vision a").addClass('sidebar-link');
     $("#kommercheskij_uchet_vision a").attr("aria-expanded", "true");
@@ -330,12 +475,7 @@ if (window.location.pathname === '/potrebitelyam/kommercheskij_uchet_elektriches
 }
 ;
 
-if (window.location.pathname === '/potrebitelyam/obsluzhivanie_potrebitelej/ofisy_obsluzhivaniya_potrebitelej' ||
-    window.location.pathname === '/potrebitelyam/obsluzhivanie_potrebitelej/zaochnoe_obsluzhivanie_posredstvom_telefonnoj_svyazi' ||
-    window.location.pathname === '/potrebitelyam/obsluzhivanie_potrebitelej/interaktivnaya_obratnaya_svyaz' ||
-    window.location.pathname === '/potrebitelyam/obsluzhivanie_potrebitelej/normativnye_dokumenty_po_obsluzhivaniyu_potrebitelej' ||
-    window.location.pathname === '/potrebitelyam/obsluzhivanie_potrebitelej/lichnyj_kabinet_potrebitelya' ||
-    window.location.pathname === '/potrebitelyam/obsluzhivanie_potrebitelej/voprosy_i_otvety') {
+if (window.location.pathname.indexOf('/potrebitelyam/obsluzhivanie_potrebitelej/') > -1) {
     $("#obsluzhivanie_potrebitelej_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
     $("#obsluzhivanie_potrebitelej_vision a").addClass('sidebar-link');
     $("#obsluzhivanie_potrebitelej_vision a").attr("aria-expanded", "true");
@@ -362,7 +502,7 @@ if (window.location.pathname === '/potrebitelyam/obsluzhivanie_potrebitelej/norm
 }
 ;
 
-if (window.location.pathname === '/potrebitelyam/obsluzhivanie_potrebitelej/lichnyj_kabinet_potrebitelya') {
+if (window.location.pathname.indexOf('/potrebitelyam/obsluzhivanie_potrebitelej/lichnyj_kabinet_potrebitelya/') > -1) {
     $("#lichnyj_kabinet_potrebitelya").addClass('sidebar-item active');
 }
 ;

@@ -8,102 +8,123 @@ urlpatterns = [
 
     path('o_nas/rekvizity', views.o_nas_rekvizity.as_view(), name='o_nas_rekvizity'),
 
-    path('raskrytie_informacii/godovaya_finansovaya_otchetnost',
+    path('karta_sajta', views.karta_sajta.as_view(), name='karta_sajta'),
+
+    path('raskrytie_informacii/finansovaya_informaciya/godovaya_finansovaya_otchetnost',
          views.raskr_inf_godovaya_finansovaya_otchetnost.as_view(),
          name='raskr_inf_godovaya_finansovaya_otchetnost'),
 
-    path('raskrytie_informacii/struktura_i_obem_zatrat',
+    path('raskrytie_informacii/finansovaya_informaciya/struktura_i_obem_zatrat',
          views.raskr_inf_struktura_i_obem_zatrat.as_view(),
          name='raskr_inf_struktura_i_obem_zatrat'),
 
-    path('raskrytie_informacii/metod_dohodnosti_investirovannogo_kapitala',
+    path('raskrytie_informacii/finansovaya_informaciya/metod_dohodnosti_investirovannogo_kapitala',
          views.raskr_inf_metod_dohodnosti_investirovannogo_kapitala.as_view(),
          name='raskr_inf_metod_dohodnosti_investirovannogo_kapitala'),
 
-    path('raskrytie_informacii/predlozheniya_o_razmere_cen',
+    path('raskrytie_informacii/finansovaya_informaciya/predlozheniya_o_razmere_cen',
          views.raskr_inf_predlozheniya_o_razmere_cen.as_view(),
          name='raskr_inf_predlozheniya_o_razmere_cen'),
 
-    path('raskrytie_informacii/o_cenah_na_tovary_raboty_i_uslugi',
-         views.raskr_inf_o_cenah_na_tovary_raboty_i_uslugi.as_view(),
-         name='raskr_inf_o_cenah_na_tovary_raboty_i_uslugi'),
+    path('raskrytie_informacii/finansovaya_informaciya/investicionnye_programmy',
+         views.raskr_inf_investicionnye_programmy.as_view(),
+         name='raskr_inf_investicionnye_programmy'),
+
+    path('raskrytie_informacii/finansovaya_informaciya/otchety_o_realizacii_investicionnyh_programm',
+         views.raskr_inf_otchety_o_realizacii_investicionnyh_programm.as_view(),
+         name='raskr_inf_otchety_o_realizacii_investicionnyh_programm'),
 
     path(
-        'raskrytie_informacii/o_raskhodah_svyazannyh_s_osushchestvleniem_tekhnologicheskogo_prisoedineniya_ne_vklyuchaemyh_v_platu_za_tekhnologicheskoe_prisoedinenie',
-        views.raskr_inf_o_raskhodah_svyazannyh_s_osushchestvleniem_tekhnologicheskogo_prisoedineniya_ne_vklyuchaemyh_v_platu_za_tekhnologicheskoe_prisoedinenie.as_view(),
-        name='raskr_inf_o_raskhodah_svyazannyh_s_osushchestvleniem_tekhnologicheskogo_prisoedineniya_ne_vklyuchaemyh_v_platu_za_tekhnologicheskoe_prisoedinenie'),
+        'raskrytie_informacii/finansovaya_informaciya/priobretenii_tovarov_dlya_okazaniya_uslug',
+        views.raskr_inf_priobretenii_tovarov_dlya_okazaniya_uslug.as_view(),
+        name='raskr_inf_priobretenii_tovarov_dlya_okazaniya_uslug'),
+
+    path('raskrytie_informacii/peredacha_elektricheskoj_energii/tarify_na_uslugi_po_peredache_elektroenergii',
+         views.raskr_inf_peredacha_ee_tarify_na_uslugi_po_peredache_elektroenergii.as_view(),
+         name='raskr_inf_peredacha_ee_tarify_na_uslugi_po_peredache_elektroenergii'),
 
     path(
-        'raskrytie_informacii/o_raskhodah_na_stroitelstvo_vvedennyh_v_ekspluataciyu_obektov_elektrosetevogo_hozyajstva',
-        views.raskr_inf_o_raskhodah_na_stroitelstvo_vvedennyh_v_ekspluataciyu_obektov_elektrosetevogo_hozyajstva.as_view(),
-        name='raskr_inf_o_raskhodah_na_stroitelstvo_vvedennyh_v_ekspluataciyu_obektov_elektrosetevogo_hozyajstva'),
-
-    path('raskrytie_informacii/ob_osnovnyh_potrebitelskih_harakteristikah_reguliruemyh_tovarov_rabot_i_uslug',
-         views.raskr_inf_ob_osnovnyh_potrebitelskih_harakteristikah_reguliruemyh_tovarov_rabot_i_uslug.as_view(),
-         name='raskr_inf_ob_osnovnyh_potrebitelskih_harakteristikah_reguliruemyh_tovarov_rabot_i_uslug'),
-
-    path('raskrytie_informacii/o_nalichii_tekhnicheskoj_vozmozhnosti_dostupa_k_reguliruemym_tovaram_rabotam_i_uslugam',
-         views.raskr_inf_o_nalichii_tekhnicheskoj_vozmozhnosti_dostupa_k_reguliruemym_tovaram_rabotam_i_uslugam.as_view(),
-         name='raskr_inf_o_nalichii_tekhnicheskoj_vozmozhnosti_dostupa_k_reguliruemym_tovaram_rabotam_i_uslugam'),
-
-    path('raskrytie_informacii/o_velichine_rezerviruemoj_maksimalnoj_moshchnosti',
-         views.raskr_inf_o_velichine_rezerviruemoj_maksimalnoj_moshchnosti.as_view(),
-         name='raskr_inf_o_velichine_rezerviruemoj_maksimalnoj_moshchnosti'),
-
-    path('raskrytie_informacii/o_rezultatah_kontrolnyh_zamerov_elektricheskih_parametrov',
-         views.raskr_inf_o_rezultatah_kontrolnyh_zamerov_elektricheskih_parametrov.as_view(),
-         name='raskr_inf_o_rezultatah_kontrolnyh_zamerov_elektricheskih_parametrov'),
-
-    path('raskrytie_informacii/ob_usloviyah_na_kotoryh_osushchestvlyaetsya_postavka_reguliruemyh_tovarov_rabot_i_uslug',
-         views.raskr_inf_ob_usloviyah_na_kotoryh_osushchestvlyaetsya_postavka_reguliruemyh_tovarov_rabot_i_uslug.as_view(),
-         name='raskr_inf_ob_usloviyah_na_kotoryh_osushchestvlyaetsya_postavka_reguliruemyh_tovarov_rabot_i_uslug'),
+        'raskrytie_informacii/peredacha_elektricheskoj_energii/osnovnye_potrebitelskie_harakteristiki',
+        views.raskr_inf_peredacha_ee_osnovnye_potrebitelskie_harakteristiki.as_view(),
+        name='raskr_inf_peredacha_ee_osnovnye_potrebitelskie_harakteristiki'),
 
     path(
-        'raskrytie_informacii/o_poryadke_vypolneniya_tekhnologicheskih_tekhnicheskih_i_drugih_meropriyatij_svyazannyh_s_tekhnologicheskim_prisoedineniem',
-        views.raskr_inf_o_poryadke_vypolneniya_tekhnologicheskih_tekhnicheskih_i_drugih_meropriyatij_svyazannyh_s_tekhnologicheskim_prisoedineniem.as_view(),
-        name='raskr_inf_o_poryadke_vypolneniya_tekhnologicheskih_tekhnicheskih_i_drugih_meropriyatij_svyazannyh_s_tekhnologicheskim_prisoedineniem'),
+        'raskrytie_informacii/peredacha_elektricheskoj_energii/usloviya_postavki_reguliruemyh_uslug',
+        views.raskr_inf_peredacha_ee_usloviya_postavki_reguliruemyh_uslug.as_view(),
+        name='raskr_inf_peredacha_ee_usloviya_postavki_reguliruemyh_uslug'),
 
-    path('raskrytie_informacii/o_vozmozhnosti_podachi_zayavki_na_osushchestvlenie_tekhnologicheskogo_prisoedineniya',
-         views.raskr_inf_o_vozmozhnosti_podachi_zayavki_na_osushchestvlenie_tekhnologicheskogo_prisoedineniya.as_view(),
-         name='raskr_inf_o_vozmozhnosti_podachi_zayavki_na_osushchestvlenie_tekhnologicheskogo_prisoedineniya'),
-
-    path('raskrytie_informacii/ob_osnovnyh_etapah_obrabotki_zayavok_na_tekhnologicheskoe_prisoedinenie',
-         views.raskr_inf_ob_osnovnyh_etapah_obrabotki_zayavok_na_tekhnologicheskoe_prisoedinenie.as_view(),
-         name='raskr_inf_ob_osnovnyh_etapah_obrabotki_zayavok_na_tekhnologicheskoe_prisoedinenie'),
-
-    path('raskrytie_informacii/ob_investicionnyh_programmah',
-         views.raskr_inf_ob_investicionnyh_programmah.as_view(),
-         name='raskr_inf_ob_investicionnyh_programmah'),
-
-    path('raskrytie_informacii/ob_otchetah_o_realizacii_investicionnyh_programm',
-         views.raskr_inf_ob_otchetah_o_realizacii_investicionnyh_programm.as_view(),
-         name='raskr_inf_ob_otchetah_o_realizacii_investicionnyh_programm'),
+    path('raskrytie_informacii/peredacha_elektricheskoj_energii/pasporta_uslug',
+         views.raskr_inf_peredacha_ee_pasporta_uslug.as_view(),
+         name='raskr_inf_peredacha_ee_pasporta_uslug'),
 
     path(
-        'raskrytie_informacii/o_sposobah_priobreteniya_stoimosti_i_ob_obemah_tovarov_neobhodimyh_dlya_okazaniya_uslug_po_peredache_elektroenergii',
-        views.raskr_inf_o_sposobah_priobreteniya_stoimosti_i_ob_obemah_tovarov_neobhodimyh_dlya_okazaniya_uslug_po_peredache_elektroenergii.as_view(),
-        name='raskr_inf_o_sposobah_priobreteniya_stoimosti_i_ob_obemah_tovarov_neobhodimyh_dlya_okazaniya_uslug_po_peredache_elektroenergii'),
+        'raskrytie_informacii/peredacha_elektricheskoj_energii/obem_i_stoimost_poter',
+        views.raskr_inf_peredacha_ee_obem_i_stoimost_poter.as_view(),
+        name='raskr_inf_peredacha_ee_obem_i_stoimost_poter'),
 
-    path('raskrytie_informacii/o_pasportah_uslug',
-         views.raskr_inf_o_pasportah_uslug.as_view(),
-         name='raskr_inf_o_pasportah_uslug'),
-
-    path('raskrytie_informacii/o_licah_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost',
-         views.raskr_inf_o_licah_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost.as_view(),
-         name='raskr_inf_o_licah_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost'),
-
-    path('raskrytie_informacii/o_kachestve_obsluzhivaniya_potrebitelej_uslug',
-         views.raskr_inf_o_kachestve_obsluzhivaniya_potrebitelej_uslug.as_view(),
-         name='raskr_inf_o_kachestve_obsluzhivaniya_potrebitelej_uslug'),
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/tarify_na_tekhnologicheskoe_prisoedinenie',
+         views.raskr_inf_tp_tarify_na_tekhnologicheskoe_prisoedinenie.as_view(),
+         name='raskr_inf_tp_tarify_na_tekhnologicheskoe_prisoedinenie'),
 
     path(
-        'raskrytie_informacii/ob_obeme_i_o_stoimosti_elektricheskoj_energii_za_raschetnyj_period_priobretennoj_v_celyah_kompensacii_poter',
-        views.raskr_inf_ob_obeme_i_o_stoimosti_elektricheskoj_energii_za_raschetnyj_period_priobretennoj_v_celyah_kompensacii_poter.as_view(),
-        name='raskr_inf_ob_obeme_i_o_stoimosti_elektricheskoj_energii_za_raschetnyj_period_priobretennoj_v_celyah_kompensacii_poter'),
+        'raskrytie_informacii/tekhnologicheskoe_prisoedinenie/raskhody_na_tekhnologicheskoe_prisoedinenie_ne_vklyuchaemye_v_platu',
+        views.raskr_inf_raskhody_na_tekhnologicheskoe_prisoedinenie_ne_vklyuchaemye_v_platu.as_view(),
+        name='raskr_inf_raskhody_na_tekhnologicheskoe_prisoedinenie_ne_vklyuchaemye_v_platu'),
 
-    path('raskrytie_informacii/o_vydelennyh_abonentskih_nomerah_i_adresah_elektronnoj_pochty',
-         views.raskr_inf_o_vydelennyh_abonentskih_nomerah_i_adresah_elektronnoj_pochty.as_view(),
-         name='raskr_inf_o_vydelennyh_abonentskih_nomerah_i_adresah_elektronnoj_pochty'),
+    path(
+        'raskrytie_informacii/tekhnologicheskoe_prisoedinenie/raskhody_na_stroitelstvo_obektov_elektrosetevogo_hozyajstva',
+        views.raskr_inf_raskhody_na_stroitelstvo_obektov_elektrosetevogo_hozyajstva.as_view(),
+        name='raskr_inf_raskhody_na_stroitelstvo_obektov_elektrosetevogo_hozyajstva'),
+
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/osnovnye_potrebitelskie_harakteristiki',
+         views.raskr_inf_tp_osnovnye_potrebitelskie_harakteristiki.as_view(),
+         name='raskr_inf_tp_osnovnye_potrebitelskie_harakteristiki'),
+
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/dostup_k_reguliruemym_uslugam',
+         views.raskr_inf_dostup_k_reguliruemym_uslugam.as_view(),
+         name='raskr_inf_dostup_k_reguliruemym_uslugam'),
+
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/velichina_rezerviruemoj_maksimalnoj_moshchnosti',
+         views.raskr_inf_velichina_rezerviruemoj_maksimalnoj_moshchnosti.as_view(),
+         name='raskr_inf_velichina_rezerviruemoj_maksimalnoj_moshchnosti'),
+
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/rezultaty_kontrolnyh_zamerov',
+         views.raskr_inf_rezultaty_kontrolnyh_zamerov.as_view(),
+         name='raskr_inf_rezultaty_kontrolnyh_zamerov'),
+
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/usloviya_postavki_reguliruemyh_uslug',
+         views.raskr_inf_tp_usloviya_postavki_reguliruemyh_uslug.as_view(),
+         name='raskr_inf_tp_usloviya_postavki_reguliruemyh_uslug'),
+
+    path(
+        'raskrytie_informacii/tekhnologicheskoe_prisoedinenie/poryadok_vypolneniya_tekhnologicheskih_tekhnicheskih',
+        views.raskr_inf_poryadok_vypolneniya_tekhnologicheskih_tekhnicheskih.as_view(),
+        name='raskr_inf_poryadok_vypolneniya_tekhnologicheskih_tekhnicheskih'),
+
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/vozmozhnost_tekhnologicheskogo_prisoedineniya',
+         views.raskr_inf_vozmozhnost_tekhnologicheskogo_prisoedineniya.as_view(),
+         name='raskr_inf_vozmozhnost_tekhnologicheskogo_prisoedineniya'),
+
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/osnovnye_etapi_tekhnologicheskogo_prisoedineniya',
+         views.raskr_inf_osnovnye_etapi_tekhnologicheskogo_prisoedineniya.as_view(),
+         name='raskr_inf_osnovnye_etapi_tekhnologicheskogo_prisoedineniya'),
+
+    path('raskrytie_informacii/tekhnologicheskoe_prisoedinenie/pasporta_uslug',
+         views.raskr_inf_tp_pasporta_uslug.as_view(),
+         name='raskr_inf_tp_pasporta_uslug'),
+
+    path(
+        'raskrytie_informacii/tekhnologicheskoe_prisoedinenie/lica_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost',
+        views.raskr_inf_lica_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost.as_view(),
+        name='raskr_inf_lica_namerevayushchihsya_pereraspredelit_maksimalnuyu_moshchnost'),
+
+    path('raskrytie_informacii/kachestvo_obsluzhivaniya_potrebitelej_uslug',
+         views.raskr_inf_kachestvo_obsluzhivaniya_potrebitelej_uslug.as_view(),
+         name='raskr_inf_kachestvo_obsluzhivaniya_potrebitelej_uslug'),
+
+    path('raskrytie_informacii/vydelennye_abonentskih_nomerah',
+         views.raskr_inf_vydelennye_abonentskih_nomerah.as_view(),
+         name='raskr_inf_vydelennye_abonentskih_nomerah'),
 
     path('potrebitelyam/territoriya_obsluzhivaniya_setevoj_organizacii/obshchaya_informaciya',
          views.potr_ter_obsl_so_obshchaya_informaciya.as_view(),
@@ -218,9 +239,9 @@ urlpatterns = [
          views.obsl_potr_normativnye_dokumenty_po_obsluzhivaniyu_potrebitelej.as_view(),
          name='obsl_potr_normativnye_dokumenty_po_obsluzhivaniyu_potrebitelej'),
 
-    path('potrebitelyam/obsluzhivanie_potrebitelej/lichnyj_kabinet_potrebitelya',
-         views.obsl_potr_lichnyj_kabinet_potrebitelya.as_view(),
-         name='obsl_potr_lichnyj_kabinet_potrebitelya'),
+    # path('potrebitelyam/obsluzhivanie_potrebitelej/lichnyj_kabinet_potrebitelya',
+    #      views.obsl_potr_lichnyj_kabinet_potrebitelya.as_view(),
+    #      name='obsl_potr_lichnyj_kabinet_potrebitelya'),
 
     path('potrebitelyam/obsluzhivanie_potrebitelej/voprosy_i_otvety',
          views.obsl_potr_voprosy_i_otvety.as_view(),

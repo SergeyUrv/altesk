@@ -3,137 +3,223 @@
 
 {% block content %}
 
+    <div class="row">
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Подключение к электросетям</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Технологическое присоединение</h5>
+                    <p class="card-text">Технологическое присоединение энергопринимающих устройств потребителей
+                        электрической энергии</p>
+                    <div class="mt-auto">
+                        <a href="{% url 'new_zayavka' pkk=0 %}" class="btn btn-primary mt-1">Подать заявку</a>
+                        <a href="{% url 'zayavki' %}" class="btn btn-outline-primary mt-1">Посмотреть заявки</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Подключение к электросетям</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Перераспределение (снижение) мощности</h5>
+                    <p class="card-text">Перераспределение (снижение) мощности присоединенных энергопринимающих
+                        устройств</p>
 
-</div>
-<div class="card-group">
-  <div class="card">
-    <div class="card-header">
-       Подключение к электросетям
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Подать заявку</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Подключение к электросетям</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Восстановление (переоформление)
+                        документов ТП</h5>
+                    <p class="card-text">Восстановление (переоформление) документов о технологическом присоединении</p>
+                    <div class="mt-auto">
+                     <a href="#" class="btn btn-primary mt-1">Подать заявку</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-wrench"></i> Технологическое присоединение</h5>
-      <p class="card-text">Технологическое присоединение энергопринимающих устройств потребителей электрической энергии</p>
-      <a href="{% url 'new_zayavka' pkk=0 %}" class="btn btn-primary">Подать заявку</a>
-      <a href="{% url 'zayavki' %}" class="btn btn-secondary">Посмотреть заявки</a>
     </div>
-  </div>
-    <div class="card">
-    <div class="card-header">
-       Подключение к электросетям
+    <div class="row">
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Потребление и учет электроэнергии</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Передать показания прибора учета электрической
+                        энергии</h5>
+                    <p class="card-text">Ввод потребителем текущих показаний приборов учета электрической энергии</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Передать показания</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Потребление и учет электроэнергии</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Установка/замена/допуск в эксплуатацию прибора
+                        учета</h5>
+                    <p class="card-text">Заявки на установку, замену и (или) эксплуатацию приборов учета.
+                        Установка/замена
+                        прибора учета с 01.07.2020 по ФЗ-522.</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Подать заявку</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Потребление и учет электроэнергии</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Допуск в эксплуатацию прибора учета</h5>
+                    <p class="card-text">Заявка на осуществление допуска в эксплуатацию прибора учета</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Подать заявку</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Потребление и учет электроэнергии</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Снятие показаний существующего прибора учета</h5>
+                    <p class="card-text">Заявка о необходимости снятия показаний существующего прибора учета</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Подать заявку</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Потребление и учет электроэнергии</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Оборудование точки поставки приборами учета</h5>
+                    <p class="card-text">Заявление на оборудование точки поставки приборами учета</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Подать заявку</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-shuffle"></i> Перераспределение (снижение) мощности</h5>
-      <p class="card-text">Перераспределение (снижение) мощности присоединенных энергопринимающих устройств</p>
-      <a href="#" class="btn btn-primary">Подать заявку</a>
+    <div class="row">
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Направление обращений</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Сообщить о хищении, неучтенном
+                        потреблении электроэнергии</h5>
+                    <p class="card-text">Прием сообщений о бездоговорном (безучетном) потреблении электрической энергии,
+                        хищении объектов электросетевого хозяйства</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Сообщить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Направление обращений</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Прием обращений от потребителя с запросом
+                        справочной информации и по вопросам консультации</h5>
+                    <p class="card-text">Прием обращений потребителей с запросом справочной информации, по вопросам
+                        консультации, предоставление ответа потребителю и запись потребителей на прием в офис
+                        обслуживания</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Передать обращение</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Направление обращений</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Прием жалоб потребителей</h5>
+                    <p class="card-text">Прием жалоб потребителей через интерактивные электронные формы и предоставление
+                        ответа потребителю</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Отправить жалобу</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-    <div class="card">
-    <div class="card-header">
-       Подключение к электросетям
+    <div class="row">
+        <div class="col-md-12 col-xl-6 col-xxl-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <span class="text-muted">Опросы</span>
+                        </div>
+                    </div>
+                    <h5 class="card-title">Оценить качество оказываемых услуг сетевой
+                        организации и обслуживания потребителя</h5>
+                    <p class="card-text">Заполнение анкеты потребителя для опроса с целью оценки качества оказываемых
+                        услуг
+                        сетевой организации и обслуживания потребителя</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary mt-1">Оценить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-file-earmark-arrow-up"></i> Восстановление (переоформление) документов ТП</h5>
-      <p class="card-text">Восстановление (переоформление) документов о технологическом присоединении</p>
-      <a href="#" class="btn btn-primary">Подать заявку</a>
-    </div>
-  </div>
-</div>
 
-<div class="card-group">
-  <div class="card">
-    <div class="card-header">
-       Потребление и учет электроэнергии
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-mailbox"></i> Передать показания прибора учета электрической энергии</h5>
-      <p class="card-text">Ввод потребителем текущих показаний приборов учета электрической энергии</p>
-      <a href="#" class="btn btn-primary">Передать показания</a>
-    </div>
-  </div>
-    <div class="card">
-    <div class="card-header">
-       Потребление и учет электроэнергии
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-cone-striped"></i> Установка/замена/допуск в эксплуатацию прибора учета</h5>
-      <p class="card-text">Заявки на установку, замену и (или) эксплуатацию приборов учета. Установка/замена прибора учета с 01.07.2020 по ФЗ-522.</p>
-      <a href="#" class="btn btn-primary">Подать заявку</a>
-    </div>
-  </div>
-    <div class="card">
-    <div class="card-header">
-       Направление обращений
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-shield-fill-exclamation"></i> Сообщить о хищении, неучтенном потреблении электроэнергии</h5>
-      <p class="card-text">Прием сообщений о бездоговорном (безучетном) потреблении электрической энергии, хищении объектов электросетевого хозяйства</p>
-      <a href="#" class="btn btn-primary">Сообщить</a>
-    </div>
-  </div>
-</div>
-
-<div class="card-group">
-  <div class="card">
-    <div class="card-header">
-       Потребление и учет электроэнергии
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-skip-backward-circle"></i> Допуск в эксплуатацию прибора учета</h5>
-      <p class="card-text">Заявка на осуществление допуска в эксплуатацию прибора учета</p>
-      <a href="#" class="btn btn-primary">Подать заявку</a>
-    </div>
-  </div>
-    <div class="card">
-    <div class="card-header">
-       Потребление и учет электроэнергии
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-speedometer"></i> Снятие показаний существующего прибора учета</h5>
-      <p class="card-text">Заявка о необходимости снятия показаний существующего прибора учета</p>
-      <a href="#" class="btn btn-primary">Подать заявку</a>
-    </div>
-  </div>
-    <div class="card">
-    <div class="card-header">
-       Потребление и учет электроэнергии
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-tools"></i> Оборудование точки поставки приборами учета</h5>
-      <p class="card-text">Заявление на оборудование точки поставки приборами учета</p>
-      <a href="#" class="btn btn-primary">Подать заявку</a>
-    </div>
-  </div>
-</div>
-<div class="card-group">
-  <div class="card">
-    <div class="card-header">
-       Направление обращений
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-info-square"></i> Прием обращений от потребителя с запросом справочной информации и по вопросам консультации</h5>
-      <p class="card-text">Прием обращений потребителей с запросом справочной информации, по вопросам консультации, предоставление ответа потребителю и запись потребителей на прием в офис обслуживания</p>
-      <a href="#" class="btn btn-primary">Передать обращение</a>
-    </div>
-  </div>
-    <div class="card">
-    <div class="card-header">
-       Направление обращений
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-exclamation-triangle-fill"></i> Прием жалоб потребителей</h5>
-      <p class="card-text">Прием жалоб потребителей через интерактивные электронные формы и предоставление ответа потребителю</p>
-      <a href="#" class="btn btn-primary">Отправить жалобу</a>
-    </div>
-  </div>
-    <div class="card">
-    <div class="card-header">
-       Опросы
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-trophy-fill"></i> Оценить качество оказываемых услуг сетевой организации и обслуживания потребителя</h5>
-      <p class="card-text">Заполнение анкеты потребителя для опроса с целью оценки качества оказываемых услуг сетевой организации и обслуживания потребителя</p>
-      <a href="#" class="btn btn-primary">Оценить</a>
-    </div>
-  </div>
-</div>
 {% endblock content %}

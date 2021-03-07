@@ -1,6 +1,9 @@
 from django.contrib import admin
-from .models import Content, ContentFile
+from .models import ContentMain, ContentPotr, ContentRaskrInf, ContentFile
 
-admin.site.register(Content)
+admin.site.register(ContentMain)
+admin.site.register(ContentPotr)
+admin.site.register(ContentRaskrInf)
 admin.site.register(ContentFile)
+
 
