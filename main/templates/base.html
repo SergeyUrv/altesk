@@ -947,7 +947,7 @@
                         </div>
 
                         <div id="Documents" class="mb-5">
-                            {% if content.contentfile_set.exists %}
+                            {% if content.contentfile_set.exists and content.name != "Главная" %}
                                 <h3>{{ 'Документы:' }}</h3>
                             {% endif %}
 

@@ -10,7 +10,8 @@ class index(View):
     @staticmethod
     def get(request):
         content = ContentMain.objects.get(name="Главная")
-        return render(request, "main/simple_page.html", {"content": content})
+        content_photos = content.contentfile_set.all()
+        return render(request, "main/index.html", {"content": content, "content_photos": content_photos})
 
 
 class o_nas_kontakty(View):
