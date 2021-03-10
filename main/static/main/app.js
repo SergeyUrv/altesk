@@ -10,15 +10,8 @@ if (window.location.pathname === '/raskrytie_informacii') {
 }
 ;
 
-if (window.location.pathname.indexOf('/o_nas/') > -1) {
-    $("#o_nas_vision ul").addClass('sidebar-dropdown list-unstyled collapse show');
-    $("#o_nas_vision a").addClass('sidebar-link');
-    $("#o_nas_vision a").attr("aria-expanded", "true");
-}
-;
-
-if (window.location.pathname === '/o_nas/kontakty') {
-    $("#kontakty").addClass('sidebar-item active');
+if (window.location.pathname === '/kontakty_i_rekvizity') {
+    $("#kontakty_i_rekvizity").addClass('sidebar-item active');
 }
 ;
 
