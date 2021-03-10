@@ -11,8 +11,7 @@ class index(View):
     def get(request):
         content = ContentMain.objects.get(name="Главная")
         content_photos = content.contentfile_set.all()
-        content_files = content.contentfile_set.order_by('-date_year', '-date_quarter', '-date_month')
-        return render(request, "main/index.html", {"content": content, "content_photos": content_photos, "content_files": content_files})
+        return render(request, "main/index.html", {"content": content, "content_photos": content_photos})
 
 
 class kontakty_i_rekvizity(View):
