@@ -22395,3 +22395,25 @@ div.dataTables_wrapper span.select-info, div.dataTables_wrapper span.select-item
 .sw-theme-arrows.sw-dark>.nav .nav-link.danger:after {
     border-left-color: #d9534f
 }
+
+#tel-button {
+    margin: 0 0 50px 0 !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: fixed !important;
+    z-index: 16000160 !important;
+    bottom: 0 !important;
+    text-align: center !important;
+    height: 50px;
+    min-width: 50px;
+    border-radius: 25px;
+    visibility: visible;
+    transition: none !important;
+    background-color: #d9534f;
+    box-shadow: 2px 2px 6px rgb(0 0 0 / 40%);
+    right: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

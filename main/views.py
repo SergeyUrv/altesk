@@ -14,17 +14,10 @@ class index(View):
         return render(request, "main/index.html", {"content": content, "content_photos": content_photos})
 
 
-class o_nas_kontakty(View):
+class kontakty_i_rekvizity(View):
     @staticmethod
     def get(request):
-        content = ContentMain.objects.get(name="Контакты")
-        return render(request, "main/simple_page.html", {"content": content})
-
-
-class o_nas_rekvizity(View):
-    @staticmethod
-    def get(request):
-        content = ContentMain.objects.get(name="Реквизиты")
+        content = ContentMain.objects.get(name="Контакты и реквизиты")
         return render(request, "main/simple_page.html", {"content": content})
 
 
