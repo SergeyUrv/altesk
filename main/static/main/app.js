@@ -150,7 +150,7 @@ if (window.location.pathname.indexOf('/raskrytie_informacii/tekhnologicheskoe_pr
 ;
 
     if (window.location.pathname === '/raskrytie_informacii/tekhnologicheskoe_prisoedinenie/usloviya_postavki_reguliruemyh_uslug') {
-    $("#usloviya_postavki_reguliruemyh_uslug_ri").addClass('sidebar-item active');
+    $("#usloviya_postavki_reguliruemyh_uslug_tp").addClass('sidebar-item active');
 }
 ;
 
