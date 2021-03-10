@@ -11,14 +11,16 @@ class index(View):
     def get(request):
         content = ContentMain.objects.get(name="Главная")
         content_photos = content.contentfile_set.all()
-        return render(request, "main/index.html", {"content": content, "content_photos": content_photos})
+        content_files = content.contentfile_set.order_by('-date_year', '-date_quarter', '-date_month')
+        return render(request, "main/index.html", {"content": content, "content_photos": content_photos, "content_files": content_files})
 
 
 class kontakty_i_rekvizity(View):
     @staticmethod
     def get(request):
         content = ContentMain.objects.get(name="Контакты и реквизиты")
-        return render(request, "main/simple_page.html", {"content": content})
+        content_files = content.contentfile_set.order_by('-date_year', '-date_quarter', '-date_month')
+        return render(request, "main/simple_page.html", {"content": content, "content_files": content_files})
 
 
 class karta_sajta(View):
