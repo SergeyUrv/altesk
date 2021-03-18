@@ -1,2 +1,4 @@
 /main/migrations/
 /blog/
+/media/files
+db.sqlite3
