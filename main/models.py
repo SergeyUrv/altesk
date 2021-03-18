@@ -46,7 +46,7 @@ class ContentFile(models.Model):
     file = models.FileField("Файл", upload_to='files/')
     date_month = models.PositiveIntegerField("Расчетный период: месяц", default=0)
     date_quarter = models.PositiveIntegerField("Расчетный период: квартал", default=0)
-    date_year = models.PositiveIntegerField("Расчетный период: год", default=2021)
+    date_year = models.PositiveIntegerField("Расчетный период: год", default=0)
 
     def __str__(self):
         return self.name

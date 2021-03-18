@@ -955,49 +955,53 @@
                                 {% for content_file in content_files %}
                                     <ul class="list-unstyled text-small">
                                         <li>
-                                            <span>
-                                                Отчетный период: {{ content_file.date_year }}
-                                                {% if content_file.date_quarter == 0 and content_file.date_month == 0 %}
-                                                    год
-                                                {% else %}
-                                                    год,
-                                                {% endif %}
-                                                {% if content_file.date_quarter != 0 %}
-                                                    {{ content_file.date_quarter }}
-                                                    {% if content_file.date_month == 0 %}
-                                                        квартал
+                                                <br>
+                                                {% if content_file.date_year != 0 %}
+                                                    Отчетный период: {{ content_file.date_year }}
+                                                    {% if content_file.date_quarter == 0 and content_file.date_month == 0 %}
+                                                        год
                                                     {% else %}
-                                                        квартал,
+                                                        год,
                                                     {% endif %}
-                                                {% endif %}
-                                                {% if content_file.date_month != 0 %}
-                                                    {% if content_file.date_month == 1 %}
-                                                        январь
-                                                    {% elif content_file.date_month == 2 %}
-                                                        февраль
-                                                    {% elif content_file.date_month == 3 %}
-                                                        март
-                                                    {% elif content_file.date_month == 4 %}
-                                                        апрель
-                                                    {% elif content_file.date_month == 5 %}
-                                                        май
-                                                    {% elif content_file.date_month == 6 %}
-                                                        июнь
-                                                    {% elif content_file.date_month == 7 %}
-                                                        июль
-                                                    {% elif content_file.date_month == 8 %}
-                                                        август
-                                                    {% elif content_file.date_month == 9 %}
-                                                        сентябрь
-                                                    {% elif content_file.date_month == 10 %}
-                                                        октябрь
-                                                    {% elif content_file.date_month == 11 %}
-                                                        ноябрь
-                                                    {% elif content_file.date_month == 12 %}
-                                                        декабрь
+                                                    {% if content_file.date_quarter != 0 %}
+                                                        {{ content_file.date_quarter }}
+                                                        {% if content_file.date_month == 0 %}
+                                                            квартал
+                                                        {% else %}
+                                                            квартал,
+                                                        {% endif %}
                                                     {% endif %}
+                                                    {% if content_file.date_month != 0 %}
+                                                        {% if content_file.date_month == 1 %}
+                                                            январь
+                                                        {% elif content_file.date_month == 2 %}
+                                                            февраль
+                                                        {% elif content_file.date_month == 3 %}
+                                                            март
+                                                        {% elif content_file.date_month == 4 %}
+                                                            апрель
+                                                        {% elif content_file.date_month == 5 %}
+                                                            май
+                                                        {% elif content_file.date_month == 6 %}
+                                                            июнь
+                                                        {% elif content_file.date_month == 7 %}
+                                                            июль
+                                                        {% elif content_file.date_month == 8 %}
+                                                            август
+                                                        {% elif content_file.date_month == 9 %}
+                                                            сентябрь
+                                                        {% elif content_file.date_month == 10 %}
+                                                            октябрь
+                                                        {% elif content_file.date_month == 11 %}
+                                                            ноябрь
+                                                        {% elif content_file.date_month == 12 %}
+                                                            декабрь
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% else %}
+                                                    </br>
                                                 {% endif %}
-                                            </span>
+                                                </span>
                                             <a class="link-secondary" href="/media/{{ content_file.file }}">
                                                 <h4>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
