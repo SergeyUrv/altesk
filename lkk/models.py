@@ -347,7 +347,7 @@ class Zayavka(models.Model):
                                        ('send', 'Направлена, ожидает рассмотрения'),
                                        ('edit','Возвращена на доработку'),
                                        ('vrab','Принята в работу')],
-                                        default='ЭВ', max_length=4, verbose_name='Статус заявки', blank=True, null=True)
+                                        default='save', max_length=4, verbose_name='Статус заявки', blank=True, null=True)
     status_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
     status_error = RichTextUploadingField(null=True, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
@@ -430,6 +430,12 @@ class Obracheniya(models.Model):
     comment = models.TextField(null=True, blank=False, verbose_name='Текст обращения')
     file = models.FileField(blank=True, verbose_name='Приложить материалы')
     created_date = models.DateTimeField(default=timezone.now)
+    status = models.CharField(choices=[('save','Сохранено, но не направлено'),
+                                       ('nonf', 'Заявка заполнена, но не сформирована'),
+                                       ('send', 'Направлена, ожидает рассмотрения'),
+                                       ('edit','Возвращена на доработку'),
+                                       ('vrab','Принята в работу')],
+                                        default='save', max_length=4, verbose_name='Статус заявки', blank=True, null=True)
     def clean(self):
         if self.fio.peole_type == 'fiz' and not self.org is None:
             raise ValidationError(

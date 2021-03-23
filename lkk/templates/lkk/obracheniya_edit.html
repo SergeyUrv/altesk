@@ -1,0 +1,27 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'lkk/menu.html' %}
+{% load crispy_forms_tags %}
+
+&nbsp;{% block content %}
+<h2>Обращение в сетевую компанию</h2>
+
+{% for e in form.non_field_errors %}
+  <div class="alert alert-danger"> {{ e }} </div>
+{% endfor %}
+{% if form.subject.errors %}
+    <ol>
+    {% for error in form.subject.errors %}
+       <div class="alert alert-danger">{{ error|escape }}</div>
+    {% endfor %}
+    </ol>
+{% endif %}
+{% for e in form.name_of_field.errors %}
+  <div class="alert alert-danger"> {{ e }} </div>
+{% endfor %}
+
+<form method="post" class="form-horizontal" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% crispy form %}
+  <br>
+</form>
+{% endblock content %}

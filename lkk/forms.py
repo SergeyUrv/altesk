@@ -81,6 +81,11 @@ class Zayavitel_people(forms.ModelForm):
         self.fields['adr_main'].queryset = i
         self.fields['adr_post'].queryset = i
         self.fields['adr_fakt'].queryset = i
+        #добавляем кнопочки добавить
+        for item in self.fields :
+            if item == 'adr_main' or item == 'adr_post' or item == 'adr_fakt':
+                self.fields[item].label = self.fields[item].label + '<a href="'+ reverse('adres_edit', args='0') +'", title="Добавить..."><i class="bi bi-globe"></i></a>'
+
     class Meta:
         model = People
         #fields = ('__all__')
@@ -109,6 +114,12 @@ class Zayavitel_form(forms.ModelForm):
         self.fields['ruk_fio'].queryset = i
         i = People.objects.filter(author=user_id, people_type='pre')
         self.fields['pred_fio'].queryset = i
+        #добавляем кнопочки добавить
+        for item in self.fields :
+            if item == 'fio' or item == 'ruk_fio' or item == 'pred_fio' :
+                self.fields[item].label = self.fields[item].label + '<a href="'+ reverse('person_edit', args='0') +'", title="Добавить..."><i class="bi bi-person-plus-fill"></i></a>'
+            if item == 'adr_ur' or item == 'adr_post' or item == 'adr_fakt':
+                self.fields[item].label = self.fields[item].label + '<a href="'+ reverse('adres_edit', args='0') +'", title="Добавить..."><i class="bi bi-globe"></i></a>'
 
     #pred_document_date = DateField(widget=AdminDateWidget)
 
@@ -116,19 +127,11 @@ class Zayavitel_form(forms.ModelForm):
         model = Zayavitel_ur
         #fields = ('__all__')
         exclude = ('created_date', 'author', )
-        labels = {
-            'fio': 'ФИО заявителя <a href="/lk/profile_fio/edit/0", title="Добавить..."><i class="bi bi-person-plus-fill"></i></a>',
-            'ruk_fio':'ФИО руководителя <a href="/lk/profile_fio/edit/0", title="Добавить..."><i class="bi bi-person-plus-fill"></i></a>',
-            'pred_fio': 'ФИО представителя <a href="/lk/profile_fio/edit/0", title="Добавить..."><i class="bi bi-person-plus-fill"></i></a>',
-            'adr_ur': 'Юридический адрес <a href="/lk/profile_adres/edit/0", title="Добавить..."><i class="bi bi-globe"></i></a>',
-            'adr_post': 'Почтовый адрес <a href="/lk/profile_adres/edit/0", title="Добавить..."><i class="bi bi-globe"></i></a>',
-            'adr_fakt': 'Фактический адрес <a href="/lk/profile_adres/edit/0", title="Добавить..."><i class="bi bi-globe"></i></a>',
-        }
 
-class Obrachenia_form(forms.ModelForm):
+class Obracheniya_form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user_id = kwargs.pop('users')
-        super(Obrachenia_form, self).__init__(*args, **kwargs)
+        super(Obracheniya_form, self).__init__(*args, **kwargs)
         #обрабатываем списки, выдаем только значения созданные пользователем
         i = Zayavitel_ur.objects.filter(author=user_id)
         self.fields['org'].queryset = i
@@ -138,7 +141,7 @@ class Obrachenia_form(forms.ModelForm):
     class Meta:
         model = Obracheniya
         #fields = ('__all__')
-        exclude = ('created_date', 'author')
+        exclude = ('created_date', 'author', 'status')
 
 class Zayavka_pu_form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -156,6 +159,12 @@ class Zayavka_pu_form(forms.ModelForm):
         exclude = ('created_date', 'author')
 
 class Epu_form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user_id = kwargs.pop('users')
+        super(Epu_form, self).__init__(*args, **kwargs)
+        #обрабатываем списки, выдаем только значения созданные пользователем
+        i = Adres.objects.filter(author=user_id)
+        self.fields['epu_adres'].queryset = i
 
     class Meta:
         model = Epu

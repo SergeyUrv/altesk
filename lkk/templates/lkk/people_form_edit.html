@@ -40,6 +40,53 @@ $(document).ready(function() {
     $('#div_id_adr_post_poluchatel').hide();
     $('#div_id_adr_fakt').hide();
     $('#div_id_doc_polnomochia').hide();
+
+    if ($('#id_people_type').val() === 'fiz') {
+        $('#div_id_dolznost').hide();
+        $('#div_id_snils').show();
+        $('#div_id_doc_vid').show();
+        $('#div_id_doc_seria').show();
+        $('#div_id_doc_number').show();
+        $('#div_id_doc_vidan').show();
+        $('#div_id_doc_data').show();
+        $('#div_id_doc_file').show();
+        $('#div_id_adr_main').show();
+        $('#div_id_adr_post').show();
+        $('#div_id_adr_post_aya').show();
+        $('#div_id_adr_post_poluchatel').show();
+        $('#div_id_adr_fakt').show();
+        $('#div_id_doc_polnomochia').hide();
+    } else if ($('#id_people_type').val() === 'ruk') {
+        $('#div_id_dolznost').show();
+        $('#div_id_snils').hide();
+        $('#div_id_doc_vid').hide();
+        $('#div_id_doc_seria').hide();
+        $('#div_id_doc_number').hide();
+        $('#div_id_doc_vidan').hide();
+        $('#div_id_doc_data').hide();
+        $('#div_id_doc_file').hide();
+        $('#div_id_adr_main').hide();
+        $('#div_id_adr_post').hide();
+        $('#div_id_adr_post_aya').hide();
+        $('#div_id_adr_post_poluchatel').hide();
+        $('#div_id_adr_fakt').hide();
+        $('#div_id_doc_polnomochia').hide();
+    } else if ($('#id_people_type').val() === 'pre') {
+        $('#div_id_dolznost').show();
+        $('#div_id_snils').hide();
+        $('#div_id_doc_vid').hide();
+        $('#div_id_doc_seria').hide();
+        $('#div_id_doc_number').hide();
+        $('#div_id_doc_vidan').hide();
+        $('#div_id_doc_data').hide();
+        $('#div_id_doc_file').hide();
+        $('#div_id_adr_main').hide();
+        $('#div_id_adr_post').hide();
+        $('#div_id_dr_post_aya').hide();
+        $('#div_id_adr_post_poluchatel').hide();
+        $('#div_id_adr_fakt').hide();
+        $('#div_id_doc_polnomochia').show();
+    };
 });
 
 $('#id_people_type').change(function () {

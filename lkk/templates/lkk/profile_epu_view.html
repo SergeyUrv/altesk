@@ -1,0 +1,49 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'lkk/menu.html' %}
+
+&nbsp;{% block content %}
+<h2>Профиль {{ user }}</h2>
+<h3>{{ title }}</h3>
+<p><a href="{% url 'epu_edit' pkk=0 %}">
+    <button type="button" class="btn btn-primary"><i class="bi bi-diagram-2-fill"></i> Добавить</button>
+    </a>
+</p>
+<table class="table">
+   <thead>
+    <tr>
+        <th>Описание точки подключения</th>
+        <th>Описание ГРБП</th>
+        <th>Максимальная мощность</th>
+        <th>Адрес</th>
+        <th>Комментарий</th>
+        <th>Материалы</th>
+        <th>Дата изменения</th>
+        <th>Изменить</th>
+    </tr>
+   </thead>
+    <tbody>
+    {% for item in epu%}
+    <tr>
+        <td>ПС {{ item.epu_ps }}, ячейка {{ item.epu_yacheyka }}, линия {{ item.epu_linia }}, опора {{ item.opora_vv }}, КТП {{ item.epu_ktp }}
+            фидер {{ item.epu_fider }}, опора {{ item.epu_opora_nv }}
+        </td>
+        <td>{{ item.epu_grbp }}</td>
+        <td>{{ item.epu_p_max }}</td>
+        <td>{{ item.epu_adres }}</td>
+        <td>{{ item.comment }}</td>
+        <td>
+            {% if item.file %}
+            <a href="{{ item.file.url }}" title="Скачть материалы"><i class="bi bi-box-arrow-down"></i> Документы</a></td>
+            {% endif %}
+        <td>{{ item.created_date }}</td>
+
+        <td>
+            <a href="{% url 'epu_edit' pkk=item.pk %}", title="Редактировать"><i class="bi bi-pencil-fill"></i></a>
+            <a href="{% url 'epu_del' pkk=item.pk %}", title="Удалить"><i class="bi bi-trash"></i></a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

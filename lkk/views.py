@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 
 from main.models import ContentPotr
-from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zayavitel_form, Epu_form
-from .models import People, Adres, Zayavitel_ur, Zayavka, Epu
+from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zayavitel_form, Epu_form, Obracheniya_form
+from .models import People, Adres, Zayavitel_ur, Zayavka, Epu, Obracheniya
 from django.shortcuts import redirect
 from django.utils import timezone
 from docxtpl import DocxTemplate
@@ -113,11 +113,30 @@ def zayavitel_edit(request, pkk):
 def epu_edit(request, pkk):
     return get_form(request, pkk, Epu, Epu_form, 'epu', 'Данные об энергопринимающем устройстве')
 
+# добавление и редактирование обращения
+@login_required()
+def obracheniya_edit(request, pkk):
+    try:
+        item = Obracheniya.objects.get(pk=pkk, author=request.user)
+        if item.status == 'save' or item.status == 'edit' or item.status == 'nonf':
+            return get_form(request=request, pkk=pkk, SModel=Obracheniya, Model_form=Obracheniya_form, redir='obracheniya',
+                            title='Подача обращения',
+                            rendering='lkk/obracheniya_edit.html')
+        else:
+            return redirect('obracheniya')
+    except Obracheniya.DoesNotExist:
+        return get_form(request=request, pkk=pkk, SModel=Obracheniya, Model_form=Obracheniya_form, redir='obracheniya',
+                        title='Подача обращения', rendering='lkk/obracheniya_edit.html')
 
 # удаление epu
 @login_required()
 def epu_del(request, pkk):
-    pass
+    try:
+        epu1 = Epu.objects.get(pk=pkk, author=request.user)
+        epu1.delete()
+    except Epu.DoesNotExist:
+        epu_nayden = False
+    return redirect('epu')
 
 
 # удаление людей
@@ -165,6 +184,10 @@ def zayavka_del(request, pkk):
         people_nayden = False
     return redirect('zayavki')
 
+# удаление обращения
+@login_required()
+def obracheniya_del(request):
+    pass
 
 # отправка заявки
 @login_required()
@@ -184,7 +207,9 @@ def zayavka_send(request, pkk):
 # просмотр списка людей
 @login_required()
 def epu_view(request):
-    pass
+    epu = Epu.objects.filter(author=request.user)
+    content = ContentPotr.objects.get(name="Личный кабинет потребителя")
+    return render(request, 'lkk/profile_epu_view.html', {'epu': epu, 'title': 'Энергопринимающие устройства', "content": content})
 
 
 # просмотр списка людей
@@ -220,6 +245,10 @@ def zayavka_view(request):
     return render(request, 'lkk/profile_zayavka_view.html',
                   {'zaya': zaya, 'title': 'Заявки на технологическое присоединение',
                    'user': request.user, "content": content})
+# просмотр списка обращений
+@login_required()
+def obracheniya_view(request):
+    pass
 
 
 # Вывод главной страницы ЛКК

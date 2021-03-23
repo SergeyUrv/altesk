@@ -4,7 +4,7 @@ from .views import zayavka_new,\
     profile_view, profile_edit, profile_del, profile_adres, profile_adres_edit, profile_adres_del,\
     zayavitel, zayavitel_edit, zayavitel_del,\
     main_lk, zayavka_view, zayavka_del, zayavka_send, zayavka_create, zayavka_detail, register,\
-    epu_edit, epu_del, epu_view
+    epu_edit, epu_del, epu_view, obracheniya_view, obracheniya_edit
 from django.urls import include
 
 urlpatterns = [
@@ -25,9 +25,12 @@ urlpatterns = [
     path('profile_zayavitel/', zayavitel, name='zayavitel'),
     path('profile_zayavitel/edit/<int:pkk>/', zayavitel_edit, name='zayavitel_edit'),
     path('profile_zayavitel/delete/<int:pkk>/', zayavitel_del, name='zayavitel_del'),
-    path('profile_epu/<int:pkk>/', epu_view, name='epu'),
-    path('profile_epu/edit/<int:pkk>/', epu_edit, name='zayavitel_edit'),
-    path('profile_epu/delete/<int:pkk>/', epu_del, name='zayavitel_del'),
+    path('profile_epu/', epu_view, name='epu'),
+    path('profile_epu/edit/<int:pkk>/', epu_edit, name='epu_edit'),
+    path('profile_epu/delete/<int:pkk>/', epu_del, name='epu_del'),
+    path('obracheniya/', obracheniya_view, name='obracheniya'),
+    path('obracheniya/edit/<int:pkk>/', obracheniya_edit, name='obracheniya_edit'),
+#    path('obracheniya/delete/<int:pkk>/', obracheniya_del, name='obracheniya_del'),
     path('', main_lk, name='main_lk'),
 
 ]
