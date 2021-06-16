@@ -1,0 +1,85 @@
+<!-- templates/lkk/zayavka_new.html -->
+{% extends 'lkk/menu.html' %}
+
+&nbsp;{% block content %}
+
+<h2>Профиль {{ user }}</h2>
+<h3>{{ title }}</h3>
+<p><a href="{% url 'new_zayavka' pkk=0 %}">
+    <button type="button" class="btn btn-primary"><i class="bi bi-building"></i> Добавить</button>
+    </a>
+</p>
+<table class="table">
+   <thead>
+    <tr>
+        <th>Номер заявки <i class="bi bi-list-ol"></i></th>
+        <th>Дата изменения <i class="bi bi-calendar4-event"></i></th>
+        <th>Статус заявки <i class="bi bi-journal-check"></i></th>
+        <th>Дата изменения статуса <i class="bi bi-calendar4-event"></i></th>
+        <th>Действия <i class="bi bi-pencil"></i></i></th>
+
+    </tr>
+   </thead>
+    <tbody>
+    {% for item in zaya%}
+    <tr>
+        <td>{{ item.pk }}</td>
+        <td>{{ item.created_date }}</td>
+        <td>
+            {% if item.status == 'save'  %}
+            <i class="bi bi-save"></i>
+            {% endif %}
+            {% if item.status == 'nonf'  %}
+            <i class="bi bi-file-earmark-text"></i>
+            {% endif %}
+            {% if item.status == 'send'  %}
+            <i class="bi bi-hourglass-top"></i>
+            {% endif %}
+            {% if item.status == 'vrab'  %}
+            <i class="bi bi-hourglass-split"></i>
+            {% endif %}
+            {% if item.status == 'edit'  %}
+            <i class="bi bi-folder-symlink-fill"></i>
+            {% endif %}
+            {{ item.get_status_display }}
+            {% if item.status == 'edit'  %}
+            <h5>Замечания:</h5>
+            {% autoescape off %}
+            {{ item.status_error }}
+            {% endautoescape %}
+            {% endif %}
+            </p>
+        </td>
+        <td>{{ item.status_date }}</td>
+        <td>
+            {% if item.status == 'send' %}
+            <a href="{% url 'zayavka_status_vrab' pkk=item.pk %}" title="Принять в работу" class="btn btn-primary">Принять в работу <i class="bi bi-arrow-right-circle-fill"></i></a>
+            {% endif %}
+            {% if item.status == 'vrab' %}
+            <div class="d-grid gap-2">
+            <a href="{% url 'zayavka_status_edit' pkk=item.pk %}" title="Вернуть на доработку" class="btn btn-warning">Вернуть на доработку <i class="bi bi-file-earmark-x"></i></i></i></a>
+            <a href="{% url 'zayavka_status_obr' pkk=item.pk %}" title="Направить договор" class="btn btn-info">Направить договор <i class="bi bi-file-earmark-check"></i></a>
+            </div>
+            {% endif %}
+            {% if item.status == 'obr' %}
+            <div class="d-grid gap-2">
+            <a href="{% url 'zayavka_status_canc' pkk=item.pk %}" title="Заявка аннулирована" class="btn btn-danger">Заявка аннулирована <i class="bi bi-file-earmark-excel"></i></i></a>
+            <a href="{% url 'zayavka_status_dog' pkk=item.pk %}" title="Договор заключен" class="btn btn-success">Договор заключен <i class="bi bi-file-earmark-medical"></i></a>
+            </div>
+            {% endif %}
+            {% if item.status == 'dog' %}
+            <a href="{% url 'zayavka_status_wpot' pkk=item.pk %}" title="Мероприятия по тех.присоединению со стороны СО выполнены" class="btn btn-primary">Мероприятия выполнены <i class="bi bi-file-earmark-excel"></i></i></a>
+            {% endif %}
+            {% if item.status == 'wpot' %}
+            <a href="{% url 'zayavka_status_done' pkk=item.pk %}" title="Тех.присоединение выполнено" class="btn btn-success">Тех.прис. выполнен <i class="bi bi-file-earmark-medical"></i></a>
+            {% endif %}
+            {% if item.status == 'done' %}
+            Тех.присоединение выполнено
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

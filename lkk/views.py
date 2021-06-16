@@ -16,6 +16,9 @@ from django.contrib import messages
 
 # импорт логин-декоратора
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
+
 
 # Create your views here.
 
@@ -245,6 +248,7 @@ def zayavka_view(request):
     return render(request, 'lkk/profile_zayavka_view.html',
                   {'zaya': zaya, 'title': 'Заявки на технологическое присоединение',
                    'user': request.user, "content": content})
+
 # просмотр списка обращений
 @login_required()
 def obracheniya_view(request):
@@ -419,3 +423,61 @@ def zayavka_detail(request, pkk):
     except Zayavka.DoesNotExist:
         people_nayden = False
     return redirect('zayavki')
+
+#####################Вьюшки для админки персонала
+
+# просмотр списка заявок персоналом
+@staff_member_required
+def zayavka_view_admin(request):
+    zaya = Zayavka.objects.all
+    content = ContentPotr.objects.get(name="Личный кабинет потребителя")
+    return render(request, 'lkk/profile_zayavka_view_admin.html',
+                  {'zaya': zaya, 'title': 'Заявки на технологическое присоединение',
+                   'user': request.user, "content": content})
+
+# принять заявку в работу
+@staff_member_required()
+def zayavka_status_vrab(request, pkk):
+    try:
+        item = Zayavka.objects.get(pk=pkk)
+        if item.status == 'send':
+            item.status_date = timezone.now()
+            item.status = 'vrab'
+            item.save()
+    except Zayavka.DoesNotExist:
+        pass
+    return redirect('zayavki_admin')
+
+# вернуть на доработку
+@staff_member_required()
+def zayavka_status_edit(request, pkk):
+    pass
+
+# приложить договор
+@staff_member_required()
+def zayavka_status_obr(request, pkk):
+    pass
+
+# аннулировать заявку
+@staff_member_required()
+def zayavka_status_canc(request, pkk):
+    pass
+
+# отметить что договор подписан
+@staff_member_required()
+def zayavka_status_doc(request, pkk):
+    pass
+
+# выполнено тех.присоединение со стороны СО
+@staff_member_required()
+def zayavka_status_wpod(request, pkk):
+    pass
+
+# выполнен тех.прис. - приложить документы
+@staff_member_required()
+def zayavka_status_done(request, pkk):
+    pass
+
+
+
+

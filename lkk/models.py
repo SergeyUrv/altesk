@@ -346,7 +346,13 @@ class Zayavka(models.Model):
                                        ('nonf', 'Заявка заполнена, но не сформирована'),
                                        ('send', 'Направлена, ожидает рассмотрения'),
                                        ('edit','Возвращена на доработку'),
-                                       ('vrab','Принята в работу')],
+                                       ('vrab','Принята в работу'),
+                                       ('obr', 'Подготовлен договор, ожидает подписания'),
+                                       ('dog', 'Договор заключен, идет выполнение мероприятий по тех.присоединению'),
+                                       ('wpot', 'Мероприятия по тех.присоединению со стороны сетевой компании выполнены'),
+                                       ('done', 'Тех.присоединение выполнено'),
+                                       ('canc', 'Заявка на тех.присоединение аннулирована'),
+                                       ],
                                         default='save', max_length=4, verbose_name='Статус заявки', blank=True, null=True)
     status_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
     status_error = RichTextUploadingField(null=True, blank=True)
