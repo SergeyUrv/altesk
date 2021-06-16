@@ -392,6 +392,7 @@ class Zayavka(models.Model):
             raise ValidationError({'protivoavariynaya_avtomatica': _('Приложите перечень')})
         if not self.persdannie:
             raise ValidationError({'persdannie': _('Мы не сможем принять заявку без согласия на обработку персональных данных')})
+
         # if self.vremenniy_tehpris_srok > 366:
         #     raise ValidationError('Присоединение передвижных объектов может осуществляется сроком до 12 месяцев (365/366 дней)')
 

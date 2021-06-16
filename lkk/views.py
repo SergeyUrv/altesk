@@ -280,6 +280,11 @@ def zayavka_tp_render(item):
         kad_number = 'Кадастровый номер' + item.kad_number
     else:
         kad_number = ''
+    # обрабатываем наименование ГП если есть
+    if item.eso is not None:
+        eso = item.eso.gp
+    else:
+        eso = ''
     # обрабатываем реквизиты договора если есть
     if item.dog_number is None or item.dog_date is None:
         dogovor = ''
@@ -351,7 +356,7 @@ def zayavka_tp_render(item):
                'kat_nadeznosti': item.get_kat_nadeznosti_display(),
                'vid_deyat_okved': item.vid_deyat_okved,
                'kad_number': kad_number,
-               'eso': item.eso.gp,
+               'eso': eso,
                'vid_dogovora': item.get_vid_dogovora_display(),
                'dogovor': dogovor,
                'kolvo_tochek': item.kolvo_tochek,
