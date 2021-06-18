@@ -35,6 +35,7 @@ urlpatterns = [
     path('zayavka_status_vrab/<int:pkk>/', zayavka_status_vrab, name='zayavka_status_vrab'),
     path('zayavka_status_edit/<int:pkk>/', zayavka_status_edit, name='zayavka_status_edit'),
     path('zayavka_status_obr/<int:pkk>/', zayavka_status_obr, name='zayavka_status_obr'),
+    path('zayavka_status_obreso/<int:pkk>/', zayavka_status_obreso, name='zayavka_status_obreso'),
     path('zayavka_status_canc/<int:pkk>/', zayavka_status_canc, name='zayavka_status_canc'),
     path('zayavka_status_doc/<int:pkk>/', zayavka_status_doc, name='zayavka_status_doc'),
     path('zayavka_status_wpod/<int:pkk>/', zayavka_status_wpod, name='zayavka_status_wpod'),

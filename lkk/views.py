@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 
 from main.models import ContentPotr
-from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zayavitel_form, Epu_form, Obracheniya_form
+from .forms import ZayavkaForm, Zayavitel_yur, Zayavitel_people, Adres_form, Zayavitel_form, Epu_form, Obracheniya_form,\
+    ZayavkaForm_edit, ZayavkaForm_edit_eso
 from .models import People, Adres, Zayavitel_ur, Zayavka, Epu, Obracheniya
 from django.shortcuts import redirect
 from django.utils import timezone
@@ -448,15 +449,81 @@ def zayavka_status_vrab(request, pkk):
         pass
     return redirect('zayavki_admin')
 
+# вывод административной формы
+# запрос, ID в базе, Модель, Форма модели, перенаправить после сохранения формы, заголовок, какой рендерить шаблон
+def get_form_admin(request, pkk, SModel, Model_form, redir, title, rendering='lkk/profile_form_edit.html', status='vrab'):
+    content = ContentPotr.objects.get(name="Личный кабинет потребителя")
+    try:
+        find_object = SModel.objects.get(pk=pkk)
+        if find_object.admin_file_doceso:
+            eso=True
+        else:
+            eso=False
+        object_nayden = True
+    except SModel.DoesNotExist:
+        object_nayden = False
+    # people1 = get_object_or_404(People, author=request.user)
+    if request.method == "POST":
+        if object_nayden:
+            form = Model_form(request.POST, request.FILES, status=status, instance=find_object, eso=eso)
+        else:
+            form = Model_form(request.POST, request.FILES, status=status, eso=eso)
+        if form.is_valid():
+            vform = form.save(commit=False)
+            vform.status = status
+            vform.status_date = timezone.now()
+            vform.save()
+            return redirect(redir)
+    else:
+        if object_nayden:
+            form = Model_form(status=status, instance=find_object, eso=eso)
+        else:
+            form = Model_form(status=status, eso=eso)
+    return render(request, rendering, {'form': form, 'title': title, "content": content})
+
 # вернуть на доработку
 @staff_member_required()
 def zayavka_status_edit(request, pkk):
-    pass
+    try:
+        item = Zayavka.objects.get(pk=pkk)
+        if item.status == 'vrab':
+            return get_form_admin(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm_edit, redir='zayavki_admin',
+                            title='Отклонение заявки на тех.присоединение',
+                            rendering='lkk/admin_zayavka_edit.html', status='edit')
+        else:
+            return redirect('zayavki_admin')
+    except Zayavka.DoesNotExist:
+        return redirect('zayavki_admin')
 
-# приложить договор
+# приложить договор ТП
 @staff_member_required()
 def zayavka_status_obr(request, pkk):
-    pass
+    try:
+        item = Zayavka.objects.get(pk=pkk)
+        if item.status == 'vrab':
+            return get_form_admin(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm_edit,
+                                  redir='zayavki_admin',
+                                  title='Приложить договор на тех.присоединение и счет',
+                                  rendering='lkk/admin_zayavka_edit.html', status='obr')
+        else:
+            return redirect('zayavki_admin')
+    except Zayavka.DoesNotExist:
+        return redirect('zayavki_admin')
+
+# приложить договор ЭСО
+@staff_member_required()
+def zayavka_status_obreso(request, pkk):
+    try:
+        item = Zayavka.objects.get(pk=pkk)
+        if item.status == 'vrab' or item.status == 'obr':
+            return get_form_admin(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm_edit_eso,
+                                  redir='zayavki_admin',
+                                  title='Приложить договор ЭСО',
+                                  rendering='lkk/admin_zayavka_edit.html', status='eso')
+        else:
+            return redirect('zayavki_admin')
+    except Zayavka.DoesNotExist:
+        return redirect('zayavki_admin')
 
 # аннулировать заявку
 @staff_member_required()

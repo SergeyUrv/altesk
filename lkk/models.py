@@ -355,9 +355,16 @@ class Zayavka(models.Model):
                                        ],
                                         default='save', max_length=4, verbose_name='Статус заявки', blank=True, null=True)
     status_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
-    status_error = RichTextUploadingField(null=True, blank=True)
+    status_error = RichTextUploadingField(null=True, blank=True, verbose_name='Замечания сетевой организации')
     created_date = models.DateTimeField(default=timezone.now)
     zaya_file = models.FileField(blank=True, verbose_name='Заявка')
+    admin_file_doc = models.FileField(blank=True, verbose_name='Договор тех.присоединения')
+    admin_file_invoice = models.FileField(blank=True, verbose_name='Счёт')
+    admin_file_akttp = models.FileField(blank=True, verbose_name='Документы, подтверждающие фактическое тех.присоединение')
+    admin_file_aip = models.FileField(blank=True, verbose_name='Документ о допуске ПУ в эксплуатацию')
+    admin_file_doceso = models.FileField(blank=True, verbose_name='Договор поставки электрической энергии')
+    admin_comment = models.TextField(blank=True, null=True, verbose_name='Комментарий сетевой организации')
+
     #published_date = models.DateTimeField(blank=True, null=True)
 
     def clean(self):

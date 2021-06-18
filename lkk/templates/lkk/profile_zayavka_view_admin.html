@@ -58,13 +58,16 @@
             {% if item.status == 'vrab' %}
             <div class="d-grid gap-2">
             <a href="{% url 'zayavka_status_edit' pkk=item.pk %}" title="Вернуть на доработку" class="btn btn-warning">Вернуть на доработку <i class="bi bi-file-earmark-x"></i></i></i></a>
-            <a href="{% url 'zayavka_status_obr' pkk=item.pk %}" title="Направить договор" class="btn btn-info">Направить договор <i class="bi bi-file-earmark-check"></i></a>
+            <a href="{% url 'zayavka_status_obr' pkk=item.pk %}" title="Направить договор тех.присоединения" class="btn btn-info">Направить договор ТП <i class="bi bi-file-earmark-check"></i></a>
+                {% if not item.admin_file_doceso %}
+                    <a href="{% url 'zayavka_status_obreso' pkk=item.pk %}" title="Направить договор поставки электрической энергии от гарантирующего поставщика" class="btn btn-secondary">Направить договор ЭСО<i class="bi bi-file-earmark-check"></i></a>
+                {% endif %}
             </div>
             {% endif %}
             {% if item.status == 'obr' %}
             <div class="d-grid gap-2">
             <a href="{% url 'zayavka_status_canc' pkk=item.pk %}" title="Заявка аннулирована" class="btn btn-danger">Заявка аннулирована <i class="bi bi-file-earmark-excel"></i></i></a>
-            <a href="{% url 'zayavka_status_dog' pkk=item.pk %}" title="Договор заключен" class="btn btn-success">Договор заключен <i class="bi bi-file-earmark-medical"></i></a>
+            <a href="{% url 'zayavka_status_doc' pkk=item.pk %}" title="Договор заключен" class="btn btn-success">Договор заключен <i class="bi bi-file-earmark-medical"></i></a>
             </div>
             {% endif %}
             {% if item.status == 'dog' %}

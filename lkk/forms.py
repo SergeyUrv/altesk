@@ -36,7 +36,9 @@ class ZayavkaForm(forms.ModelForm):
     class Meta:
         model = Zayavka
         #fields = ('__all__')
-        exclude = ('created_date', 'author', 'status', 'status_date', 'status_error', 'zaya_file')
+        exclude = ('created_date', 'author', 'status', 'status_date', 'status_error', 'zaya_file',
+                   'admin_file_doc', 'admin_file_akttp', 'admin_file_doceso', 'admin_file_invoice', 'admin_file_aip',
+                   'admin_comment')
 
     def __init__(self, *args, **kwargs):
         user_id = kwargs.pop('users')
@@ -170,3 +172,49 @@ class Epu_form(forms.ModelForm):
         model = Epu
         #fields = ('__all__')
         exclude = ('created_date', 'author')
+
+##### админ формы для заявок на тех прес.
+#форма подачи заявки на тех присоединение
+class ZayavkaForm_edit(forms.ModelForm):
+    class Meta:
+        model = Zayavka
+        fields = ('status_error', 'admin_comment', 'admin_file_doc', 'admin_file_invoice', 'admin_file_akttp', 'admin_file_aip', 'admin_file_doceso')
+        # exclude = ('created_date', 'author', 'status', 'status_date', 'status_error', 'zaya_file',
+        #            'admin_file_doc', 'admin_file_akttp', 'admin_file_doceso', 'admin_file_invoice', 'admin_file_aip',
+        #            'admin_comment')
+
+    def __init__(self, *args, **kwargs):
+        status = kwargs.pop('status')
+        eso = kwargs.pop('eso')
+        super(ZayavkaForm_edit, self).__init__(*args, **kwargs)
+        if status == 'edit':
+            self.fields['admin_file_doc'].widget = forms.HiddenInput()
+            self.fields['admin_file_invoice'].widget = forms.HiddenInput()
+            self.fields['admin_file_akttp'].widget = forms.HiddenInput()
+            self.fields['admin_file_aip'].widget = forms.HiddenInput()
+            self.fields['admin_file_doceso'].widget = forms.HiddenInput()
+        if status == 'obr':
+            self.fields['status_error'].widget = forms.HiddenInput()
+            self.fields['admin_file_akttp'].widget = forms.HiddenInput()
+            self.fields['admin_file_aip'].widget = forms.HiddenInput()
+            if eso:
+                self.fields['admin_file_doceso'].widget = forms.HiddenInput()
+
+        #добавляем кнопочку сохранить
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('Сохранить', 'Сохранить'))
+
+#форма подачи заявки на тех присоединение - приложить договор ЭСО
+class ZayavkaForm_edit_eso(forms.ModelForm):
+    class Meta:
+        model = Zayavka
+        fields = ('admin_comment', 'admin_file_doceso')
+
+    def __init__(self, *args, **kwargs):
+        status = kwargs.pop('status')
+        eso = kwargs.pop('eso')
+        super(ZayavkaForm_edit_eso, self).__init__(*args, **kwargs)
+
+
+
