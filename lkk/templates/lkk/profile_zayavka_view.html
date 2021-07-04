@@ -41,11 +41,32 @@
             {% if item.status == 'edit'  %}
             <i class="bi bi-folder-symlink-fill"></i>
             {% endif %}
+            {% if item.status == 'obr'  %}
+            <i class="bi bi-file-earmark-text"></i>
+            {% endif %}
+            {% if item.status == 'dog'  %}
+            <i class="bi bi-file-earmark-medical"></i>
+            {% endif %}
+            {% if item.status == 'wpot'  %}
+            <i class="bi bi-journal-check"></i>
+            {% endif %}
+            {% if item.status == 'done'  %}
+            <i class="bi bi-check2-all"></i>
+            {% endif %}
+            {% if item.status == 'canc'  %}
+            <i class="bi bi-file-earmark-excel-fill"></i>
+            {% endif %}
             {{ item.get_status_display }}
             {% if item.status == 'edit'  %}
             <h5>Замечания:</h5>
             {% autoescape off %}
             {{ item.status_error }}
+            {% endautoescape %}
+            {% endif %}
+            {% if item.admin_comment  %}
+            <h5>Комментарий сетевой организации:</h5>
+            {% autoescape off %}
+            {{ item.admin_comment }}
             {% endautoescape %}
             {% endif %}
             </p>
@@ -64,6 +85,28 @@
             {% endif %}
             {% if item.status == 'save' or item.status == 'edit' or item.status == 'vrab' or item.status == 'send'%}
             <a href="{{ item.zaya_file.url }}" title="Скачть заявку"><i class="bi bi-box-arrow-down"></i> Заявка</a>
+            {% endif %}
+            {% if item.status == 'obr' or item.status == 'dog' or item.status == 'wpot' or item.status == 'done'%}
+                {% if item.admin_file_doc %}
+                    <a href="{{ item.admin_file_doc }}" title="Скачть договор технологического присоединения"><i class="bi bi-box-arrow-down"></i> Договор тех.присоединения</a>
+                    <br>
+                {% endif %}
+                {% if item.admin_file_invoice %}
+                    <a href="{{ item.admin_file_invoice }}" title="Скачть счет на оплату технологического присоединения"><i class="bi bi-box-arrow-down"></i> Счет на оплату</a>
+                    <br>
+                {% endif %}
+                {% if item.admin_file_doceso %}
+                    <a href="{{ item.admin_file_doceso }}" title="Скачть договор поставки электрической энергии"><i class="bi bi-box-arrow-down"></i> Договор энергоснабжения</a>
+                    <br>
+                {% endif %}
+                {% if item.admin_file_aip %}
+                    <a href="{{ item.admin_file_aip }}" title="Скачть акт допуска прибора учета в эксплуатацию"><i class="bi bi-box-arrow-down"></i> Ввод в эксплуатацию ПУ</a>
+                    <br>
+                {% endif %}
+                {% if item.admin_file_akttp %}
+                    <a href="{{ item.admin_file_akttp }}" title="Скачть акт надлежащего технологического присоединения"><i class="bi bi-box-arrow-down"></i> Акт тех.присоединения</a>
+                    <br>
+                {% endif %}
             {% endif %}
         </td>
     </tr>

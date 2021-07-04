@@ -41,43 +41,151 @@
             {% if item.status == 'edit'  %}
             <i class="bi bi-folder-symlink-fill"></i>
             {% endif %}
+            {% if item.status == 'obr'  %}
+            <i class="bi bi-file-earmark-text"></i>
+            {% endif %}
+            {% if item.status == 'dog'  %}
+            <i class="bi bi-file-earmark-medical"></i>
+            {% endif %}
+            {% if item.status == 'wpot'  %}
+            <i class="bi bi-journal-check"></i>
+            {% endif %}
+            {% if item.status == 'done'  %}
+            <i class="bi bi-check2-all"></i>
+            {% endif %}
+            {% if item.status == 'canc'  %}
+            <i class="bi bi-file-earmark-excel-fill"></i>
+            {% endif %}
             {{ item.get_status_display }}
             {% if item.status == 'edit'  %}
-            <h5>Замечания:</h5>
+            <p><h5>Замечания:</h5>
             {% autoescape off %}
             {{ item.status_error }}
             {% endautoescape %}
-            {% endif %}
             </p>
+            {% endif %}
+            {% if item.admin_comment  %}
+            <p><h5>Комментарий сетевой организации:</h5>
+            {% autoescape off %}
+            {{ item.admin_comment }}
+            {% endautoescape %}
+            </p>
+            {% endif %}
         </td>
         <td>{{ item.status_date }}</td>
         <td>
+
+            {% load my_tags %}
+            {% if item.zaya_file %}
+                <a href="{{ item.zaya_file.url }}" title="{% get_verbose_field_name item "zaya_file" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "zaya_file" %}</a>
+                <br>
+            {% endif %}
+            {% if item.dog_tehpris_file %}
+                <a href="{{ item.dog_tehpris_file.url }}" title="{% get_verbose_field_name item "dog_tehpris_file" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "dog_tehpris_file" %}</a>
+                <br>
+            {% endif %}
+            {% if item.persdannie_soglasie_eso %}
+                <a href="{{ item.persdannie_soglasie_eso.url }}" title="{% get_verbose_field_name item "persdannie_soglasie_eso" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "persdannie_soglasie_eso" %}</a>
+                <br>
+            {% endif %}
+            {% if item.ucheriditelnie %}
+                <a href="{{ item.ucheriditelnie.url }}" title="{% get_verbose_field_name item "ucheriditelnie" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "ucheriditelnie" %}</a>
+                <br>
+            {% endif %}
+            {% if item.vipiska_egpul %}
+                <a href="{{ item.vipiska_egpul.url }}" title="{% get_verbose_field_name item "vipiska_egpul" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "vipiska_egpul" %}</a>
+                <br>
+            {% endif %}
+            {% if item.plan_raspolozenia %}
+                <a href="{{ item.plan_raspolozenia.url }}" title="{% get_verbose_field_name item "plan_raspolozenia" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "plan_raspolozenia" %}</a>
+                <br>
+            {% endif %}
+            {% if item.pravo_sobstvennosti %}
+                <a href="{{ item.pravo_sobstvennosti.url }}" title="{% get_verbose_field_name item "pravo_sobstvennosti" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "pravo_sobstvennosti" %}</a>
+                <br>
+            {% endif %}
+            {% if item.mkd_soglasie %}
+                <a href="{{ item.mkd_soglasie.url }}" title="{% get_verbose_field_name item "mkd_soglasie" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "mkd_soglasie" %}</a>
+                <br>
+            {% endif %}
+            {% if item.snt_spravka %}
+                <a href="{{ item.snt_spravka.url }}" title="{% get_verbose_field_name item "snt_spravka" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "snt_spravka" %}</a>
+                <br>
+            {% endif %}
+            {% if item.snt_soglasie %}
+                <a href="{{ item.snt_soglasie.url }}" title="{% get_verbose_field_name item "snt_soglasie" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "snt_soglasie" %}</a>
+                <br>
+            {% endif %}
+            {% if item.gsk_spravka %}
+                <a href="{{ item.gsk_spravka.url }}" title="{% get_verbose_field_name item "gsk_spravka" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "gsk_spravka" %}</a>
+                <br>
+            {% endif %}
+            {% if item.soglasie_sobstvennikov %}
+                <a href="{{ item.soglasie_sobstvennikov.url }}" title="{% get_verbose_field_name item "soglasie_sobstvennikov" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "soglasie_sobstvennikov" %}</a>
+                <br>
+            {% endif %}
+            {% if item.protivoavariynaya_avtomatica %}
+                <a href="{{ item.protivoavariynaya_avtomatica.url }}" title="{% get_verbose_field_name item "protivoavariynaya_avtomatica" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "protivoavariynaya_avtomatica" %}</a>
+                <br>
+            {% endif %}
+            {% if item.doc_tehpris %}
+                <a href="{{ item.doc_tehpris.url }}" title="{% get_verbose_field_name item "doc_tehpris" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "doc_tehpris" %}</a>
+            {% endif %}
+            {% if item.persdannie_file %}
+                <a href="{{ item.persdannie_file.url }}" title="{% get_verbose_field_name item "persdannie_file" %}"><i class="bi bi-box-arrow-down"></i> {% get_verbose_field_name item "persdannie_file" %}</a>
+                <br>
+            {% endif %}
+            <div class="d-grid gap-2">
             {% if item.status == 'send' %}
             <a href="{% url 'zayavka_status_vrab' pkk=item.pk %}" title="Принять в работу" class="btn btn-primary">Принять в работу <i class="bi bi-arrow-right-circle-fill"></i></a>
+            {% if not item.admin_file_doceso %}
+                <a href="{% url 'zayavka_status_obreso' pkk=item.pk %}" title="Направить договор поставки электрической энергии от гарантирующего поставщика" class="btn btn-secondary">Направить договор ЭСО<i class="bi bi-file-earmark-check"></i></a>
             {% endif %}
-            {% if item.status == 'vrab' %}
-            <div class="d-grid gap-2">
+            {% elif item.status == 'vrab' %}
             <a href="{% url 'zayavka_status_edit' pkk=item.pk %}" title="Вернуть на доработку" class="btn btn-warning">Вернуть на доработку <i class="bi bi-file-earmark-x"></i></i></i></a>
             <a href="{% url 'zayavka_status_obr' pkk=item.pk %}" title="Направить договор тех.присоединения" class="btn btn-info">Направить договор ТП <i class="bi bi-file-earmark-check"></i></a>
-                {% if not item.admin_file_doceso %}
-                    <a href="{% url 'zayavka_status_obreso' pkk=item.pk %}" title="Направить договор поставки электрической энергии от гарантирующего поставщика" class="btn btn-secondary">Направить договор ЭСО<i class="bi bi-file-earmark-check"></i></a>
-                {% endif %}
-            </div>
+            {% if not item.admin_file_doceso %}
+                <a href="{% url 'zayavka_status_obreso' pkk=item.pk %}" title="Направить договор поставки электрической энергии от гарантирующего поставщика" class="btn btn-secondary">Направить договор ЭСО<i class="bi bi-file-earmark-check"></i></a>
             {% endif %}
-            {% if item.status == 'obr' %}
-            <div class="d-grid gap-2">
+            {% elif item.status == 'obr' %}
             <a href="{% url 'zayavka_status_canc' pkk=item.pk %}" title="Заявка аннулирована" class="btn btn-danger">Заявка аннулирована <i class="bi bi-file-earmark-excel"></i></i></a>
             <a href="{% url 'zayavka_status_doc' pkk=item.pk %}" title="Договор заключен" class="btn btn-success">Договор заключен <i class="bi bi-file-earmark-medical"></i></a>
-            </div>
+            {% if not item.admin_file_doceso %}
+                <a href="{% url 'zayavka_status_obreso' pkk=item.pk %}" title="Направить договор поставки электрической энергии от гарантирующего поставщика" class="btn btn-secondary">Направить договор ЭСО<i class="bi bi-file-earmark-check"></i></a>
             {% endif %}
-            {% if item.status == 'dog' %}
+            {% elif item.status == 'dog' %}
             <a href="{% url 'zayavka_status_wpot' pkk=item.pk %}" title="Мероприятия по тех.присоединению со стороны СО выполнены" class="btn btn-primary">Мероприятия выполнены <i class="bi bi-file-earmark-excel"></i></i></a>
+            {% if not item.admin_file_doceso %}
+                <a href="{% url 'zayavka_status_obreso' pkk=item.pk %}" title="Направить договор поставки электрической энергии от гарантирующего поставщика" class="btn btn-secondary">Направить договор ЭСО<i class="bi bi-file-earmark-check"></i></a>
             {% endif %}
-            {% if item.status == 'wpot' %}
+            {% elif item.status == 'wpot' %}
             <a href="{% url 'zayavka_status_done' pkk=item.pk %}" title="Тех.присоединение выполнено" class="btn btn-success">Тех.прис. выполнен <i class="bi bi-file-earmark-medical"></i></a>
             {% endif %}
+            </div>
             {% if item.status == 'done' %}
             Тех.присоединение выполнено
+            {% endif %}
+            {% if item.status == 'obr' or item.status == 'dog' or item.status == 'wpot' or item.status == 'done'%}
+                {% if item.admin_file_doc %}
+                    <a href="{{ item.admin_file_doc }}" title="Скачть договор технологического присоединения"><i class="bi bi-box-arrow-down"></i> Договор тех.присоединения</a>
+                    <br>
+                {% endif %}
+                {% if item.admin_file_invoice %}
+                    <a href="{{ item.admin_file_invoice }}" title="Скачть счет на оплату технологического присоединения"><i class="bi bi-box-arrow-down"></i> Счет на оплату</a>
+                    <br>
+                {% endif %}
+                {% if item.admin_file_doceso %}
+                    <a href="{{ item.admin_file_doceso }}" title="Скачть договор поставки электрической энергии"><i class="bi bi-box-arrow-down"></i> Договор энергоснабжения</a>
+                    <br>
+                {% endif %}
+                {% if item.admin_file_aip %}
+                    <a href="{{ item.admin_file_aip }}" title="Скачть акт допуска прибора учета в эксплуатацию"><i class="bi bi-box-arrow-down"></i> Ввод в эксплуатацию ПУ</a>
+                    <br>
+                {% endif %}
+                {% if item.admin_file_akttp %}
+                    <a href="{{ item.admin_file_akttp }}" title="Скачть акт надлежащего технологического присоединения"><i class="bi bi-box-arrow-down"></i> Акт тех.присоединения</a>
+                    <br>
+                {% endif %}
             {% endif %}
         </td>
     </tr>

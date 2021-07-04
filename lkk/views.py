@@ -474,6 +474,8 @@ def get_form_admin(request, pkk, SModel, Model_form, redir, title, rendering='lk
             vform.status_date = timezone.now()
             vform.save()
             return redirect(redir)
+        else:
+            print(form.errors)
     else:
         if object_nayden:
             form = Model_form(status=status, instance=find_object, eso=eso)
@@ -519,7 +521,7 @@ def zayavka_status_obreso(request, pkk):
             return get_form_admin(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm_edit_eso,
                                   redir='zayavki_admin',
                                   title='Приложить договор ЭСО',
-                                  rendering='lkk/admin_zayavka_edit.html', status='eso')
+                                  rendering='lkk/admin_zayavka_edit.html', status=item.status)
         else:
             return redirect('zayavki_admin')
     except Zayavka.DoesNotExist:
@@ -528,7 +530,17 @@ def zayavka_status_obreso(request, pkk):
 # аннулировать заявку
 @staff_member_required()
 def zayavka_status_canc(request, pkk):
-    pass
+    try:
+        item = Zayavka.objects.get(pk=pkk)
+        if item.status == 'obr':
+            return get_form_admin(request=request, pkk=pkk, SModel=Zayavka, Model_form=ZayavkaForm_edit,
+                                  redir='zayavki_admin',
+                                  title='Аннулировать заявку',
+                                  rendering='lkk/admin_zayavka_edit.html', status='canc')
+        else:
+            return redirect('zayavki_admin')
+    except Zayavka.DoesNotExist:
+        return redirect('zayavki_admin')
 
 # отметить что договор подписан
 @staff_member_required()

@@ -199,7 +199,13 @@ class ZayavkaForm_edit(forms.ModelForm):
             self.fields['admin_file_aip'].widget = forms.HiddenInput()
             if eso:
                 self.fields['admin_file_doceso'].widget = forms.HiddenInput()
-
+        if status == 'canc':
+            self.fields['admin_file_doc'].widget = forms.HiddenInput()
+            self.fields['admin_file_invoice'].widget = forms.HiddenInput()
+            self.fields['admin_file_akttp'].widget = forms.HiddenInput()
+            self.fields['admin_file_aip'].widget = forms.HiddenInput()
+            self.fields['admin_file_doceso'].widget = forms.HiddenInput()
+            self.fields['status_error'].widget = forms.HiddenInput()
         #добавляем кнопочку сохранить
         self.helper = FormHelper()
         self.helper.form_method = 'post'
@@ -215,6 +221,9 @@ class ZayavkaForm_edit_eso(forms.ModelForm):
         status = kwargs.pop('status')
         eso = kwargs.pop('eso')
         super(ZayavkaForm_edit_eso, self).__init__(*args, **kwargs)
-
+        #добавляем кнопочку сохранить
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('Сохранить', 'Сохранить'))
 
 

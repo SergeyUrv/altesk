@@ -12,6 +12,9 @@
                 <a class="btn btn-outline-primary mr-1 my-1" href="{% url 'zayavitel' %}">Юридические лица</a>
                 <a class="btn btn-outline-primary mr-1 my-1" href="{% url 'epu' %}">Энергопринимающие устройства</a>
                 <a class="btn btn-outline-primary mr-1 my-1" href="{% url 'zayavki' %}">Заявки и обращения</a>
+                {% if user.is_staff %}
+                    <a class="btn btn-outline-warning mr-1 my-1" href="{% url 'zayavki_admin' %}">Заявки пользователей</a>
+                {% endif %}
             </nav>
         </div>
     </div>
